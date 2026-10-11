@@ -225,6 +225,7 @@ nav.topnav a:hover{border-color:var(--ink);background:var(--card);box-shadow:3px
 .hist-wrap .card{margin-bottom:0}
 .hist-time{display:inline-block;background:var(--ink);color:#fff;font-size:12px;font-weight:700;border-radius:12px;padding:3px 12px;margin-bottom:8px}
 .hist-empty{text-align:center;background:var(--card);border:2.5px dashed var(--ink);border-radius:22px;padding:34px 18px;font-size:16px;line-height:2}
+.new-sec-title.sec2{margin-top:28px}
 
 /* ===== بطاقات الوصفات (ماسونري) ===== */
 .recipes-sec{padding:44px 0 60px}
@@ -1234,21 +1235,31 @@ function relTime(ts){
 function renderHistoryTab(){
   const hist = Array.isArray(state.history) ? state.history : [];
   const q = histQ.trim();
-  const items = hist.map(h=>({h, r:RECIPES.find(x=>x.id===h.id)}))
-    .filter(x=>x.r && (!q || x.r.name.includes(q)));
+  const viewed = hist.map(h=>({h, r:RECIPES.find(x=>x.id===h.id)})).filter(x=>x.r);
+  const vIds = {};
+  viewed.forEach(x=>{ vIds[x.r.id] = 1; });
+  const rest = MEAL_ORDER.flatMap(c=>RECIPES.filter(r=>r.cat===c)).filter(r=>!r.isNew && !vIds[r.id]);
   const bar = `
   <div class="hist-bar">
     <div class="hist-search">${ic('eye',18)}<input id="histInput" placeholder="🔍 ابحث باسم الطبخة…" value="${esc(histQ)}"></div>
     <button class="tab" onclick="clearHistory()">${ic('trash',15)} مسح السجل</button>
   </div>`;
-  if(!hist.length){
-    $('#cards').innerHTML = bar + `<div class="hist-empty">🕘 <b>لا توجد وصفات سابقة بعد</b><br>كل وصفة تفتحها ستُحفظ هنا تلقائيًا لتعود إليها بسهولة.</div>`;
-  }else if(!items.length){
-    $('#cards').innerHTML = bar + `<div class="hist-empty">🔍 لا توجد نتائج مطابقة لـ «${esc(q)}»</div>`;
+  const wrap = (x,i)=> x.h
+    ? `<div class="hist-wrap"><span class="hist-time">🕘 شوهدت ${relTime(x.h.t)}</span>${cardHTML(x.r,i,false)}</div>`
+    : `<div class="hist-wrap">${cardHTML(x.r,i,false)}</div>`;
+  let body = '';
+  if(q){
+    const items = viewed.concat(rest.map(r=>({h:null, r}))).filter(x=>x.r.name.includes(q));
+    body = items.length
+      ? `<p class="hist-count">${items.length} ${items.length===1?'نتيجة':'نتائج'} مطابقة لـ «${esc(q)}»</p><div class="cards">${items.map(wrap).join('')}</div>`
+      : `<div class="hist-empty">🔍 لا توجد نتائج مطابقة لـ «${esc(q)}»</div>`;
   }else{
-    $('#cards').innerHTML = bar + `<p class="hist-count">${items.length} ${items.length===1?'وصفة محفوظة':'وصفات محفوظة'} — الأحدث أولًا</p><div class="cards">` +
-      items.map(({h,r},i)=>`<div class="hist-wrap"><span class="hist-time">🕘 شوهدت ${relTime(h.t)}</span>${cardHTML(r,i,false)}</div>`).join('') + `</div>`;
+    body = `<p class="hist-count">كل الوصفات السابقة محفوظة هنا — التي فُتحت والتي لم تُفتح</p>`;
+    if(viewed.length) body += `<h3 class="new-sec-title">🕘 وصفات اطّلعتِ عليها مؤخرًا</h3><div class="cards">${viewed.map(wrap).join('')}</div>`;
+    if(rest.length) body += `<h3 class="new-sec-title sec2">📚 بقية الوصفات السابقة</h3><div class="cards">${rest.map((r,i)=>wrap({h:null, r},i)).join('')}</div>`;
+    if(!viewed.length && !rest.length) body += `<div class="hist-empty">🕘 <b>لا توجد وصفات سابقة بعد</b></div>`;
   }
+  $('#cards').innerHTML = bar + body;
   const inp = $('#histInput');
   if(inp) inp.addEventListener('input', ()=>{
     histQ = inp.value; renderHistoryTab();
