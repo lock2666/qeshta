@@ -1,0 +1,1367 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>قشطة | طبخات التيك توك</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ===== الأساسيات ===== */
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#2b1a10;
+  --paper:#fbf1de;
+  --card:#fffdf6;
+  --red:#ff4d3d;   --red-soft:#ffe3de;
+  --yellow:#ffc531;--yellow-soft:#fff1cd;
+  --green:#1f9e6e; --green-soft:#def2e7;
+  --teal:#0f7b78;  --teal-soft:#daeeec;
+  --pink:#ee4f90;  --pink-soft:#fce0ec;
+  --orange:#f59e00;
+  --r:18px;
+}
+html{scroll-behavior:smooth}
+body{
+  font-family:'IBM Plex Sans Arabic',sans-serif;
+  background:var(--paper);
+  background-image:radial-gradient(#eedcbd 1.3px,transparent 1.4px);
+  background-size:24px 24px;
+  color:var(--ink);
+  font-size:16px;
+  line-height:1.7;
+  overflow-x:hidden;
+}
+h1,h2,h3,.font-h{font-family:'Baloo Bhaijaan 2',cursive}
+button{font-family:inherit;cursor:pointer}
+input{font-family:inherit}
+.ic{flex:none;vertical-align:-3px}
+.container{max-width:1180px;margin:0 auto;padding:0 22px}
+::selection{background:var(--yellow)}
+
+/* ===== أزرار النيو-بروتاليست ===== */
+.btn{
+  display:inline-flex;align-items:center;gap:8px;
+  border:2.5px solid var(--ink);border-radius:14px;
+  background:var(--card);color:var(--ink);
+  font-weight:700;font-size:15px;padding:10px 20px;
+  box-shadow:4px 4px 0 var(--ink);
+  transition:transform .15s,box-shadow .15s;
+}
+.btn:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--ink)}
+.btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
+.btn.dark{background:var(--ink);color:var(--paper)}
+.btn.yellow{background:var(--yellow)}
+.btn.red{background:var(--red);color:#fff}
+.btn.round{border-radius:50%;width:46px;height:46px;padding:0;justify-content:center}
+
+/* ===== الهيدر ===== */
+header.top{
+  position:sticky;top:0;z-index:60;
+  background:var(--paper);border-bottom:3px solid var(--ink);
+}
+.top-in{display:flex;align-items:center;gap:20px;padding:12px 22px;max-width:1180px;margin:0 auto}
+.logo{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--ink)}
+.logo-stamp{
+  width:48px;height:48px;border-radius:50%;
+  background:var(--red);color:#fff;border:3px solid var(--ink);
+  display:grid;place-items:center;box-shadow:3px 3px 0 var(--ink);
+  transform:rotate(-6deg);
+}
+.logo-name{font-family:'Baloo Bhaijaan 2';font-weight:800;font-size:26px;line-height:1}
+.logo-sub{font-size:11.5px;font-weight:600;background:var(--yellow);border:2px solid var(--ink);border-radius:20px;padding:1px 10px;display:inline-block;transform:rotate(-2deg)}
+nav.topnav{display:flex;gap:6px;margin-inline-start:auto}
+nav.topnav a{
+  text-decoration:none;color:var(--ink);font-weight:700;font-size:14.5px;
+  padding:7px 14px;border-radius:12px;border:2px solid transparent;
+  display:inline-flex;align-items:center;gap:6px;
+}
+nav.topnav a:hover{border-color:var(--ink);background:var(--card);box-shadow:3px 3px 0 var(--ink)}
+.basket-btn{position:relative}
+.basket-count{
+  position:absolute;top:-9px;left:-9px;min-width:23px;height:23px;
+  background:var(--red);color:#fff;border:2.5px solid var(--ink);
+  border-radius:12px;font-size:12px;font-weight:800;
+  display:grid;place-items:center;padding:0 4px;
+}
+
+/* ===== الهيرو ===== */
+.hero{padding:56px 0 44px;position:relative}
+.hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:40px;align-items:center}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--ink);color:var(--paper);font-weight:700;font-size:13.5px;
+  padding:6px 16px;border-radius:24px;transform:rotate(-1.5deg);
+}
+.hero-badge .dot{width:8px;height:8px;border-radius:50%;background:var(--red);animation:blink 1.4s infinite}
+@keyframes blink{50%{opacity:.25}}
+.hero h1{
+  font-size:clamp(2.5rem,5.5vw,4.1rem);font-weight:800;line-height:1.25;margin:18px 0 14px;
+}
+.hl{background:var(--yellow);border:2.5px solid var(--ink);border-radius:10px;padding:0 10px;display:inline-block;transform:rotate(-1deg);box-shadow:3px 3px 0 var(--ink)}
+.hl2{color:var(--red)}
+.hero p.lead{font-size:17.5px;max-width:520px;color:#54422f;margin-bottom:26px}
+.hero-ctas{display:flex;gap:14px;flex-wrap:wrap}
+.hero-stats{display:flex;gap:26px;margin-top:34px;flex-wrap:wrap}
+.hstat strong{font-family:'Baloo Bhaijaan 2';font-size:26px;font-weight:800;display:block;line-height:1.1}
+.hstat span{font-size:13px;font-weight:600;color:#6b563e}
+
+/* بلاطة المقلاة */
+.hero-art{position:relative;display:grid;place-items:center;min-height:380px}
+.pan-frame{
+  width:min(400px,100%);aspect-ratio:1;border-radius:50%;
+  background:var(--yellow-soft);border:3px solid var(--ink);
+  box-shadow:8px 8px 0 var(--ink);
+  display:grid;place-items:center;position:relative;
+}
+.sticker{
+  position:absolute;border:2.5px solid var(--ink);border-radius:14px;
+  font-family:'Baloo Bhaijaan 2';font-weight:800;font-size:14px;
+  padding:6px 14px;box-shadow:3px 3px 0 var(--ink);
+  animation:float 4s ease-in-out infinite;background:var(--card);white-space:nowrap;z-index:3;
+}
+.sticker.s1{background:var(--pink);color:#fff;top:4%;right:-4%;transform:rotate(8deg);animation-delay:.3s}
+.sticker.s2{background:var(--green);color:#fff;bottom:6%;right:-8%;transform:rotate(-7deg);animation-delay:1s}
+.sticker.s3{background:var(--red);color:#fff;top:32%;left:-10%;transform:rotate(-10deg);animation-delay:.6s}
+@keyframes float{50%{translate:0 -10px}}
+.steam path{stroke:#c9b393;stroke-width:4;fill:none;stroke-linecap:round;animation:steam 2.6s ease-in-out infinite;opacity:0}
+.steam path:nth-child(2){animation-delay:.8s}
+.steam path:nth-child(3){animation-delay:1.6s}
+@keyframes steam{0%{opacity:0;transform:translateY(8px)}35%{opacity:1}100%{opacity:0;transform:translateY(-16px)}}
+.spark{position:absolute;color:var(--orange);animation:blink 2.2s infinite}
+
+/* ===== شريط الوسوم المتحرك ===== */
+.marquee{background:var(--ink);color:var(--paper);overflow:hidden;padding:11px 0;border-block:3px solid var(--ink)}
+.mq-track{display:flex;width:max-content;animation:mq 26s linear infinite}
+.mq-track span{font-family:'Baloo Bhaijaan 2';font-weight:700;font-size:15px;padding:0 18px;white-space:nowrap}
+.mq-track span em{color:var(--yellow);font-style:normal;margin-inline-start:14px}
+@keyframes mq{from{transform:translateX(0)}to{transform:translateX(50%)}}
+
+/* ===== عناوين الأقسام ===== */
+.sec-head{display:flex;align-items:end;gap:16px;flex-wrap:wrap;margin-bottom:22px}
+.kicker{
+  display:inline-flex;align-items:center;gap:7px;font-weight:800;font-size:13px;
+  background:var(--card);border:2.5px solid var(--ink);border-radius:22px;padding:4px 14px;
+  box-shadow:3px 3px 0 var(--ink);transform:rotate(-1deg);margin-bottom:10px;
+}
+.sec-head h2{font-size:clamp(1.7rem,3.4vw,2.4rem);font-weight:800;line-height:1.3}
+.sec-head p{color:#6b563e;font-size:15px}
+
+/* ===== لوحة المنيو اليومي ===== */
+.board-sec{padding:30px 0 10px}
+.board{
+  background:#281a10;color:#f6ead6;border:3px solid var(--ink);
+  border-radius:26px;box-shadow:9px 9px 0 var(--yellow);
+  padding:34px 34px 28px;position:relative;overflow:hidden;
+}
+.board::before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.045) 1.4px,transparent 1.5px);background-size:26px 26px;pointer-events:none}
+.board-kicker{
+  display:inline-flex;align-items:center;gap:8px;background:var(--red);color:#fff;
+  border:2px solid #f6ead6;border-radius:20px;padding:3px 14px;
+  font-weight:800;font-size:13px;transform:rotate(-1.5deg);
+}
+.board h2{font-size:clamp(1.8rem,3.6vw,2.5rem);font-weight:800;margin:12px 0 2px}
+.board .date{color:var(--yellow);font-weight:700;font-size:15px}
+.board .hint{color:#cbb69a;font-size:14px;margin-bottom:20px}
+.meal-row{
+  display:flex;align-items:center;gap:16px;padding:13px 4px;
+  border-bottom:2px dashed rgba(246,234,214,.25);
+}
+.meal-row:last-of-type{border-bottom:none}
+.meal-tag{
+  flex:none;font-family:'Baloo Bhaijaan 2';font-weight:800;font-size:14px;
+  border:2px solid var(--ink);border-radius:12px;padding:5px 14px;color:#fff;
+  box-shadow:2.5px 2.5px 0 rgba(0,0,0,.55);min-width:78px;text-align:center;transform:rotate(-1deg);
+}
+.meal-info{flex:1;min-width:0}
+.meal-info strong{font-family:'Baloo Bhaijaan 2';font-weight:800;font-size:19px;display:block;line-height:1.3}
+.meal-info span{color:#cbb69a;font-size:13px;font-weight:600}
+.meal-name.swapping{animation:swapIn .45s ease}
+@keyframes swapIn{0%{opacity:0;transform:translateX(-14px) rotate(-2deg)}100%{opacity:1;transform:none}}
+.meal-act{display:flex;gap:8px}
+.icon-pill{
+  width:40px;height:40px;border-radius:12px;border:2px solid #f6ead6;
+  background:transparent;color:#f6ead6;display:grid;place-items:center;transition:.15s;
+}
+.icon-pill:hover{background:var(--yellow);color:var(--ink);border-color:var(--yellow);transform:rotate(-8deg) scale(1.08)}
+.board-cta{margin-top:20px;display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.board-cta .btn{box-shadow:4px 4px 0 rgba(0,0,0,.5)}
+
+/* ===== التابات ===== */
+.tabs{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 26px}
+.tab{
+  border:2.5px solid var(--ink);border-radius:16px;background:var(--card);
+  font-family:'Baloo Bhaijaan 2';font-weight:800;font-size:15px;
+  padding:7px 18px;transition:.15s;display:inline-flex;align-items:center;gap:7px;
+}
+.tab .tdot{width:9px;height:9px;border-radius:50%;background:var(--tc,#999);border:1.5px solid var(--ink)}
+.tab:hover{transform:translate(-1px,-2px);box-shadow:3px 3px 0 var(--ink)}
+.tab.on{background:var(--tc,var(--ink));color:#fff;transform:rotate(-1.5deg) scale(1.04);box-shadow:4px 4px 0 var(--ink)}
+.tab.on .tdot{border-color:#fff}
+
+/* ===== بطاقات الوصفات (ماسونري) ===== */
+.recipes-sec{padding:44px 0 60px}
+.cards{columns:3;column-gap:22px}
+.card{
+  break-inside:avoid;margin-bottom:22px;background:var(--card);
+  border:2.5px solid var(--ink);border-radius:22px;overflow:hidden;
+  box-shadow:5px 5px 0 var(--ink);
+  transition:transform .18s,box-shadow .18s;
+  display:inline-block;width:100%;
+}
+.card:hover{transform:translateY(-5px) rotate(0deg) !important;box-shadow:8px 8px 0 var(--ink)}
+.card-top{
+  background:var(--c);color:var(--art,#fff);position:relative;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 18px;cursor:pointer;
+  background-image:radial-gradient(rgba(255,255,255,.14) 1.4px,transparent 1.5px);
+  background-size:20px 20px;
+}
+.card-top .dish-svg{width:74px;height:74px;transition:transform .25s}
+.card:hover .dish-svg{transform:scale(1.12) rotate(-4deg)}
+.cat-chip{
+  background:var(--ink);color:#fff;font-size:11.5px;font-weight:800;
+  border-radius:20px;padding:3px 12px;letter-spacing:.3px;
+}
+.card-body{padding:16px 18px 18px}
+.card-body h3{font-size:21px;font-weight:800;line-height:1.35}
+.tagline{font-size:13.5px;color:#7a6549;margin:4px 0 12px}
+.card-meta{display:flex;gap:14px;flex-wrap:wrap;font-size:13px;font-weight:700;color:#5d4a33;margin-bottom:12px}
+.card-meta span{display:inline-flex;align-items:center;gap:5px}
+.flames{display:inline-flex;align-items:center;gap:1px;color:var(--red)}
+.flames .ic.dim{opacity:.22}
+.ingr-prev{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.ingr-prev i{
+  font-style:normal;font-size:12px;font-weight:600;background:var(--cs);
+  border:1.5px solid var(--ink);border-radius:16px;padding:2px 11px;
+}
+.ingr-prev i.more{background:var(--card);border-style:dashed}
+.card-foot{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.heart-btn{
+  display:inline-flex;align-items:center;gap:6px;background:none;border:none;
+  font-weight:800;font-size:13.5px;color:#7a6549;transition:.15s;padding:6px 4px;
+}
+.heart-btn .ic{transition:.2s}
+.heart-btn.liked{color:var(--red)}
+.heart-btn.liked .ic{fill:var(--red);transform:scale(1.15)}
+.heart-btn.pop .ic{animation:pop .4s ease}
+@keyframes pop{40%{transform:scale(1.7)}}
+.open-btn{
+  border:2px solid var(--ink);border-radius:12px;background:var(--c);color:var(--art,#fff);
+  font-weight:800;font-size:13.5px;padding:7px 14px;display:inline-flex;align-items:center;gap:6px;
+  transition:.15s;box-shadow:3px 3px 0 var(--ink);
+}
+.open-btn:hover{transform:translate(-2px,-2px);box-shadow:5px 5px 0 var(--ink)}
+
+/* البطاقة المميزة العريضة */
+.card.featured{display:flex;flex-direction:column}
+.card.featured .card-top{padding:24px 26px}
+.card.featured .dish-svg{width:120px;height:120px}
+.card.featured .card-body{padding:20px 26px 24px}
+.card.featured h3{font-size:26px}
+
+/* ===== المودال ===== */
+.modal-wrap{
+  position:fixed;inset:0;z-index:100;display:none;
+  background:rgba(30,17,8,.62);backdrop-filter:blur(3px);
+  align-items:center;justify-content:center;padding:18px;
+}
+.modal-wrap.open{display:flex;animation:fadeIn .2s}
+@keyframes fadeIn{from{opacity:0}}
+.modal{
+  width:min(900px,96vw);max-height:90vh;background:var(--card);
+  border:3px solid var(--ink);border-radius:24px;display:flex;flex-direction:column;
+  overflow:hidden;box-shadow:10px 10px 0 rgba(0,0,0,.35);animation:rise .28s cubic-bezier(.2,1.2,.4,1);
+}
+@keyframes rise{from{transform:translateY(26px) scale(.97);opacity:0}}
+.modal-head{color:var(--art,#fff);padding:22px 26px 18px;position:relative;
+  background-image:radial-gradient(rgba(255,255,255,.12) 1.4px,transparent 1.5px);background-size:22px 22px}
+.modal-close{
+  position:absolute;top:14px;left:14px;width:38px;height:38px;border-radius:12px;
+  border:2.5px solid var(--ink);background:var(--card);color:var(--ink);
+  display:grid;place-items:center;box-shadow:3px 3px 0 var(--ink);transition:.15s;
+}
+.modal-close:hover{transform:rotate(90deg)}
+.modal-head .cat-chip{display:inline-block;margin-bottom:8px}
+.modal-head h2{font-size:clamp(1.5rem,3vw,2rem);font-weight:800;line-height:1.3}
+.modal-head .tagline{color:rgba(255,255,255,.85)}
+.modal-meta{display:flex;gap:18px;flex-wrap:wrap;margin-top:12px;font-size:13.5px;font-weight:700}
+.modal-meta span{display:inline-flex;align-items:center;gap:6px}
+.modal-foot-row{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.modal-body{overflow-y:auto;display:grid;grid-template-columns:305px 1fr;gap:0;flex:1}
+.ingr-col{border-inline-start:3px dashed #e4d4b8;padding:24px 22px;background:#fffaf0}
+.ingr-col h4,.steps-col h4{font-family:'Baloo Bhaijaan 2';font-weight:800;font-size:19px;display:flex;align-items:center;gap:9px;margin-bottom:14px}
+.add-all-btn{
+  width:100%;justify-content:center;margin-bottom:14px;font-size:13.5px;padding:9px 12px;
+}
+.ing-list{list-style:none}
+.ing-list li{
+  display:flex;align-items:center;gap:9px;padding:8px 4px;
+  border-bottom:1.5px dashed #e8d9bc;transition:.15s;border-radius:8px;
+}
+.ing-list li:hover{background:#fff3dd}
+.ing-check{
+  width:24px;height:24px;flex:none;border:2.5px solid var(--ink);border-radius:8px;
+  background:var(--card);display:grid;place-items:center;color:transparent;transition:.15s;
+}
+li.on .ing-check{background:var(--c);color:#fff;border-color:var(--c)}
+li.on .ing-n{text-decoration:line-through;opacity:.45}
+.ing-q{font-weight:800;font-size:12.5px;color:var(--c);background:var(--cs);border-radius:8px;padding:1px 8px;flex:none;min-width:52px;text-align:center}
+.ing-n{flex:1;font-size:14px;font-weight:500}
+.ing-add{
+  width:26px;height:26px;flex:none;border-radius:8px;border:2px solid var(--ink);
+  background:var(--card);display:grid;place-items:center;color:var(--ink);transition:.15s;opacity:.55;
+}
+.ing-list li:hover .ing-add{opacity:1}
+.ing-add:hover{background:var(--c);color:#fff;transform:rotate(90deg)}
+.steps-col{padding:24px 26px}
+.step-progress{margin-bottom:18px}
+.step-progress .bar{height:13px;border:2.5px solid var(--ink);border-radius:10px;background:var(--card);overflow:hidden}
+.step-progress .fill{height:100%;width:0%;background:var(--c);transition:width .4s cubic-bezier(.2,1,.4,1)}
+.step-progress small{font-weight:700;color:#7a6549;display:block;margin-top:5px}
+.steps{list-style:none;display:flex;flex-direction:column;gap:0}
+.step{display:flex;gap:14px;position:relative;padding-bottom:22px}
+.step::before{
+  content:"";position:absolute;top:34px;bottom:4px;right:16px;
+  border-inline-start:2.5px dashed #d9c5a2;
+}
+.step:last-child::before{display:none}
+.step-num{
+  width:34px;height:34px;flex:none;border-radius:50%;background:var(--c);color:var(--art,#fff);
+  border:2.5px solid var(--ink);display:grid;place-items:center;
+  font-family:'Baloo Bhaijaan 2';font-weight:800;font-size:15px;z-index:1;transition:.2s;
+}
+.step.done .step-num{background:var(--ink);color:var(--yellow)}
+.step-txt{flex:1;font-size:14.5px}
+.step.done .step-txt{opacity:.55;text-decoration:line-through;text-decoration-color:var(--c);text-decoration-thickness:2px}
+.step-tools{display:flex;gap:8px;margin-top:9px}
+.step-done-btn{
+  display:inline-flex;align-items:center;gap:6px;border:2px solid var(--ink);border-radius:10px;
+  background:var(--card);font-size:12.5px;font-weight:800;padding:4px 12px;transition:.15s;
+}
+.step.done .step-done-btn{background:var(--green);color:#fff}
+.step-done-btn:hover{transform:translateY(-2px);box-shadow:2px 2px 0 var(--ink)}
+.timer-btn{
+  display:inline-flex;align-items:center;gap:6px;border:2px solid var(--ink);border-radius:10px;
+  background:var(--yellow);font-size:12.5px;font-weight:800;padding:4px 12px;transition:.15s;
+}
+.timer-btn:hover{transform:translateY(-2px);box-shadow:2px 2px 0 var(--ink)}
+.tip-block{
+  margin-top:8px;background:var(--yellow-soft);border:2.5px solid var(--ink);
+  border-radius:16px;padding:15px 18px;position:relative;
+}
+.tip-block b{font-family:'Baloo Bhaijaan 2';font-weight:800;display:flex;align-items:center;gap:8px;color:#8a5a00;margin-bottom:4px;font-size:15.5px}
+.tip-block p{font-size:14px}
+
+/* ===== قائمة المشتريات (المذكرة) ===== */
+.drawer-wrap{
+  position:fixed;inset:0;z-index:110;background:rgba(30,17,8,.55);
+  opacity:0;pointer-events:none;transition:.3s;
+}
+.drawer-wrap.open{opacity:1;pointer-events:auto}
+.drawer{
+  position:fixed;top:0;left:0;height:100%;width:min(410px,94vw);
+  background:#fff8e4;border-inline-end:3px solid var(--ink);
+  transform:translateX(-105%);transition:transform .35s cubic-bezier(.2,1,.3,1);
+  display:flex;flex-direction:column;
+  background-image:repeating-linear-gradient(#fff8e4 0 30px,#f0e2c2 30px 31.5px);
+}
+.drawer-wrap.open .drawer{transform:none}
+.drawer-head{
+  background:var(--red);color:#fff;border-bottom:3px solid var(--ink);
+  padding:16px 22px;display:flex;align-items:center;gap:12px;
+  background-image:radial-gradient(rgba(255,255,255,.13) 1.3px,transparent 1.4px);background-size:18px 18px;
+}
+.magnet{
+  width:44px;height:44px;flex:none;border-radius:12px;background:var(--yellow);
+  border:2.5px solid var(--ink);display:grid;place-items:center;color:var(--ink);
+  box-shadow:3px 3px 0 rgba(0,0,0,.4);transform:rotate(-8deg);
+}
+.drawer-head h3{font-family:'Baloo Bhaijaan 2';font-weight:800;font-size:20px;line-height:1.2}
+.drawer-head small{font-size:12px;opacity:.9;font-weight:600}
+.drawer-close{
+  margin-inline-start:auto;width:34px;height:34px;border-radius:10px;border:2px solid var(--ink);
+  background:var(--card);color:var(--ink);display:grid;place-items:center;transition:.15s;
+}
+.drawer-close:hover{transform:rotate(90deg)}
+.add-row{display:flex;gap:9px;padding:15px 20px 8px}
+.add-row input{
+  flex:1;border:2.5px solid var(--ink);border-radius:12px;padding:9px 14px;
+  font-size:14px;background:var(--card);color:var(--ink);outline:none;font-weight:500;
+}
+.add-row input:focus{box-shadow:3px 3px 0 var(--yellow)}
+.basket-list{list-style:none;flex:1;overflow-y:auto;padding:8px 20px 16px}
+.basket-list li{
+  display:flex;align-items:center;gap:10px;padding:6px 2px;
+  border-bottom:1.5px dashed #e0cfa8;animation:slideIn .25s ease;
+}
+@keyframes slideIn{from{opacity:0;transform:translateX(14px)}}
+.bk-check{
+  width:25px;height:25px;flex:none;border:2.5px solid var(--ink);border-radius:8px;
+  background:var(--card);display:grid;place-items:center;color:transparent;transition:.15s;
+}
+li.done .bk-check{background:var(--green);color:#fff;border-color:var(--ink)}
+.bk-txt{flex:1;font-size:14.5px;font-weight:600}
+.bk-q{font-size:11.5px;font-weight:700;color:#9a7d4e;background:#fff;border:1.5px solid #d9c5a2;border-radius:8px;padding:1px 7px;flex:none}
+li.done .bk-txt{text-decoration:line-through;opacity:.45;text-decoration-thickness:2px}
+.bk-del{width:28px;height:28px;flex:none;border:none;background:none;color:#b3492e;display:grid;place-items:center;border-radius:8px;transition:.15s}
+.bk-del:hover{background:#ffe0d8;transform:scale(1.15)}
+.empty-basket{text-align:center;color:#a98c5c;padding:36px 20px;font-weight:600;font-size:14.5px}
+.empty-basket .ic{display:block;margin:0 auto 10px;opacity:.5}
+.drawer-foot{border-top:3px solid var(--ink);padding:14px 20px;background:var(--card)}
+.basket-prog{display:flex;align-items:center;gap:10px;margin-bottom:12px;font-size:13px;font-weight:800}
+.basket-prog .bar{flex:1;height:11px;border:2.5px solid var(--ink);border-radius:8px;overflow:hidden;background:#fff}
+.basket-prog .fill{height:100%;background:var(--green);transition:width .3s}
+.drawer-foot-btns{display:flex;gap:9px}
+.drawer-foot-btns .btn{flex:1;justify-content:center;font-size:12.5px;padding:8px 6px}
+
+/* ===== FAB ===== */
+.fab{
+  position:fixed;bottom:24px;left:24px;z-index:90;
+  width:64px;height:64px;border-radius:50%;background:var(--yellow);
+  border:3px solid var(--ink);box-shadow:5px 5px 0 var(--ink);
+  display:grid;place-items:center;color:var(--ink);transition:.15s;
+}
+.fab:hover{transform:translate(-2px,-3px) rotate(-8deg);box-shadow:7px 8px 0 var(--ink)}
+.fab .basket-count{top:-4px;left:-4px}
+
+/* ===== الموقت العائم ===== */
+.timerbox{
+  position:fixed;bottom:24px;right:24px;z-index:90;
+  display:flex;align-items:center;gap:12px;
+  background:var(--ink);color:var(--paper);border:3px solid var(--ink);
+  border-radius:18px;padding:10px 14px;box-shadow:5px 5px 0 var(--yellow);
+  animation:rise .3s cubic-bezier(.2,1.2,.4,1);
+}
+.timerbox[hidden]{display:none}
+.timerbox svg{width:46px;height:46px;transform:rotate(-90deg)}
+.tbg{fill:none;stroke:rgba(255,255,255,.14);stroke-width:4.5}
+.tfg{fill:none;stroke:var(--yellow);stroke-width:4.5;stroke-linecap:round;stroke-dasharray:125.6;stroke-dashoffset:0;transition:stroke-dashoffset .5s linear}
+.tinfo{display:flex;flex-direction:column;line-height:1.25}
+.tinfo small{font-size:10.5px;color:#cbb69a;font-weight:700;max-width:110px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tinfo strong{font-family:'Baloo Bhaijaan 2';font-size:20px;font-weight:800;letter-spacing:1px}
+.timer-stop{width:32px;height:32px;border-radius:10px;border:2px solid var(--paper);background:transparent;color:var(--paper);display:grid;place-items:center;transition:.15s}
+.timer-stop:hover{background:var(--red);border-color:var(--red)}
+.timerbox.ringing{animation:ring .5s ease infinite}
+@keyframes ring{25%{transform:rotate(1.5deg)}75%{transform:rotate(-1.5deg)}}
+
+/* ===== التوست ===== */
+.toasts{position:fixed;bottom:26px;left:50%;transform:translateX(-50%);z-index:150;display:flex;flex-direction:column;gap:10px;align-items:center;pointer-events:none}
+.toast{
+  display:flex;align-items:center;gap:10px;
+  background:var(--ink);color:var(--paper);border:2.5px solid var(--ink);
+  border-radius:16px;padding:11px 20px;font-weight:700;font-size:14px;
+  box-shadow:4px 4px 0 rgba(0,0,0,.3);animation:toastIn .3s cubic-bezier(.2,1.2,.4,1);
+  max-width:min(440px,90vw);
+}
+.toast .ic{color:var(--yellow)}
+.toast.out{animation:toastOut .3s forwards}
+@keyframes toastIn{from{opacity:0;transform:translateY(18px) scale(.9)}}
+@keyframes toastOut{to{opacity:0;transform:translateY(14px) scale(.92)}}
+
+/* ===== الفوتر ===== */
+footer{background:var(--ink);color:var(--paper);border-top:3px solid var(--ink);margin-top:20px}
+.foot-in{max-width:1180px;margin:0 auto;padding:30px 22px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.foot-in .logo-stamp{background:var(--yellow);color:var(--ink);border-color:var(--paper);box-shadow:3px 3px 0 var(--red)}
+.foot-in strong{font-family:'Baloo Bhaijaan 2';font-size:20px;font-weight:800}
+.foot-in p{font-size:13.5px;color:#cbb69a;flex:1;min-width:200px}
+
+/* ===== الكونفيتي ===== */
+#fx{position:fixed;inset:0;pointer-events:none;z-index:200}
+
+/* ===== التجاوب ===== */
+@media (max-width:980px){
+  .cards{columns:2}
+  .hero-grid{grid-template-columns:1fr}
+  .hero-art{order:-1;min-height:320px}
+  nav.topnav{display:none}
+  .modal-body{grid-template-columns:1fr}
+  .ingr-col{border-inline-start:none;border-bottom:3px dashed #e4d4b8}
+}
+@media (max-width:620px){
+  .cards{columns:1}
+  .board{padding:24px 18px}
+  .meal-row{flex-wrap:wrap}
+  .meal-info{flex-basis:100%;order:3;padding-inline-start:2px}
+  .card.featured .dish-svg{width:86px;height:86px}
+  .hero{padding:34px 0 30px}
+}
+</style>
+</head>
+<body>
+
+<!-- الهيدر -->
+<header class="top">
+  <div class="top-in">
+    <a class="logo" href="#">
+      <span class="logo-stamp" id="logoIcon"></span>
+      <span>
+        <span class="logo-name">قشطة</span><br>
+        <span class="logo-sub">طبخات التيك توك</span>
+      </span>
+    </a>
+    <nav class="topnav">
+      <a href="#menu-sec" id="navMenu"></a>
+      <a href="#recipes-sec" id="navBook"></a>
+      <a href="#" onclick="openBasket();return false" id="navBasket"></a>
+    </nav>
+    <button class="btn yellow basket-btn" onclick="openBasket()" id="headBasket">
+      <span class="basket-count" id="headBasketCount">0</span>
+    </button>
+  </div>
+</header>
+
+<!-- الهيرو -->
+<section class="hero">
+  <div class="container hero-grid">
+    <div>
+      <span class="hero-badge"><span class="dot"></span>وصفات دقيقة… بروح تيكتوك</span>
+      <h1>اطبخ أجمل الطبخات <span class="hl">بالمقاييس المظبوطة</span><br>و<span class="hl2">خطوات واضحة</span> خطوة بخطوة</h1>
+      <p class="lead">كل وصفة هون بمقادير محسوبة بالجرام والملعقة، خطوات مرقّمة بالتفصيل، سرّ الشيف، مؤقت مدمج — ومنيو يومي كامل لكل وجباتك.</p>
+      <div class="hero-ctas">
+        <a class="btn dark" href="#menu-sec" id="ctaMenu"></a>
+        <a class="btn yellow" href="#recipes-sec" id="ctaBook"></a>
+      </div>
+      <div class="hero-stats">
+        <div class="hstat"><strong id="stRecipes">0</strong><span>وصفة مفصّلة</span></div>
+        <div class="hstat"><strong id="stHearts">0</strong><span>قلب من الطبّاخين</span></div>
+        <div class="hstat"><strong>5</strong><span>وجبات مقترحة يوميًا</span></div>
+      </div>
+    </div>
+    <div class="hero-art">
+      <span class="sticker s1">مقاييس مظبوطة</span>
+      <span class="sticker s2">منيو كل يوم</span>
+      <span class="sticker s3">قائمة تسوق ذكية</span>
+      <svg class="spark" style="top:12%;left:22%" width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 7.6L22 12l-7.6 2.4L12 22l-2.4-7.6L2 12l7.6-2.4Z"/></svg>
+      <svg class="spark" style="bottom:16%;right:12%;animation-delay:.9s" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 7.6L22 12l-7.6 2.4L12 22l-2.4-7.6L2 12l7.6-2.4Z"/></svg>
+      <div class="pan-frame">
+        <svg viewBox="0 0 420 420" width="86%" style="max-width:340px">
+          <g class="steam" transform="translate(210 92)">
+            <path d="M-40 22c-8-12 8-20 0-34"/>
+            <path d="M0 16c-8-12 8-20 0-34"/>
+            <path d="M40 22c-8-12 8-20 0-34"/>
+          </g>
+          <circle cx="210" cy="238" r="128" fill="#3a2a1d" stroke="#2b1a10" stroke-width="7"/>
+          <circle cx="210" cy="230" r="112" fill="#4a3524" stroke="#2b1a10" stroke-width="5"/>
+          <rect x="322" y="206" width="88" height="34" rx="17" fill="#2b1a10" stroke="#2b1a10" stroke-width="4"/>
+          <rect x="334" y="214" width="64" height="18" rx="9" fill="#4a3524"/>
+          <path d="M140 236c-6-20 14-30 34-24 12-14 44-14 58 0 22-8 44 6 38 26-4 16-26 22-64 22s-60-8-66-24Z" fill="#fffdf6" stroke="#2b1a10" stroke-width="5" stroke-linejoin="round"/>
+          <circle cx="206" cy="238" r="24" fill="#ffc531" stroke="#2b1a10" stroke-width="5"/>
+          <circle cx="199" cy="231" r="6" fill="#fff" opacity=".7"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- شريط الوسوم -->
+<div class="marquee"><div class="mq-track" id="mqTrack"></div></div>
+
+<!-- المنيو اليومي -->
+<section class="board-sec" id="menu-sec">
+  <div class="container">
+    <div class="board">
+      <span class="board-kicker" id="boardKicker"></span>
+      <h2>منيو اليوم</h2>
+      <div class="date" id="boardDate"></div>
+      <p class="hint">اقتراح مطبخ «قشطة» لكل وجبات يومك — بدّل أي طبق ما عجبك، وأضف مقاديره كاملة لقائمة المشتريات بضغطة.</p>
+      <div id="mealsRows"></div>
+      <div class="board-cta">
+        <button class="btn yellow" id="addDayBtn"></button>
+        <span style="font-size:13px;color:#cbb69a;font-weight:600" id="dayCount"></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- الوصفات -->
+<section class="recipes-sec" id="recipes-sec">
+  <div class="container">
+    <div class="sec-head">
+      <div>
+        <span class="kicker" id="secKicker"></span>
+        <h2>مكتبة الوصفات</h2>
+      </div>
+      <p style="margin-inline-start:auto">افتح أي وصفة لترى المقادير والخطوات الكاملة مع المؤقت وسرّ الشيف</p>
+    </div>
+    <div class="tabs" id="tabs"></div>
+    <div class="cards" id="cards"></div>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-in">
+    <span class="logo-stamp" id="footIcon"></span>
+    <div>
+      <strong>قشطة</strong><br>
+      <p>كل الوصفات بمقاييس مظبوطة وخطوات مُجرّبة — صحتين وعافية، ولا تنسَ تضيف مقاديرك للمذكرة قبل ما تنزل السوق.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- زر السلة العائم -->
+<button class="fab" onclick="openBasket()" id="fabBtn" title="قائمة المشتريات">
+  <span class="basket-count" id="fabCount">0</span>
+</button>
+
+<!-- مذكرة المشتريات -->
+<div class="drawer-wrap" id="drawerWrap">
+  <aside class="drawer" onclick="event.stopPropagation()">
+    <div class="drawer-head">
+      <span class="magnet" id="magnetIcon"></span>
+      <div>
+        <h3>قائمة المشتريات</h3>
+        <small>اللي نفذ من البيت — علّم وانت تشتري</small>
+      </div>
+      <button class="drawer-close" onclick="closeBasket()" id="drawerClose"></button>
+    </div>
+    <form class="add-row" id="addRow">
+      <input type="text" id="basketInput" placeholder="اضف عنصر ناقص… مثل: زيت زيتون" autocomplete="off">
+      <button class="btn dark" type="submit" id="addRowBtn"></button>
+    </form>
+    <ul class="basket-list" id="basketList"></ul>
+    <div class="drawer-foot">
+      <div class="basket-prog">
+        <span id="basketProgTxt">0 من 0</span>
+        <div class="bar"><div class="fill" id="basketFill" style="width:0%;background:var(--green)"></div></div>
+      </div>
+      <div class="drawer-foot-btns">
+        <button class="btn" id="clearDoneBtn"></button>
+        <button class="btn red" id="clearAllBtn"></button>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<!-- مودال الوصفة -->
+<div class="modal-wrap" id="modalWrap">
+  <div class="modal" id="modalBox"></div>
+</div>
+
+<!-- الموقت العائم -->
+<div class="timerbox" id="timerbox" hidden>
+  <svg viewBox="0 0 48 48"><circle class="tbg" cx="24" cy="24" r="20"/><circle class="tfg" id="timerRing" cx="24" cy="24" r="20"/></svg>
+  <div class="tinfo"><small id="timerLabel"></small><strong id="timerTxt">00:00</strong></div>
+  <button class="timer-stop" id="timerStop"></button>
+</div>
+
+<div class="toasts" id="toasts"></div>
+<canvas id="fx"></canvas>
+
+<script>
+/* ================== الأيقونات ================== */
+const ICONS = {
+  clock:'<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>',
+  flame:'<path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/>',
+  users:'<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
+  heart:'<path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>',
+  cart:'<circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>',
+  shuffle:'<path d="M2 18h1.4c1.3 0 2.5-.6 3.3-1.7l6.1-8.6c.8-1.1 2-1.7 3.3-1.7H22"/><path d="m18 2 4 4-4 4"/><path d="M2 6h1.9c1.5 0 2.9.9 3.6 2.2"/><path d="M22 18h-5.9c-1.3 0-2.6-.7-3.3-1.8l-.5-.8"/><path d="m18 14 4 4-4 4"/>',
+  check:'<polyline points="20 6 9 17 4 12"/>',
+  plus:'<path d="M12 5v14M5 12h14"/>',
+  trash:'<path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/>',
+  x:'<path d="M18 6 6 18M6 6l12 12"/>',
+  timer:'<line x1="10" y1="2" x2="14" y2="2"/><line x1="12" y1="14" x2="15" y2="11"/><circle cx="12" cy="14" r="8"/>',
+  eye:'<path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/>',
+  sparkle:'<path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/>',
+  magnet:'<path d="m6 15-4-4 6.75-6.77a7.79 7.79 0 0 1 11 11L13 22l-4-4 6.39-6.36a2.14 2.14 0 0 0-3-3L6 15"/><path d="m5 8 4 4"/><path d="m12 15 4 4"/>',
+  zap:'<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>',
+  book:'<path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/>',
+  cal:'<rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>',
+  chef:'<path d="M6 13.87A4 4 0 0 1 7.41 6a5.11 5.11 0 0 1 1.05-1.54 5 5 0 0 1 7.08 0A5.11 5.11 0 0 1 16.59 6 4 4 0 0 1 18 13.87V21H6Z"/><path d="M6 17h12"/>',
+  list:'<line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/>'
+};
+const ic = (n,s=18)=>`<svg class="ic" width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${ICONS[n]}</svg>`;
+
+/* ================== رسومات الأطباق ================== */
+const DISH = {
+  bowl:'<path d="M10 30h44c0 14-9 22-22 22s-22-8-22-22Z"/><ellipse cx="32" cy="30" rx="22" ry="5.5"/><circle cx="32" cy="28" r="3.5"/><path d="M19 25l3-3M45 25l-3-3"/>',
+  wrap:'<rect x="9" y="27" width="46" height="19" rx="9.5" transform="rotate(-16 32 36)"/><path d="M21 42l12-10M31 46l12-10"/><path d="M24 13c-2 3 2 5 0 8M34 11c-2 3 2 5 0 8"/>',
+  wings:'<path d="M24 12c12-4 22 6 19 17-2 8-11 12-19 9"/><path d="M26 36l-9 12"/><circle cx="14" cy="50" r="4"/><circle cx="21" cy="53" r="4"/><path d="M46 12l3-5M52 18l5-2"/>',
+  sticks:'<rect x="12" y="8" width="10" height="32" rx="5" transform="rotate(10 17 24)"/><rect x="28" y="8" width="10" height="32" rx="5" transform="rotate(10 33 24)"/><rect x="44" y="8" width="10" height="32" rx="5" transform="rotate(10 49 24)"/><circle cx="52" cy="51" r="7"/>',
+  pancakes:'<ellipse cx="32" cy="42" rx="23" ry="8"/><ellipse cx="32" cy="34" rx="20" ry="7"/><ellipse cx="32" cy="27" rx="17" ry="6"/><rect x="28" y="18" width="9" height="7" rx="1.5"/><path d="M32 5v7"/>',
+  shakshuka:'<path d="M10 34h44c0 13-9 20-22 20s-22-7-22-20Z"/><ellipse cx="32" cy="34" rx="22" ry="5"/><circle cx="24" cy="32" r="5"/><circle cx="24" cy="32" r="2"/><circle cx="41" cy="32" r="5"/><circle cx="41" cy="32" r="2"/><path d="M26 12c-2 3 2 5 0 8M38 10c-2 3 2 5 0 8"/>',
+  avotoast:'<rect x="8" y="24" width="48" height="26" rx="7"/><ellipse cx="33" cy="37" rx="15" ry="8"/><circle cx="33" cy="37" r="3.5"/><path d="M14 22a8 8 0 0 1 16 0Z"/><circle cx="22" cy="18" r="3"/>',
+  omelet:'<path d="M10 40c0-11 10-19 22-19s22 8 22 19c0 4-7 6-22 6s-22-2-22-6Z"/><path d="M15 38c6-9 28-9 34 0"/><path d="M26 12c-2 3 2 5 0 8M38 12c-2 3 2 5 0 8"/>',
+  pot:'<rect x="13" y="28" width="38" height="21" rx="6"/><ellipse cx="32" cy="28" rx="20" ry="5"/><path d="M13 35h-7M51 35h7"/><circle cx="32" cy="21" r="3"/><path d="M24 12c-2 3 2 5 0 8M40 12c-2 3 2 5 0 8"/>',
+  pasta:'<path d="M10 32h44c0 13-9 21-22 21s-22-8-22-21Z"/><path d="M15 24c3-7 8 7 11 0s8 7 11 0 8 7 12 0"/><path d="M19 15c3-7 7 6 10 0s7 6 10 0"/>',
+  soupLentil:'<path d="M10 32h44c0 13-9 21-22 21s-22-8-22-21Z"/><ellipse cx="32" cy="32" rx="22" ry="5"/><path d="M44 8l8 8-16 14"/><path d="M20 10c-2 3 2 5 0 8M30 8c-2 3 2 5 0 8"/>',
+  soupMush:'<path d="M10 36h44c0 13-9 20-22 20s-22-7-22-20Z"/><ellipse cx="32" cy="36" rx="22" ry="5"/><path d="M18 24a14 9 0 0 1 28 0Z"/><path d="M29 24v5a3 3 0 0 0 6 0v-5"/><path d="M14 10c-2 3 2 5 0 8"/>',
+  burger:'<path d="M10 30a22 15 0 0 1 44 0Z"/><path d="M10 34h44"/><circle cx="22" cy="23" r="1.5"/><circle cx="32" cy="20" r="1.5"/><circle cx="42" cy="23" r="1.5"/><rect x="12" y="38" width="40" height="10" rx="5"/>',
+  pizza:'<path d="M32 56 12 15a28 28 0 0 1 40 0Z"/><path d="M17 19a24 24 0 0 1 30 0"/><circle cx="27" cy="28" r="4.5"/><circle cx="38" cy="33" r="4.5"/>',
+  skewer:'<path d="M4 34h56"/><path d="M18 34l6-9 7 9-7 9Z"/><path d="M38 34l6-9 7 9-7 9Z"/><circle cx="54" cy="34" r="4"/><path d="M24 12c-2 3 2 5 0 8"/>',
+  kunafa:'<circle cx="32" cy="36" r="21"/><path d="M15 31c7-7 27-7 34 0M14 39c8-7 28-7 36 0"/><path d="M32 6c-2 3 2 5 0 8M42 8c-2 3 2 5 0 8"/>',
+  cheesecake:'<rect x="12" y="40" width="40" height="9" rx="3"/><rect x="15" y="25" width="34" height="15" rx="3"/><path d="M15 25c6-6 10 4 16-2s12 4 18-2"/><circle cx="32" cy="13" r="4"/><path d="M32 9c1-3 3-4 5-4"/>',
+  brownie:'<rect x="9" y="23" width="24" height="24" rx="4"/><rect x="36" y="30" width="19" height="19" rx="4"/><path d="M32 8c-2 3 2 5 0 8"/><circle cx="17" cy="31" r="1.5"/><circle cx="26" cy="38" r="1.5"/>',
+  custard:'<path d="M17 16h30l-4 27a7 7 0 0 1-7 6h-8a7 7 0 0 1-7-6Z"/><path d="M23 16c2-7 16-7 18 0"/><circle cx="27" cy="28" r="1.5"/><circle cx="37" cy="33" r="1.5"/><circle cx="31" cy="38" r="1.5"/>'
+};
+const dish = k=>`<svg class="dish-svg" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">${DISH[k]}</svg>`;
+
+/* ================== التصنيفات ================== */
+const CATS = {
+  snacks:   {label:'مقبلات', c:'#1f9e6e', s:'#def2e7'},
+  breakfast:{label:'فطور',   c:'#f59e00', s:'#fff1cd', art:'var(--ink)'},
+  lunch:    {label:'غداء',   c:'#ff4d3d', s:'#ffe3de'},
+  dinner:   {label:'عشاء',   c:'#0f7b78', s:'#daeeec'},
+  dessert:  {label:'حلا',    c:'#ee4f90', s:'#fce0ec'}
+};
+const MEAL_ORDER = ['breakfast','lunch','dinner','snacks','dessert'];
+
+/* ================== بيانات الوصفات ================== */
+const R = (o)=>o;
+const RECIPES = [
+/* ---- مقبلات ---- */
+R({id:'hummus',cat:'snacks',name:'حمص بالطحينة الكريمي',tagline:'حريري زي الحرير — سر المطاعم كلّه في رشة ماء مثلج',time:10,serves:4,diff:1,cal:180,hearts:8400,tags:['سريع','نباتي','بالخلاط'],icon:'bowl',
+ing:[['400غ','حمص مسلوق مصفّى'],['3 ملاعق كبيرة','طحينة سمسم'],['2 ملاعق كبيرة','عصير ليمون طازج'],['1 فص','ثوم'],['نصف ملعقة صغيرة','كمون مطحون'],['نصف ملعقة صغيرة','ملح'],['4 ملاعق كبيرة','ماء مثلج'],['للتزيين','زيت زيتون + بابريكا + صنوبر']],
+steps:[['صفّي الحمص من علبته مع الاحتفاظ بقليل من ماء التصفية جانبًا.',1],
+['في الخلاط ضعي الطحينة وعصير الليمون أولًا واخلطي دقيقة كاملة حتى يتكثف الخليط ويبيضّ لونه — هذه الخطوة تكسر الطحينة وتمنح نعومة مطاعم الحمص الشهيرة.',1],
+['أضيفي الحمص والثوم والكمون والملح واخلطي دقيقتين حتى يصبح ناعمًا تمامًا بلا أي حبوب.'],
+['أضيفي الماء المثلج ملعقة بعد ملعقة مع الخلط المستمر حتى يصل القوام إلى حريرية يتمدد ويسيل ببطء من الملعقة المقلوبة.'],
+['تذوّقي وعدّلي الليمون والملح — الحمص الجاهز لازم يكون مذاقه أفتح وأسرع من توقعاتك.'],
+['اسكبيه في طبق واسع، اعملي دوامة بظهر الملعقة، صبّي زيت الزيتون البكر، ورشّي البابريكا والصنوبر المحمص والبقدونس، وقدّمه بدرجة حرارة الغرفة.']],
+tip:'الماء المثلج هو السرّ الحقيقي: يضاعف كريمية الحمص ويفتح لونه — جربي ماء الحمص نفسه (الأكوا فابا) لنتيجة أقوى.'}),
+R({id:'doros',cat:'snacks',name:'دوروس بالجبنة',tagline:'سناك القهوة الرسمي — قرمشة خارجية وجبنة سائلة داخليًا',time:15,serves:4,diff:1,cal:250,hearts:6100,tags:['سريع','قرمشة','للأطفال'],icon:'wrap',
+ing:[['4 رقائق','خبز تورتيلا صغيرة'],['1 كوب','موزاريلا مبشورة'],['نصف كوب','جبنة شيدر مبشورة'],['نصف كوب','فلفل ألوان مفروم صغيرًا'],['نصف كوب','ذرة حلوة'],['1 ملعقة صغيرة','بصل بودرة + ثوم بودرة + أوريجانو'],['للقلي','زيت خفيف']],
+steps:[['في وعاء اخلطي الموزاريلا والشيدر المبشور مع الفلفل الملون والذرة والبهارات حتى يتجانس الخليط.'],
+['سخني مقلاة واسعة غير لاصقة على نار وسط وادهنها برشّة زيت خفيفة.'],
+['ضعي رقاقة التورتيلا، وزعي الخليط على نصفها فقط مع ترك نصف سم فارغ من الحواف كي تُغلق بشكل محكم، ثم اطويها نصفين واضغطي برفق.'],
+['حمّصي كل دورو دقيقتين لكل جهة على نار وسط حتى يتقرمش ويذوب الجبنة — لا ترفعي النار كي لا يحترق الخبز قبل ذوبان الجبنة.',2],
+['جهزي صوص الغمس: اخلطي الزبادي مع المايونيز والثوم المدقوق ورشة ليمون وملح — «ثومية خفيفة» تروق للجميع.'],
+['قطّعي كل دورو ثلاث قطع مثلثة ورتّبيها بالطبق مع الصوص، وقدّمها ساخنة فورًا.']],
+tip:'نسبة الخلط المثالية للجبن: ثلثا موزاريلا (للتمدد) + ثلث شيدر (للمذاق) — لو كلها موزاريلا سيصبح مملًا، وكلها شيدر لن تتمدد.'}),
+R({id:'wings',cat:'snacks',name:'أجنحة بافلو حارة',tagline:'قرمشة تُسمع من آخر البيت — بالمقص بدل القلي العميق',time:65,serves:4,diff:2,cal:320,hearts:9700,tags:['بالفرن','حار','مشاهدات عالية'],icon:'wings',
+ing:[['1 كغ','أجنحة دجاج مقطعة'],['1 ملعقة صغيرة','بيكنغ بودر (سر القرمشة)'],['1 ملعقة صغيرة','ملح'],['نصف ملعقة صغيرة','فلفل أسود'],['نصف كوب','صوص فلفل حار'],['3 ملاعق كبيرة','زبدة'],['1 ملعقة كبيرة','عسل'],['1 ملعقة صغيرة','ثوم بودرة']],
+steps:[['جففي الأجنحة جيدًا بمنشفة ورقية — النشافة قانون القرمشة الأول، لا تتجاوزيه أبدًا.'],
+['اخلطي الأجنحة مع البيكنغ بودر والملح والفلفل الأسود حتى تتغلف بالكامل.'],
+['رتّبيها على شبك فوق صينية (الشبك يدخل الهواء تحت الأجنحة فتقرمش كل الجهات)، واخبزها على 120° لمدة 45 دقيقة لسحب الدهن، ثم ارفع الحرارة إلى 220° لمدة 20 دقيقة إضافية حتى تتحمر وتتقرمش.'],
+['صوص البافلو: ذوبي الزبدة في قدر على نار هادئة، أضيفي صوص الفلفل الحار والعسل والثوم البودرة، واخلطي حتى يتجانس ويدفأ دون أن يغلي.'],
+['انقلي الأجنحة الساخنة إلى وعاء واسع، اسكبي نصف الصوص عليها، أغلقي الوعاء ورجّيه بقوة حتى تتغلف كل قطعة بالصوص اللامع.'],
+['قدّمها فورًا مع باقي الصوص جانبًا وصوص الرانش وأعواد الكرفس الباردة.']],
+tip:'البيكنغ بودر يرفع درجة حموضة قشرة الدجاج فيتفتح بروتينها ويتقرمش دون قلي — احرصي أنه «بودرة» وليس صودا، الصودا تعطي طعمًا معدنيًا.'}),
+R({id:'mozz',cat:'snacks',name:'موزاريلا ستيكس',tagline:'خيوط جبنة ممدودة… القاعدة الذهبية: تجميد مرتين',time:25,serves:4,diff:2,cal:280,hearts:7300,tags:['جبن','مقلي','غمس'],icon:'sticks',
+ing:[['12 أصبع','موزاريلا في عدّة أصابع'],['2 حبة','بيض'],['1 كوب','بقسماط مطحون ناعم'],['نصف كوب','طحين'],['1 ملعقة صغيرة','أوريجانو + ملح للبقسماط'],['للقلي','زيت نباتي'],['للتقديم','صوص مارينارا']],
+steps:[['جففي أصابع الموزاريلا، ثم جمّديها 30 دقيقة أولًا كي لا تسيّل قبل اكتمال القلي.',30],
+['جهزي ثلاث أطباق للتغليف: الطحين في الأول، البيض المخفوق مع ملعقة ماء في الثاني، والبقسماط الممزوج بالأوريجانو والملح في الثالث.'],
+['غلّفي كل أصبع بالترتيب: طحين ثم بيض ثم بقسماط مع الضغط ليتمسك. ثم أعيديه مرة ثانية في البيض والبقسماط — الطبقة المزدوجة هي السدّ الذي يمنع تسرب الجبنة.'],
+['أعيدي الأصابع المغلفة إلى الفريزر 15 دقيقة إضافية حتى تتماسك الطبقة الخارجية.',15],
+['سخني الزيت جيدًا (اختبار: قشرة خبز تصفر فور نزولها)، واقلي 4-5 أصابع فقط في المرة، 40-60 ثانية لكل جهة حتى الذهبي — زيت حار ووقت قصير = قشرة مقرمشة وجبنة سائلة.'],
+['أخرجيها على ورق نشاف ثوانٍ فقط وقدّمها فورًا مع صوص مارينارا دافئ.']],
+tip:'لا تقلي أكثر من 5 أصابع معًا: الزيت ينخفض حرارته فتذوب الجبنة قبل أن تتحمر القشرة، وتحصل على بركة جبن بدل الأصابع.'}),
+/* ---- فطور ---- */
+R({id:'pancake',cat:'breakfast',name:'بان كيك هش وفقاعاتي',tagline:'فطور نهاية الأسبوع المثالي — السر: تكتلات صغيرة متعمدة',time:20,serves:4,diff:1,cal:350,hearts:11200,tags:['حلو','عائلي','بالسكّة'],icon:'pancakes',
+ing:[['2 كوب','طحين متعدد الاستخدام'],['1 كوب وربع','حليب'],['2 حبة','بيض'],['3 ملاعق كبيرة','سكر'],['2 ملعقة صغيرة','بيكنغ بودر'],['1 ملعقة صغيرة','فانيلا'],['2 ملاعق كبيرة','زبدة ذائبة'],['رشة','ملح'],['للتقديم','عسل + فواكه + زبدة']],
+steps:[['في وعاء واسع اخلطي المكونات الجافة جيدًا: الطحين والسكر والبيكنغ بودر والملح.'],
+['في وعاء آخر اخفقي البيض مع الحليب والفانيلا والزبدة الذائبة حتى يتجانس.'],
+['اسكبي السوائل فوق الجافة وحرّكي بملعقة حركات قصيرة قليلة فقط — يبقى بعض التكتلات الصغيرة وهذا مقصود بالضبط: الخلط المبالغ فيه يفعّل الغلوتين فتحصل على بان كيك مطاطي بدل هش.'],
+['غطي الوعاء واتركي العجين يرتاح 10 دقائق — تنشط البيكنغ بودر وتتضاعف الفقاعات.',10],
+['سخني مقلاة غير لاصقة على نار هادئة-وسط (اختبارها: رشّة ماء تتصلّب وتتصفّر)، وادهنيها بالزبدة خفيفًا.'],
+['اسكبي مغرفة واحدة لكل قرص واتركيه دون تحريك إطلاقًا حتى تظهر فقاعات على السطح وتنفجر وتتفتح حوافه — نحو دقيقتين.'],
+['اقلبي القرص بجرأة مرة واحدة فقط واحمصي الجهة الثانية دقيقة حتى الذهبي، وادهني المقلاة بين كل دفعة.'],
+['رتّبي الأقراص متراكبة وقدّميها بالزبدة والشراب أو العسل والفواكه الطازجة.']],
+tip:'لو صار أول قرص تجربة فاشلة فهذا طبيعي — المقلاة تضبط حرارتها بعد الأول. والفانيلا مع رشة قرفة بمزيج الجافة تحوّل الوصفة لمستوى مقاهي.'}),
+R({id:'shakshuka',cat:'breakfast',name:'شكشوكة بالفتا',tagline:'طبق العائلة الكبير اللي ينتهي قبل ما تبرد المقلاة',time:25,serves:4,diff:1,cal:300,hearts:8900,tags:['نباتي','عائلي','بالصحن الواحد'],icon:'shakshuka',
+ing:[['4 حبات','بيض'],['4 حبات','طماطم ناضجة مقطعة صغيرًا'],['1 حبة','بصل مفروم'],['1 حبة','فلفل أخضر شرائح'],['2 فص','ثوم مفروم'],['نصف ملعقة صغيرة','كمون + بابريكا + ملح'],['2 ملاعق كبيرة','زيت زيتون'],['ربع كوب','جبنة فتا مفتتة'],['للتزيين','بقدونس مفروم']],
+steps:[['سخني زيت الزيتون في مقلاة حديدية واسعة ذات قطع عميقة، واشوحي البصل حتى يذبل ويصبح شفافًا — 5 دقائق تقريبًا.'],
+['أضيفي الفلفل الأخضر والثوم وحرّكي 3 دقائق حتى تفوح الروائح دون أن يتحول الثوم للون البني.'],
+['أضيفي الطماطم مع الكمون والبابريكا والملح والفلفل الأسود، واتركيها على نار وسط تتكثف إلى صلصة سميكة — 10 دقائق تقريبًا، واللون يغمق ويترك الزيت على الأطراف.',10],
+['تذوّقي الصلصة وعدّليها، ثم اعملي بحفر صغيرة بظهر ملعقة خشبية في أركان المقلاة الأربعة.'],
+['اكسري بيضة في كل حفرة برفق، رشّي رشة ملح خفيفة على الصفار، وغطي المقلاة جيدًا.'],
+['اتركيها على نار هادئة 5-7 دقائق حسب ذوقك: 5 للصفار «ياني» ينساب، 7 للأكثر تماسكًا.',5],
+['رشّي الفتا المفتت والبقدونس، وقدّمي المقلاة نفسها ساخنة على الطاولة مع خبز طازج للغمس.']],
+tip:'علبة طماطم مقطعة أو ملعقة معجون تعوّض يوم ما تكون الطماطم عادية — لكن أضيفي رشة سكر كي توازن الحموضة.'}),
+R({id:'avotoast',cat:'breakfast',name:'توست أفوكادو وبيض ياني',tagline:'فطور المؤثرين… بس بميزانية بيت طبيعية',time:15,serves:2,diff:1,cal:320,hearts:5600,tags:['صحي','سريع','نباتي'],icon:'avotoast',
+ing:[['2 شريحة','خبز حبوب كاملة سميك'],['1 حبة','أفوكادو ناضج'],['2 حبة','بيض'],['نصف حبة','عصير ليمون'],['1 فص','ثوم للتدعيك (اختياري)'],['للتزيين','زيت زيتون + فلفل أسود + رقائق فلفل حار + ملح']],
+steps:[['اسلقي البيض: اغمريه في ماء يغلي بحذر واتركيه 7 دقائق بالضبط لصفار كريمي «ياني»، ثم برّده فورًا بماء مثلج وقشّره — التبريد يوقف الطبخ من الداخل.',7],
+['حمّصي شرائح الخبز في توست أو مقلاة حتى تتماسك الأطراف وتتقرمش — القاعدة لازم تصمد أمام الأفوكادو.'],
+['اهرسي الأفوكادو بالشوكة مع عصير الليمون ورشة ملح، واتركي بعض القطع الخشنة لقوام حقيقي مش مهروس مضخّم.'],
+['افركي كل شريحة توست بفص ثوم (اختياري لكنه يغيّر مستوى الطبق كله)، ووزعي عليها الأفوكادو المهروس بملعقة.'],
+['قطّعي البيض أنصافًا ورتّبه فوق الأفوكادو، ورشّي الفلفل الأسود ورقائق الفلفل الحار.'],
+['صبّي خيطًا من زيت الزيتون البكر ورشة ملح خشن، وقدّمه فورًا قبل أن يفقد الخبز قرمشته.']],
+tip:'لتركيب مثالي: هرس نصف الأفوكادو وقطّع النصف الآخر شرائح — تحصل على القوام الكريمي والمظهر الجميل معًا في نفس الشريحة.'}),
+R({id:'omelet',cat:'breakfast',name:'أومليت كريمي بالجبنة',time:10,tagline:'عشر دقائق وتبقى شيف فطور محترف — قاعدة النار الهادئة',serves:2,diff:1,cal:260,hearts:4200,tags:['سريع جدًا','بروتين'],icon:'omelet',
+ing:[['3 حبات','بيض'],['1 ملعقة كبيرة','حليب'],['ربع كوب','جبنة شيدر مبشورة'],['1 ملعقة كبيرة','زبدة'],['1 عود','ثوم أخضر مفروم'],['رشة','ملح + فلفل أسود']],
+steps:[['اكسري البيض في وعاء، أضيفي الحليب والملح والفلفل، واخفقي بالشوكة جيدًا حتى يتجانس البياض مع الصفار تمامًا — 30 ثانية على الأقل بلا بقايا خيوط بيضاء.',1],
+['سخني مقلاة غير لاصقة صغيرة على نار هادئة، وذوبي الزبدة حتى تفوح رائحتها دون أن يتغير لونها — الزبدة المحروقة تدمر الطبق من البداية.'],
+['اسكبي البيض، ثم حرّكي بلطف: اسحب الحواف المتماسكة نحو المنتصف بملعقة مرنة وادع المقلاة قليلًا كي يصل السائل إلى الفراغات — هكذا ينتفخ ولا يلتصق.'],
+['عندما يبقى السطح رطبًا بلمعة خفيفة فقط (لا ماء سائل)، وزعي الجبن والثوم الأخضر على نصف الدائرة.'],
+['اطوِ الأومليت بالنصف وارفعه للصحن بعد 20 ثانية — الداخل يجب أن يكون كريميًا لامعًا وليس مطاطيًا جافًا.'],
+['قدّمه فورًا مع رشة أعشاب وشرائح طماطم وبهاراتك المفضلة.']],
+tip:'ملعقة الحليب (أو جبنة كريمية صغيرة داخل الخفق) هي فرق الأومليت المطاطي عن الكريمي — والنار الهادئة صديقتك الدائمة.'}),
+/* ---- غداء ---- */
+R({id:'kabsa',cat:'lunch',name:'كبسة دجاج',tagline:'طبق الجمعة الرسمي — ريحتها تفتح النوافذ وتجمع العائلة',time:75,serves:6,diff:2,cal:550,hearts:15800,tags:['أرز','عائلي','جمعات'],icon:'pot',
+ing:[['1 كغ','دجاج مقطع أرباع'],['3 أكواب','أرز بسمتي'],['2 حبة','بصل مفروم'],['3 حبات','طماطم مبشورة'],['1 ملعقة كبيرة','معجون طماطم'],['1 حبة','جزر مبشور'],['2 ملاعق كبيرة','بهارات كبسة'],['2 حبة','ليمون أسود (لومي) مدقوق'],['3 حبات','هيل + ورق غار + عود قرفة'],['ربع كوب','سمن أو زيت'],['4-5 أكواب','ماء ساخن'],['للتزيين','زبيب + لوز محمص + بقدونس']],
+steps:[['اغسلي الأرز حتى يصفو الماء وانقعيه بماء فاتر 20 دقيقة ثم صفّيه — النقع يجعله ينتفخ ويطول دون أن يتفتت.',20],
+['سخني السمن في قدر عميق، وحمّري قطع الدجاج من الجهتين حتى يصير لونها ذهبيًا، ثم أخرجها جانبًا.'],
+['في نفس القدر شوحي البصل حتى يذبل ويصبح ذهبيًا (8-10 دقائق — هنا يُبنى طعم الكبسة كله)، ثم أضيفي الثوم والطماطم المبشورة ومعجون الطماطم وحرّكي 5 دقائق حتى يتبخر ماؤها ويغمق اللون.'],
+['أعيدي الدجاج، أضيفي بهارات الكبسة والملح واللومي والهيل والقرفة وورق الغار، واغمريه بماء ساخن (نحو 5 أكواب)، واتركيه على نار هادئة مغطى 25 دقيقة حتى ينضج ويطرى.',25],
+['أخرجي الدجاج واحفظه دافئًا، وأضيفي للأرز المقدر: الجزر المبشور والأرز المنقوع، وعدّلي الماء بحيث يعلو الأرز بارتفاع إصبع واحد، واتركيه يغلي بقوة حتى يتشرب معظم الماء.'],
+['خففي النار جدًا، غطي القدر بغطاء محكم (ورقة شاش مبللة بين القدر والغطاء تحصر البخار بشكل مثالي)، واتركيه 15 دقيقة دون فتح الغطاء إطلاقًا.',15],
+['أطفئي النار واتركي القدر يرتاح 10 دقائق قبل أول تقليب، ثم قلّبي الأرز على صحن التقديم، ورتّبي الدجاج فوقه، وزيّنه بالزبيب واللوز المحمص والبقدونس، وقدّمه مع الدقوس.']],
+tip:'اللومي مدقوق قليلًا قبل إضافته يفرغ نكهته كاملة — وإذا ما بقي رغيف من اللمومي وقت التقديم، ستحصل على طعم مرّ، فتذكّري إزالته.'}),
+R({id:'alfredo',cat:'lunch',name:'باستا ألفريدو بالدجاج',tagline:'صلصة تكفي كل خيط معكرونة — بلا أي حبة زيت متطايرة',time:35,serves:4,diff:1,cal:620,hearts:12400,tags:['معكرونة','كريمي','محبوب'],icon:'pasta',
+ing:[['400غ','فيتوتشيني'],['2 قطعة','صدر دجاج شرائح عرضية'],['300 مل','كريمة طبخ سائلة'],['40غ','زبدة'],['1 كوب','بارميزان مبشور خشن'],['3 فصوص','ثوم مفروم'],['للتتبيل','ملح + فلفل + بابريكا'],['رشة','جوزة الطيب']],
+steps:[['اسلقي الفيتوتشيني بماء مملح جيدًا (يجب أن يشبه الماء ماء البحر) حتى قوام «آل دينتي» — دقيقة أقل من مدة العلبة عادة، واحتفظي بكوب من ماء السلق قبل التصفية.'],
+['تبّلي شرائح الدجاج بالملح والفلفل والبابريكا، واشويها بمقلاة ساخنة بقليل من الزيت دون تحريك مستمر حتى تتشكل قشرة ذهبية، ثم قطعيها أصابع واتركيها جانبًا.'],
+['في نفس المقلاة (نكهات الدجاج هدية للصلصة) ذوبي الزبدة على نار هادئة، أضيفي الثوم المفروم وحرّكي 30 ثانية فقط حتى تفوح رائحته دون أن يتحول للون الذهبي.'],
+['اسكبي الكريمة واتركيها على نار هادئة تتعثر وتتكثف قليلًا — 4-5 دقائق.',5],
+['أنزلي المقلاة نصف درجة عن النار وأضيفي البارميزان حصة حصة مع التحريك حتى يذوب تمامًا قبل إضافة التالية، ثم عدّلي الملح والفلفل ورشّة جوزة الطيب.'],
+['أضيفي المعكرونة المصفاة مع رشة ماء السلق وحرّكي دقيقة كاملة — النشاء في ماء السلق هو ما يربط الصلصة ويغلف كل خيط بلمعة حريرية. لو ثقلت الصلصة أضيفي ماء سلق إضافي.'],
+['أعيدي قطع الدجاج وحرّكي مرة أخيرة، وقدّم فورًا مع بارميزان إضافي وبقدونس مفروم.']],
+tip:'لا تضيفي البارميزان على نار عالية أبدًا: يلتئم ويتكتل بدل الذوبان — النار الهادئة تضمن صلصة ناعمة مثل الحرير.'}),
+R({id:'lentil',cat:'lunch',name:'شوربة عدس الحمراء',tagline:'دفء في وعاء… ورشة ليمون تغيّر كل شيء',time:40,serves:5,diff:1,cal:220,hearts:6800,tags:['نباتي','صحي','شتوي'],icon:'soupLentil',
+ing:[['2 كوب','عدس أحمر مغسول'],['1 حبة','بصل مفروم'],['1 حبة','جزر مقطع'],['1 حبة','بطاطا صغيرة مكعبات'],['1 ملعقة صغيرة','كمون + كركم'],['6 أكواب','ماء أو مرق'],['1 ملعقة كبيرة','زيت أو زبدة'],['للتقديم','ليمون + خبز محمص + بقدونس']],
+steps:[['اغسلي العدس حتى يصفو ماء الغسل، وقطعي البصل والجزر والبطاطا مكعبات صغيرة متساوية كي تنضج بنفس الوقت.'],
+['سخني الزيت أو الزبدة في القدر واشوحي البصل حتى يذبل، ثم أضيفي الكمون والكركم وحرّكي 30 ثانية حتى تنفتح الروائح — لا تتجاوزيها فتحترق التوابل وترّ.'],
+['أضيفي الخضار والعدس واغمريها بالماء أو المرق (نحو 6 أكواب)، وارفعي الحرارة حتى الغليان.'],
+['جفّفي الرغوة إن ظهرت على السطح، خففي النار، وغطي القدر 25 دقيقة حتى يتفتت العدس ويطرى الخضار بالكامل.',25],
+['اهرسي الشوربة بالخلاط اليدوي حتى تصبح مخملية تمامًا، وأعيديها للنار — لو صارت ثقيلة عدّلي القوام بماء ساخن تدريجيًا.'],
+['عدّلي الملح والفلفل وأضيفي رشة كمون أخيرة، وقدّمها ساخنة مع عصير ليمون طازج يُعصر فوقها مباشرة وخبز محمص مقرمش.']],
+tip:'رشة من الليمون فوق كل صحن لحظة التقديم (وليس أثناء الطبخ) تفتح نكهة الشوربة كاملة — الشوربة بلا ليمون فقيرة روحًا.'}),
+R({id:'cburger',cat:'lunch',name:'برجر دجاج هوم‌ميد',tagline:'ألذ من المطاعم — والقرص لا يتفتت أبدًا بفضل سرّين',time:45,serves:4,diff:2,cal:540,hearts:7600,tags:['دجاج','مقلي بالصحة','جبن'],icon:'burger',
+ing:[['500غ','صدور دجاج مفرومة خشن'],['1 حبة','بصل مبشور ومعصور تمامًا'],['نصف كوب','بقسماط'],['1 حبة','بيض'],['1 ملعقة صغيرة','ملح + فلفل + بابريكا + ثوم بودرة'],['4 شرائح','جبنة شيدر'],['4 قطع','خبز برجر'],['للتجميع','خس + طماطم + مخلل + مايونيز + صوص مفضل']],
+steps:[['اخلطي الدجاج المفروم مع البصل المبشور المعصور جيدًا (المهم جدًا: البصل المملوء بالماء يفتت القرص)، والبقسماط والبيضة والبهارات.'],
+['أعجني باليد 2-3 دقائق حتى يتجانس الخليط ويصبح لزجًا قليلًا — هذه اللزوجة هي الغراء الذي يربط القرص أثناء الشوي.'],
+['قسّمي الخليط إلى 4 أقراص أوسع قليلًا من حجم الخبز (تتقلص عند الشوي)، واضغطي منتصف كل قرص بكوب صغير كي لا يتقوّس، وبرّدها 20 دقيقة كي تتماسك.',20],
+['سخني مقلاة حديدية أو جريل على نار عالية وادهنها بالزيت، واشوِ كل قرص 5-6 دقائق لكل جهة دون تحريكه أو ضغطه — لا تحرك يعني قشرة بنية متماسكة.',6],
+['في الدقيقة الأخيرة ضعي شريحة الشيدر على كل قرص وغطِّ المقلاة — البخار يذيب الجبنة بشكل مثالي.'],
+['ادهني الخبز بالزبدة وحمصه بالمقلاة نفسها حتى يتقرمش ويمتص نكهة الشوي.'],
+['رتّبي البرجر: صوص، خس، القرص بالجبنة، طماطم، مخلل، ثم قمة الخبز — وثبّته بعود خشب وقدميه ساخنًا.']],
+tip:'الضغط على القرص أثناء الشوي يطرد عصاراته للنار — مسألة محرمة. اتركه وشأنه حتى تسمع صوت القشرة يحترمك.'}),
+/* ---- عشاء ---- */
+R({id:'shawarma',cat:'dinner',name:'شاورما دجاج منزلية',tagline:'تتبيلة صحيحة = شاورما مطعم بجد — بلا أسطوانة ولا شواية',time:50,serves:4,diff:2,cal:480,hearts:13600,tags:['ساندويتش','شوي','تتبيلة'],icon:'wrap',
+ing:[['600غ','أفخاذ دجاج بلا عظم'],['3 ملاعق كبيرة','زبادي'],['1 ملعقة كبيرة','خل أو ليمون'],['4 فصوص','ثوم مهروس'],['1 ملعقة كبيرة','زيت'],['2 ملاعق كبيرة','بهارات شاورما (كركم، كمون، كزبرة، بابريكا، فلفل أسود، هيل، قرفة)'],['خبز صاج','للتغليف'],['للتجميع','طحينة أو ثومية + مخلل + بصل بالسماق']],
+steps:[['قطعي أفخاذ الدجاج شرائح طولية رقيقة بنصف سم تقريبًا — كلما رُقّت القطع أدخلت التتبيلة أعمق وطبع أسرع.'],
+['اخلطي التتبيلة: الزبادي والخل والثوم المهروس والزيت وكل البهارات حتى يتجانس تمامًا — الزبادي يعجّن اللحم ويطرّيه.'],
+['دلّكي الدجاج بالتتبيلة بأصابعك فعليًا (التدليك أفضل من الخلط)، وغطّه وبرّده ساعتين على الأقل — ولو 30 دقيقة فقط في الشدة.',30],
+['سخني مقلاة حديدية على أعلى نار حتى تبدأ بالتدخين قليلًا، بلا أي زيت — الدجاج دهني بما يكفي.'],
+['اشوِ الدجاج على دفعات صغيرة في طبقة واحدة دون تزاحم، حتى تحترق أطرافه قليلًا ويتحمر (3 دقائق لكل دفعة) — الحروق الخفيفة هذه هي طعم الشاورما الحقيقي.',3],
+['قطعي الدجاج المحمّر شرائح أرفع بسكين حاد، وأعيده للمقلاة دقيقة أخيرة مع رشة من عصير تتبيلته المتبقية كي يتشرب مرة أخيرة.'],
+['سخني الخبز، وزعيه بالدجاج والبصل بالسماق والمخلل، ولفه بإحكام.'],
+['حمّص الساندويتش الملفوف في مقلاة جافة أو ساندويتش ضاغط دقيقة لكل جهة حتى يتقرمش ويثبت اللف، وقدّمه مع الطحينة أو الثومية.']],
+tip:'الأفخاذ أفضل من الصدور للشاورما بلا منازع: دهنها الطبيعي يحميها من الجفاف على النار العالية، وطعمها أعمق وأقوى.'}),
+R({id:'pizza',cat:'dinner',name:'بيتزا مارغريتا هوم‌ميد',tagline:'عجينة تتنفس… وقشرة تتكشر بالضبط زي الصور',time:95,serves:4,diff:2,cal:560,hearts:14900,tags:['بالفرن','عجينة','إيطالي'],icon:'pizza',
+ing:[['3 أكواب','طحين'],['1 ملعقة صغيرة','خميرة فورية'],['1 ملعقة صغيرة','سكر'],['1 ملعقة صغيرة','ملح'],['كوب وربع','ماء دافئ'],['2 ملاعق كبيرة','زيت زيتون'],['للصلصة','طماطم مقطعة + ثوم + أوريجانو + ملح + رشة سكر'],['250غ','موزاريلا'],['طازج','أوراق ريحان + زيت زيتون']],
+steps:[['فحّري الخميرة: اخلطيها مع السكر في الماء الدافئ واتركيها 10 دقائق حتى تفعّ وتكوّن رغوة سميكة على السطح — لا رغوة تعني خميرة ميتة والوقت ضائع.',10],
+['في وعاء واسع اخلطي الطحين والملح، أضيفي خليط الخميرة وزيت الزيتون، واعجني 8-10 دقائق حتى يصير العجين ناعمًا مرنًا ويلتقط نفسه من يديك ووعائك.'],
+['ادهن الوعاء بالزيت، ضع العجين فيه واقلبه ليُدهن من كل الجوانب، غطّه، واتركه في مكان دافئ ساعة كاملة حتى يتضاعف حجمه — لا تستعجلها أبدًا.',60],
+['جهزي الصلصة: شوحي الثوم بزيت الزيتون، أضيفي الطماطم والأوريجانو والملح ورشة السكر، واتركيها تتكثف 15 دقيقة ثم ابرّدها — الصلصة الباردة تعجن أفضل.',15],
+['سخني الفرن على أعلى درجة (240-250°) مع صينية أو حجر بيتزا داخلها من قبل — السخونة العالية من الأسفل هي سر القشرة المقرمشة.'],
+['افردي العجين على سطح مرشوش بالسميد أو الطحين لسمك نصف سم، واتركي الحواف أسمك — ولا تستخدم الشوبك بعنف، الهواء المتبقي هو فقاعات القشرة الجميلة.'],
+['وزعي طبقة رقيقة فقط من الصلصة (زيادتها = قاعدة رطبة مأساة)، ثم الموزاريلا المقطعة.'],
+['اخبز 10-12 دقيقة حتى تقرمش الحواف وتتذوب الجبنة بفقاعات بنية جميلة.',12],
+['أخرجيها، وزعي أوراق الريحان وخيط زيت الزيتون، وانتظر دقيقتين قبل التقطيع كي لا تنزلق الجبنة مع أول قطعة.']],
+tip:'أقسم العجينة لنصفيها وبعّرها برقّة، وسمّر الحواف بفرشاة زيت زيتون مملحة — «القشرة الجيوب» التي يقتلعها الجميع أولًا.'}),
+R({id:'kufta',cat:'dinner',name:'كفتة بالطحينة بالفرن',time:45,tagline:'صينية واحدة وسفرة كاملة — الطحينة تحمّل عبء النكهة',serves:5,diff:1,cal:430,hearts:8100,tags:['لحم','صينية واحدة','بالطحينة'],icon:'skewer',
+ing:[['500غ','لحم مفروم ناعم'],['1 حبة','بصل مبشور ومعصور'],['ربع كوب','بقدونس مفروم'],['1 ملعقة صغيرة','ملح + فلفل + كمون + سبع بهارات'],['نصف كوب','طحينة سمسم'],['ربع كوب','زبادي'],['2 فص','ثوم مدقوق'],['1 حبة','عصير ليمون'],['2 حبات','بطاطا شرائح رقيقة'],['ماء','حسب الحاجة لخلط الطحينة']],
+steps:[['اخلطي اللحم المفروم مع البصل المبشور المعصور والبقدونس والبهارات، واعجني جيدًا باليد حتى يتجانس تمامًا — العجن الجيد يعني كفتة تتماسك ولا تتفتت.'],
+['شكلي الخليط أصابع أو أقراصًا متوسطة الحجم، ورتّبيها في صينية مدهونة بالزيت.'],
+['رتّبي بين أصابع الكفتة شرائح البطاطا الرقيقة (وشرائح طماطم وبصل إن أحببت) — البطاطا تمتص عصارة اللحم وتصبح أطيب منه أحيانًا.'],
+['جهزي صلصة الطحينة: اخلطي الطحينة مع الزبادي والثوم المدقوق وعصير الليمون ورشة ملح، وأضيفي الماء تدريجيًا حتى تصبح كريمية سائلة قابلة للسكب بسلاسة.'],
+['اسكبي نحو نصف الصلصة فوق الكفتة والبطاطا بالتساوي، ورجّي الصينية برفق لتوزيعها بين الطبقات.'],
+['اخبزيها في فرن محمّى مسبقًا على 180° لمدة 30 دقيقة حتى تتحمر الكفتة وتنضج البطاطا تمامًا.',30],
+['أخرجي الصينية وزعي باقي صلصة الطحينة فوقها، وأعيديها للفرن 10 دقائق أخيرة حتى تتشرب وتمتد طبقتها العلوية بحركة لزجة جميلة.'],
+['قدّمها ساخنة مع خبز طازج وبقدونس وصنوبر محمص، وقليل من عصير الليمون الطازج قبل الأكل.']],
+tip:'الزبادي داخل صلصة الطحينة يمنعها من القطف داخل الفرن — الطحينة وحدها تميل للانسداد أثناء الحرارة الطويلة.'}),
+R({id:'mushsoup',cat:'dinner',name:'شوربة كريمة الفطر',tagline:'أدق من أي معلبة — كريمية عميقة بدون كريمة باردة',time:30,serves:4,diff:1,cal:240,hearts:5300,tags:['نباتي','خفيف','شتوي'],icon:'soupMush',
+ing:[['400غ','فطر طازج شرائح'],['1 حبة','بصل مفروم صغير'],['30غ','زبدة'],['2 ملاعق كبيرة','طحين'],['2 كوب','حليب دافئ'],['1 كوب','مرق دجاج أو خضار'],['ربع كوب','كريمة (اختياري)'],['رشة','ملح + فلفل + ثيم + ورق غار'],['للتقديم','خبز محمص بالزبدة']],
+steps:[['قطعي الفطر شرائح واحتفظي بحفنة قطع صغيرة جانبًا للتزيين، وقطعي البصل صغيرًا.'],
+['ذوبي الزبدة في قدر على نار وسط، اشوحي البصل حتى يذبل، أضيفي الفطر وحمّصيه 6-8 دقائق حتى يطرى ويتبخر ماؤه ويتحمر خفيفًا — لا تملحي قبل هذه المرحلة كي لا يفرز ماءه ويُسلق بدل أن يحمرّ.',7],
+['أضيفي الطحين وحرّكي دقيقة كاملة حتى يختفي طعمه الخام ويغلف قطع الفطر.'],
+['اسكبي المرق ثم الحليب الدافئ تدريجيًا مع التحريك المطرد حتى لا تتكوّن كتل، وأضيفي الثيم وورق الغار والملح والفلفل.'],
+['اتركي الشوربة تغلي بخفة مع تحريك عرضي 10 دقائق حتى تتكثف وتنكهن بالكامل.',10],
+['اهرسي نصف الكمية بالخلاط اليدوي حتى كريمية، وأعيديها للقدر — قطع الفطر الباقية تمنح الشوربة شخصية وقوامًا.'],
+['أضيفي الكريمة (إن استخدمتِها)، عدّلي التمليح، وقدّميها مع قطع الفطر المحمص فوقها وخبز محمص بالزبدة.']],
+tip:'لنسخة أعمق نكهة: اشوي حفنة من الفطر حتى يصير لونها بني غامق وتضيفيها أثناء الخلط — الجوانب المحمصة تعطي عمق «أومامي» يهز الطبق.'}),
+/* ---- حلا ---- */
+R({id:'kunafa',cat:'dessert',name:'كنافة نوتيلا',tagline:'القاعدة الذهبية: قطر بارد على كنافة ساخنة — وتصمت القاعة',time:40,serves:6,diff:1,cal:420,hearts:17300,tags:['شوكولاتة','بالفرن','قطر'],icon:'kunafa',
+ing:[['500غ','عجينة كنافة (شعيرية)'],['200غ','زبدة ذائبة'],['1 كوب','كريمة نوتيلا أو شوكولاتة رقائق'],['1 كوب','سكر'],['نصف كوب','ماء'],['رشة','ليمون للقطر'],['للتزيين','فستق حلبي مجروش']],
+steps:[['سخني الفرن 180°. فرّعي الكنافة بخطوط دقيقة وضعيها في وعاء واسع، واغمريها بالزبدة الدافئة الذائبة وافركيها بأصابعك حتى تتغلف كل خيوط منفردة — التغليف الفرد هو ما يصنع الطبقات الذهبية.'],
+['ادهن الصينية بالزبدة جيدًا، وافردي نصف الكمية واضغطيها جيدًا بيدك لتشكل قاعدة متماسكة.'],
+['وزعي كريمة النوتيلا أو رقائق الشوكولاتة بالتساوي حتى الحواف، مع ترك سنتيمتر فارغ من الحواف كي لا يسيل الشوكولاتة أثناء الخبز.'],
+['غطي بالكمية الباقية من الكنافة واضغطي برفق — لا بضغط قوي كي لا ينسحب الحشوة.'],
+['اخبزيها 25-30 دقيقة حتى يتذهب لونها بالكامل وترتفع رائحة الزبدة المحمصة.',28],
+['أثناء الخبز جهزي القطر: أذوبي السكر في الماء مع رشة ليمون بعد الغليان 5 دقائق، واتركيه يبرد تمامًا — القطر البارد على الكنافة الساخنة يحفظ القرمشة، والعكس يجعلها مطاطية.'],
+['أخرجي الكنافة وانتظر 5 دقائق، ثم اسكبي القطر البارد تدريجيًا على كامل السطح واتركيها 10 دقائق كي تتشرب بعمق.'],
+['زينيها بالفستق المجروش وقطع الشوكولاتة، وقدّمها دافئة — الحرارة هي القلب.']],
+tip:'اسكبي القطر على حواف الصينية أولًا ثم على الوسط — كي تتشرب الطبقة السفلية أولًا وتصير كل قضمة متوازنة.'}),
+R({id:'cheesecake',cat:'dessert',name:'تشيز كيك بارد',tagline:'أربع ساعات صبر وتبقين أسطورة الحلويات — بلا فرن إطلاقًا',time:25,serves:8,diff:1,cal:380,hearts:12800,tags:['بارد','كريمة','مناسبات'],icon:'cheesecake',
+ing:[['24 قطعة','بسكويت شاي'],['100غ','زبدة ذائبة'],['400غ','جبنة كريمة بدرجة حرارة الغرفة'],['300 مل','كريمة خفق باردة'],['ثلاث أرباع كوب','سكر بودرة'],['1 ملعقة صغيرة','فانيلا'],['للتزيين','كراميل أو صلصة فراولة']],
+steps:[['اطحني البسكويت ناعمًا (كيس محكم وشوبك تكفي) واخلطيه مع الزبدة الذائبة حتى يشبه الرمل الرطب.'],
+['اضغطي الخليط بقاعدة قالب قابل للفصل بظهر كوب أو كفّتك — طبقة متماسكة تصل للحواف قليلًا، وبرّده 30 دقيقة كي يتصلب.',30],
+['اخفقي جبن الكريم مع السكر البودرة والفانيلا 3 دقائق حتى يصبح ناعمًا كريميًا — توقفي ونظّفي جوانب الوعاء مرة، ولا تخفقي مبالغة كي لا يدخل هواء يسبب تشققات لاحقًا.'],
+['في وعاء بارد اخفقي كريمة الخفق حتى تتماسك وتقف بالقمع، وادمجيها مع خليط الجبنة بحركات لفّ لطيفة من الأسفل للأعلى — الحفاظ على خفة الهواء هنا هو سرّ القوام الغيمي.'],
+['اسكبي الحشوة فوق قاعدة البسكويت المبردة، سوّي السطح بملعقة، غطّيه، وبرّده 4 ساعات على الأقل — والأفضل ليلة كاملة كي تتشرب النكهات ويثبت القوام.',240],
+['قبل التقديم مرّري سكينًا حاميًا حول الحواف وفكّ الحلقة بحذر، وزيّنه بطبقة كراميل أو صلصة فراولة وحواف بسكويت مطحون.']],
+tip:'قطع السكين أحسن نتيجة: سخّن الشفرة بماء ساخن وامسحيها بمنشفة بين كل قطعة — قطع مقلّدة من محللات الحلويات تمامًا.'}),
+R({id:'brownie',cat:'dessert',name:'براوني لزج بقشرة لامعة',tagline:'وسطه يهتز وحوافه تقرمش — هكذا يفعل المحترفون بالضبط',time:45,serves:9,diff:1,cal:450,hearts:10500,tags:['شوكولاتة','بالفرن','لزج'],icon:'brownie',
+ing:[['200غ','شوكولاتة داكنة'],['150غ','زبدة'],['1 كوب','سكر'],['2 حبة','بيض كبير'],['نصف كوب','طحين'],['ربع كوب','كاكاو خام'],['رشة','ملح'],['1 ملعقة صغيرة','فانيلا'],['اختياري','نصف كوب جوز مجروش']],
+steps:[['سخني الفرن 180°، وبطّني قالبًا مربعًا (20 سم) بورق زبدة يبرز من الجانبين — «المقابض» الورقية تخرج البراوني كاملًا بلا كسر.'],
+['ذوبي الشوكولاتة مع الزبدة بحمام مائي أو ميكروويف على دفعات 20 ثانية مع التحريك، واتركي الخليط يبرد 5 دقائق قبل المتابعة كي لا يطيب البيض.',5],
+['اخفقي البيض مع السكر والفانيلا 3 دقائق حتى يصير اللون فاتحًا والخليط سميكًا ولامعًا ويتشكل «خيط رايبون» عند رفع الخفاقة — هذه المرحلة تصنع القشرة العلوية اللامعة الشهيرة.',3],
+['اسكبي خليط الشوكولاتة فوق البيض المخفوق وحرّكي بلطف حتى يتجانس تمامًا.'],
+['غربلي فوقه الطحين والكاكاو والملح، واخلطي بأقل عدد حركات ممكن (12-15 حركة فقط) حتى يختفي أثر الطحين — الخلط الزائد يطور الغلوتين ويحوّل البراوني لمطاط.'],
+['أضيفي الجوز إن استخدمتِه، اسكبي الخليط بالقالب وسوّي السطح.'],
+['اخبز 22-25 دقيقة فقط: الحواف متماسكة والوسط يهتز مع تحريك الصينية ككتلة واحدة ولا يعلق السكين بخام — هذه علامة البراوني اللزج الصحيح، لا تتجاوزيها.',22],
+['اتركيه يبرد في القالب ساعة كاملة (لا تقطعي ساخنًا إطلاقًا!) ثم ارفعه بالورق وقطعه مربعات بسكين حامٍ يمسح بين القطع.']],
+tip:'شوكولاتة داكنة بنسبة 60-70% هي الحد الأمثل — أقل من ذلك يفقد العمق، وأعلى يصبح طعمه مرًّا على الجميع ما عدا مدمني المرارة.'}),
+R({id:'mahalabia',cat:'dessert',name:'مهلبية بالفستق',tagline:'ملعقة واحدة وترجع طفولة — بس بدون تكتلات النشا المزعجة',time:15,serves:5,diff:1,cal:260,hearts:6200,tags:['بارد','خفيف','تقليدي'],icon:'custard',
+ing:[['4 أكواب','حليب كامل الدسم'],['ثلاث أرباع كوب','سكر'],['4 ملاعق كبيرة','نشا'],['1 ملعقة كبيرة','ماء ورد أو ماء زهر'],['للتزيين','فستق حلبي مجروش + كريمة خفق']],
+steps:[['أذوبي النشا في نصف كوب من الحليب البارد واخلطي حتى يذوب تمامًا بلا أي تكتلات — خطوة الحماية من الكتل.'],
+['في قدر غير لاصق سخني باقي الحليب مع السكر على نار وسط مع تحريك عرضي حتى يذوب السكر — لا تتركيه يغلي بقوة على حافة القدر.'],
+['اسكبي خليط النشا على الحليب الساخن بالخطّ مع التحريك المستمر — ومن هنا لا تتوقفي عن التحريك إطلاقًا حتى النهاية.'],
+['اتركيها تغلي بخفة مع التحريك 5-7 دقائق حتى تتكثف وتغلف ظهر الملعقة وتختفي طعم النشا النيء تمامًا.',5],
+['أضيفي ماء الورد أو ماء الزهر، اتركيها دقيقة أخيرة ثم أطفئي النار.'],
+['اسكبيها ساخنة في كاسات التقديم، واتركيها تبرد في الجو 20 دقيقة ثم غطّيها وبرّدها 3 ساعات على الأقل حتى تتماسك باردة.'],
+['قبل التقديم زيّنيها بخيوط كريمة الخفق المخفوقة والفستق الحلبي المجروش وخيط من العسل أو القطر.']],
+tip:'مرري المهلبية بمنخل ناعم بعد الطبخ إن رغبتِ بنعومة مخملية قصوى — تُخرج أي تكتلات دقيقة وتجعلها مخملية كالحرير.'})
+];
+/* ================== الحالة والتخزين ================== */
+let uidSeed = 1;
+const nid = ()=> 'b' + (uidSeed++) + '_' + Date.now().toString(36);
+function loadState(){
+  try{
+    const raw = localStorage.getItem('qeshta-v1');
+    if(raw) return JSON.parse(raw);
+  }catch(e){}
+  return {liked:{}, basket:[], ingChk:{}, stepChk:{}, menuOff:{}};
+}
+let state = loadState();
+function save(){ try{ localStorage.setItem('qeshta-v1', JSON.stringify(state)); }catch(e){} }
+
+/* ================== أدوات ================== */
+const $ = s=>document.querySelector(s);
+const fmt = n => n>=1000 ? (n/1000).toFixed(1).replace(/\.0$/,'')+'K' : n;
+const esc = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+
+function toast(msg, icn='check'){
+  const t = document.createElement('div');
+  t.className='toast';
+  t.innerHTML = ic(icn,17) + '<span>'+esc(msg)+'</span>';
+  $('#toasts').appendChild(t);
+  setTimeout(()=>{ t.classList.add('out'); setTimeout(()=>t.remove(),320); }, 2600);
+}
+
+/* ================== السلة ================== */
+function basketCount(){ return state.basket.length; }
+function updateBasketUI(){
+  const n = basketCount();
+  $('#headBasketCount').textContent = n;
+  $('#fabCount').textContent = n;
+  const done = state.basket.filter(i=>i.done).length;
+  $('#basketProgTxt').textContent = done + ' من ' + n + ' اشتريتهم';
+  $('#basketFill').style.width = (n? Math.round(done/n*100):0) + '%';
+}
+function addBasketItem(name, qty, silent){
+  const clean = name.trim();
+  if(!clean) return false;
+  if(state.basket.some(i=>i.n === clean)){ if(!silent) toast('«'+clean+'» موجود أصلًا في القائمة','eye'); return false; }
+  state.basket.push({id:nid(), n:clean, q:qty||'', done:false});
+  save(); updateBasketUI(); renderBasket();
+  if(!silent) toast('أضفت «'+clean+'» للمذكرة','cart');
+  return true;
+}
+function toggleBasketItem(id){
+  const it = state.basket.find(i=>i.id===id);
+  if(it){ it.done = !it.done; save(); updateBasketUI(); renderBasket(); }
+}
+function delBasketItem(id){
+  state.basket = state.basket.filter(i=>i.id!==id);
+  save(); updateBasketUI(); renderBasket();
+}
+function renderBasket(){
+  const ul = $('#basketList');
+  if(!state.basket.length){
+    ul.innerHTML = '<div class="empty-basket">'+ic('cart',40)+'<br>المذكرة فاضية<br><small style="font-weight:400">افتح أي وصفة وأضف مقاديرها، أو اكتب اللي نفذ منك فوق</small></div>';
+    return;
+  }
+  ul.innerHTML = state.basket.map(it=>`
+    <li class="${it.done?'done':''}">
+      <button class="bk-check" onclick="toggleBasketItem('${it.id}')">${ic('check',14)}</button>
+      <span class="bk-txt">${esc(it.n)}</span>
+      ${it.q?`<span class="bk-q">${esc(it.q)}</span>`:''}
+      <button class="bk-del" onclick="delBasketItem('${it.id}')" title="حذف">${ic('trash',15)}</button>
+    </li>`).join('');
+}
+function openBasket(){ $('#drawerWrap').classList.add('open'); }
+function closeBasket(){ $('#drawerWrap').classList.remove('open'); }
+ $('#drawerWrap').addEventListener('click', e=>{ if(e.target.id==='drawerWrap') closeBasket(); });
+ $('#addRow').addEventListener('submit', e=>{
+  e.preventDefault();
+  const v = $('#basketInput').value;
+  if(addBasketItem(v)) $('#basketInput').value='';
+});
+ $('#clearDoneBtn').innerHTML = ic('check',15) + ' امسح المشتراة';
+ $('#clearDoneBtn').onclick = ()=>{
+  const before = state.basket.length;
+  state.basket = state.basket.filter(i=>!i.done);
+  save(); updateBasketUI(); renderBasket();
+  toast(before - state.basket.length ? 'مبروك، خلصت ' + (before-state.basket.length) + ' عنصر' : 'ما في عناصر مشتراة','sparkle');
+};
+ $('#clearAllBtn').innerHTML = ic('trash',15) + ' تفريغ الكل';
+ $('#clearAllBtn').onclick = ()=>{
+  if(!state.basket.length){ toast('القائمة فاضية أصلًا','eye'); return; }
+  state.basket = []; save(); updateBasketUI(); renderBasket();
+  toast('فرّغت القائمة كاملة','trash');
+};
+
+/* ================== الرأس والهيرو ================== */
+ $('#logoIcon').innerHTML = ic('chef',24);
+ $('#footIcon').innerHTML = ic('chef',22);
+ $('#magnetIcon').innerHTML = ic('magnet',22);
+ $('#drawerClose').innerHTML = ic('x',18);
+ $('#timerStop').innerHTML = ic('x',15);
+ $('#fabBtn').insertAdjacentHTML('beforeend', ic('cart',26));
+ $('#headBasket').insertAdjacentHTML('beforeend', ic('cart',18) + ' المذكرة');
+ $('#navMenu').innerHTML = ic('cal',16) + ' منيو اليوم';
+ $('#navBook').innerHTML = ic('book',16) + ' الوصفات';
+ $('#navBasket').innerHTML = ic('cart',16) + ' قائمة التسوق';
+ $('#ctaMenu').innerHTML = ic('cal',18) + ' شوف منيو اليوم';
+ $('#ctaBook').innerHTML = ic('book',18) + ' تصفح الوصفات';
+ $('#boardKicker').innerHTML = ic('sparkle',15) + ' اقتراح اليوم';
+ $('#secKicker').innerHTML = ic('book',15) + ' 18 وصفة بمقاييس دقيقة';
+ $('#addDayBtn').innerHTML = ic('cart',17) + ' أضف مقادير اليوم كاملة للمذكرة';
+ $('#basketInput').placeholder = 'اضف عنصرًا ناقصًا… مثل: زيت زيتون';
+ $('#addRowBtn').innerHTML = ic('plus',16);
+
+ $('#stRecipes').textContent = RECIPES.length;
+ $('#stHearts').textContent = fmt(RECIPES.reduce((a,r)=>a+r.hearts,0));
+
+/* شريط الوسوم */
+const mqItems = ['وصفات بمقاييس مظبوطة','سرّ الشيف في كل وصفة','منيو يومي لكل الوجبات','مذكرة مشتريات ذكية','مؤقت طبخ مدمج','صحتين وعافية'];
+ $('#mqTrack').innerHTML = Array(4).fill(mqItems.map(t=>`<span>${t}<em>&bull;</em></span>`).join('')).join('');
+
+/* ================== القلوب ================== */
+function heartsOf(r){ return r.hearts + (state.liked[r.id]?1:0); }
+function toggleHeart(id){
+  state.liked[id] = !state.liked[id];
+  if(!state.liked[id]) delete state.liked[id];
+  save();
+  return !!state.liked[id];
+}
+
+/* ================== التابات وعرض الوصفات ================== */
+let activeCat = 'all';
+function renderTabs(){
+  const tabs = [['all','الكل','#2b1a10']].concat(Object.entries(CATS).map(([k,v])=>[k,v.label,v.c]));
+  $('#tabs').innerHTML = tabs.map(([k,l,c])=>`
+    <button class="tab ${activeCat===k?'on':''}" style="--tc:${c}" onclick="setCat('${k}')">
+      <span class="tdot" style="background:${c}"></span>${l}
+    </button>`).join('');
+}
+function setCat(k){ activeCat = k; renderTabs(); renderCards(); }
+
+function cardHTML(r, i, featured){
+  const c = CATS[r.cat];
+  const rot = (i%2? -1:1) * (0.4 + (i%3)*0.22);
+  const liked = !!state.liked[r.id];
+  const preview = r.ing.slice(0,3).map(x=>`<i>${esc(x[1])}</i>`).join('') + (r.ing.length>3?`<i class="more">+${r.ing.length-3} مقادير</i>`:'');
+  const flames = [1,2,3].map(f=>`<svg class="ic ${f<=r.diff?'':'dim'}" width="13" height="13" viewBox="0 0 24 24" fill="${f<=r.diff?'currentColor':'none'}" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${ICONS.flame}</svg>`).join('');
+  const diffTxt = ['سهل','وسط','شيف'][r.diff-1];
+  return `
+  <article class="card ${featured?'featured':''}" style="--c:${c.c};--cs:${c.s};--art:${c.art||'#fff'};transform:rotate(${rot}deg)">
+    <div class="card-top" onclick="openRecipe('${r.id}')">
+      <div>
+        <span class="cat-chip">${c.label}</span>
+        <h3 style="color:var(--art);font-weight:800;font-size:${featured?'30px':'23px'};margin-top:8px;line-height:1.35">${esc(r.name)}</h3>
+      </div>
+      ${dish(r.icon)}
+    </div>
+    <div class="card-body">
+      <p class="tagline">${esc(r.tagline)}</p>
+      <div class="card-meta">
+        <span>${ic('clock',15)} ${r.time} دقيقة</span>
+        <span class="flames">${flames} ${diffTxt}</span>
+        <span>${ic('list',15)} ${r.ing.length} مقادير</span>
+      </div>
+      <div class="ingr-prev">${preview}</div>
+      <div class="card-foot">
+        <button class="heart-btn ${liked?'liked':''}" data-h="${r.id}" onclick="cardHeart('${r.id}',this)">
+          ${ic('heart',17)} <span>${fmt(heartsOf(r))}</span>
+        </button>
+        <button class="open-btn" onclick="openRecipe('${r.id}')">الوصفة الكاملة ${ic('book',15)}</button>
+      </div>
+    </div>
+  </article>`;
+}
+function cardHeart(id, btn){
+  const liked = toggleHeart(id);
+  btn.classList.toggle('liked', liked);
+  btn.classList.remove('pop'); void btn.offsetWidth; btn.classList.add('pop');
+  const r = RECIPES.find(x=>x.id===id);
+  btn.querySelector('span').textContent = fmt(heartsOf(r));
+  const mw = document.querySelector('.modal .heart-btn[data-h="'+id+'"]');
+  if(mw){ syncModalHeart(mw, r); }
+}
+function syncModalHeart(btn, r){
+  const liked = !!state.liked[r.id];
+  btn.classList.toggle('liked', liked);
+  btn.querySelector('span').textContent = fmt(heartsOf(r)) + ' قلب';
+}
+function renderCards(){
+  const list = activeCat==='all'
+    ? MEAL_ORDER.flatMap(c=>RECIPES.filter(r=>r.cat===c))
+    : RECIPES.filter(r=>r.cat===activeCat);
+  $('#cards').innerHTML = list.map((r,i)=>cardHTML(r,i,i===0)).join('');
+}
+
+/* ================== المنيو اليومي ================== */
+function dayIdx(){
+  const now = new Date();
+  return Math.floor((now - new Date(now.getFullYear(),0,0)) / 864e5);
+}
+function pickMeal(cat){
+  const list = RECIPES.filter(r=>r.cat===cat);
+  const off = state.menuOff[cat]||0;
+  return list[(dayIdx() + off) % list.length];
+}
+function renderMenu(){
+  $('#boardDate').textContent = new Date().toLocaleDateString('ar',{weekday:'long', day:'numeric', month:'long', year:'numeric'});
+  $('#mealsRows').innerHTML = MEAL_ORDER.map(cat=>{
+    const c = CATS[cat], r = pickMeal(cat);
+    const flames = [1,2,3].map(f=>`<svg class="ic ${f<=r.diff?'':'dim'}" width="11" height="11" viewBox="0 0 24 24" fill="${f<=r.diff?'currentColor':'none'}" stroke="currentColor" stroke-width="2">${ICONS.flame}</svg>`).join('');
+    return `
+    <div class="meal-row">
+      <span class="meal-tag" style="background:${c.c};color:${c.art||'#fff'}">${c.label}</span>
+      <div class="meal-info">
+        <strong class="meal-name" id="meal-${cat}">${esc(r.name)}</strong>
+        <span>${r.time} دقيقة &bull; ${flames} ${['سهل','وسط','شيف'][r.diff-1]} &bull; ${r.cal} سعرة للطبق</span>
+      </div>
+      <div class="meal-act">
+        <button class="icon-pill" onclick="swapMeal('${cat}')" title="بدّل الطبق">${ic('shuffle',18)}</button>
+        <button class="icon-pill" onclick="openRecipe('${r.id}')" title="افتح الوصفة">${ic('eye',18)}</button>
+      </div>
+    </div>`;
+  }).join('');
+  const dayIngs = MEAL_ORDER.flatMap(cat=>pickMeal(cat).ing);
+  $('#dayCount').textContent = '(' + dayIngs.length + ' مقاديرو ستُضاف دون تكرار)';
+}
+function swapMeal(cat){
+  state.menuOff[cat] = (state.menuOff[cat]||0) + 1;
+  save();
+  renderMenu();
+  const el = $('#meal-'+cat);
+  if(el){ el.classList.remove('swapping'); void el.offsetWidth; el.classList.add('swapping'); }
+}
+ $('#addDayBtn').onclick = ()=>{
+  const ings = MEAL_ORDER.flatMap(cat=>pickMeal(cat).ing);
+  let added = 0;
+  ings.forEach(([q,n])=>{ if(addBasketItem(n,q,true)) added++; });
+  updateBasketUI();
+  if(added) toast('أضفت ' + added + ' مقاديرو مقادير اليوم للمذكرة','cart');
+  else toast('كل مقادير اليوم موجودة بالمذكرة أصلًا','eye');
+};
+
+/* ================== مودال الوصفة ================== */
+let openId = null;
+function ingChkOf(id){ return new Set(state.ingChk[id]||[]); }
+function stepChkOf(id){ return new Set(state.stepChk[id]||[]); }
+
+function openRecipe(id){
+  const r = RECIPES.find(x=>x.id===id); if(!r) return;
+  openId = id;
+  const c = CATS[r.cat];
+  const ings = ingChkOf(id), steps = stepChkOf(id);
+  const diffTxt = ['سهل','وسط','شيف'][r.diff-1];
+  const flames = [1,2,3].map(f=>`<svg class="ic ${f<=r.diff?'':'dim'}" width="14" height="14" viewBox="0 0 24 24" fill="${f<=r.diff?'currentColor':'none'}" stroke="currentColor" stroke-width="2">${ICONS.flame}</svg>`).join('');
+  const doneN = steps.size, total = r.steps.length;
+  $('#modalBox').innerHTML = `
+  <div class="modal-head" style="--c:${c.c};--art:${c.art||'#fff'};background:${c.c}">
+    <button class="modal-close" onclick="closeRecipe()">${ic('x',18)}</button>
+    <span class="cat-chip" style="background:var(--ink)">${c.label}</span>
+    <h2>${esc(r.name)}</h2>
+    <p class="tagline">${esc(r.tagline)}</p>
+    <div class="modal-meta">
+      <span>${ic('clock',16)} ${r.time} دقيقة</span>
+      <span>${flames} ${diffTxt}</span>
+      <span>${ic('users',16)} ${r.serves} أشخاص</span>
+      <span>${ic('zap',16)} ${r.cal} سعرة للطبق</span>
+    </div>
+    <div class="modal-foot-row" style="margin-top:10px">
+      <button class="heart-btn ${state.liked[id]?'liked':''}" data-h="${id}" style="color:#fff;font-size:15px" onclick="modalHeart(this)">
+        ${ic('heart',20)} <span>${fmt(heartsOf(r))} قلب</span>
+      </button>
+      <span style="font-size:12.5px;font-weight:700;background:rgba(0,0,0,.25);border-radius:14px;padding:4px 13px">${r.tags.map(t=>'#'+t.replace(/ /g,'_')).join('  ')}</span>
+    </div>
+  </div>
+  <div class="modal-body">
+    <div class="ingr-col" style="--c:${c.c};--cs:${c.s}">
+      <h4>${ic('list',19)} المقادير <small style="font-size:12px;color:#7a6549;font-weight:600">(${r.serves} أشخاص)</small></h4>
+      <button class="btn dark add-all-btn" onclick="addAllIngs('${id}')">${ic('cart',16)} أضف كل المقادير للمذكرة</button>
+      <ul class="ing-list">
+        ${r.ing.map((x,i)=>`
+        <li class="${ings.has(i)?'on':''}">
+          <button class="ing-check" onclick="toggleIng('${id}',${i},this)">${ic('check',13)}</button>
+          <span class="ing-q">${esc(x[0])}</span>
+          <span class="ing-n">${esc(x[1])}</span>
+          <button class="ing-add" onclick="addOneIng('${id}',${i})" title="أضف للمذكرة">${ic('plus',13)}</button>
+        </li>`).join('')}
+      </ul>
+    </div>
+    <div class="steps-col" style="--c:${c.c};--art:${c.art||'#fff'}">
+      <h4>${ic('chef',20)} طريقة التحضير</h4>
+      <div class="step-progress">
+        <div class="bar"><div class="fill" id="stepFill" style="background:${c.c};width:${total?Math.round(doneN/total*100):0}%"></div></div>
+        <small id="stepTxt">${doneN} من ${total} خطوات ${doneN===total&&total?'— خلصت!':'خلصتها'}</small>
+      </div>
+      <ol class="steps">
+        ${r.steps.map((s,i)=>`
+        <li class="step ${steps.has(i)?'done':''}">
+          <span class="step-num">${i+1}</span>
+          <div class="step-txt">${esc(s[0])}
+            <div class="step-tools">
+              <button class="step-done-btn" onclick="toggleStep('${id}',${i},this)">
+                ${ic('check',13)} <span>${steps.has(i)?'تمّت':'خلصت الخطوة'}</span>
+              </button>
+              ${s[1]?`<button class="timer-btn" onclick="startTimer(${s[1]},'${esc(r.name)}')">${ic('timer',14)} مؤقت ${s[1]} دقيقة</button>`:''}
+            </div>
+          </div>
+        </li>`).join('')}
+      </ol>
+      <div class="tip-block">
+        <b>${ic('sparkle',16)} سرّ الشيف</b>
+        <p>${esc(r.tip)}</p>
+      </div>
+    </div>
+  </div>`;
+  $('#modalWrap').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeRecipe(){
+  $('#modalWrap').classList.remove('open');
+  document.body.style.overflow='';
+  openId = null;
+  renderCards();
+}
+ $('#modalWrap').addEventListener('click', e=>{ if(e.target.id==='modalWrap') closeRecipe(); });
+
+function modalHeart(btn){
+  const id = btn.dataset.h;
+  toggleHeart(id);
+  const r = RECIPES.find(x=>x.id===id);
+  syncModalHeart(btn, r);
+  renderCards();
+}
+function toggleIng(id, i, btn){
+  const set = ingChkOf(id);
+  set.has(i) ? set.delete(i) : set.add(i);
+  state.ingChk[id] = [...set]; save();
+  btn.closest('li').classList.toggle('on', set.has(i));
+}
+function addOneIng(id, i){
+  const r = RECIPES.find(x=>x.id===id);
+  addBasketItem(r.ing[i][1], r.ing[i][0]);
+}
+function addAllIngs(id){
+  const r = RECIPES.find(x=>x.id===id);
+  let added = 0;
+  r.ing.forEach(([q,n])=>{ if(addBasketItem(n,q,true)) added++; });
+  if(added) toast('أضفت ' + added + ' مقادير «' + r.name + '» للمذكرة','cart');
+  else toast('مقادير الوصفة موجودة بالمذكرة أصلًا','eye');
+}
+function toggleStep(id, i, btn){
+  const r = RECIPES.find(x=>x.id===id);
+  const set = stepChkOf(id);
+  set.has(i) ? set.delete(i) : set.add(i);
+  state.stepChk[id] = [...set]; save();
+  const li = btn.closest('.step');
+  li.classList.toggle('done', set.has(i));
+  btn.querySelector('span').textContent = set.has(i)?'تمّت':'خلصت الخطوة';
+  const fill = $('#stepFill'), txt = $('#stepTxt');
+  const pct = Math.round(set.size / r.steps.length * 100);
+  fill.style.width = pct+'%';
+  txt.textContent = set.size + ' من ' + r.steps.length + ' خطوات ' + (set.size===r.steps.length ? '— خلصت!' : 'خلصتها');
+  if(set.size === r.steps.length && r.steps.length){
+    confetti();
+    toast('خلصت «' + r.name + '»! صحتين وعافية','sparkle');
+  }
+}
+document.addEventListener('keydown', e=>{
+  if(e.key==='Escape'){ closeRecipe(); closeBasket(); }
+});
+
+/* ================== الموقت ================== */
+let tInt = null, tLeft = 0, tTotal = 1;
+const CIRC = 125.6;
+function startTimer(mins, label){
+  stopTimer(true);
+  tTotal = tLeft = Math.round(mins*60);
+  $('#timerLabel').textContent = label;
+  $('#timerbox').hidden = false;
+  $('#timerbox').classList.remove('ringing');
+  tick(); tInt = setInterval(tick, 1000);
+  toast('شغّلت مؤقت ' + mins + ' دقيقة لوصفة «' + label + '»','timer');
+}
+function tick(){
+  const m = Math.floor(tLeft/60), s = tLeft%60;
+  $('#timerTxt').textContent = String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+  $('#timerRing').style.strokeDashoffset = CIRC * (1 - tLeft/tTotal);
+  if(tLeft<=0){
+    stopTimer();
+    $('#timerbox').hidden = false;
+    $('#timerTxt').textContent = '00:00';
+    $('#timerbox').classList.add('ringing');
+    beep(); setTimeout(beep, 500);
+    toast('خلص الوقت — شوف المطبخ قبل ما يحرق!','flame');
+    setTimeout(()=>{ $('#timerbox').hidden = true; }, 8000);
+    return;
+  }
+  tLeft--;
+}
+function stopTimer(silent){
+  if(tInt){ clearInterval(tInt); tInt=null; }
+  if(!silent){
+    $('#timerbox').hidden = true;
+    $('#timerbox').classList.remove('ringing');
+    if(tLeft>0) toast('وقفت المؤقت','x');
+  }
+}
+ $('#timerStop').onclick = ()=>stopTimer();
+function beep(){
+  try{
+    const a = new (window.AudioContext||window.webkitAudioContext)();
+    const o = a.createOscillator(), g = a.createGain();
+    o.connect(g); g.connect(a.destination);
+    o.type='sine'; o.frequency.value=880;
+    g.gain.setValueAtTime(.22, a.currentTime);
+    g.gain.exponentialRampToValueAtTime(.001, a.currentTime+.55);
+    o.start(); o.stop(a.currentTime+.55);
+  }catch(e){}
+}
+
+/* ================== الكونفيتي ================== */
+function confetti(){
+  const cv = $('#fx'), ctx = cv.getContext('2d');
+  cv.width = innerWidth; cv.height = innerHeight;
+  const colors = ['#ff4d3d','#ffc531','#1f9e6e','#0f7b78','#ee4f90','#fffdf6'];
+  const ps = Array.from({length:130},()=>({
+    x: Math.random()*cv.width, y: -20 - Math.random()*cv.height*.4,
+    vx: (Math.random()-.5)*2.4, vy: 2.4+Math.random()*3.2,
+    r: 4+Math.random()*6, rot: Math.random()*Math.PI, vr: (Math.random()-.5)*.25,
+    c: colors[Math.floor(Math.random()*colors.length)],
+    shape: Math.random()<.35?'c':'r'
+  }));
+  let frames = 0;
+  (function loop(){
+    ctx.clearRect(0,0,cv.width,cv.height);
+    ps.forEach(p=>{
+      p.x+=p.vx; p.y+=p.vy; p.vy+=.04; p.rot+=p.vr;
+      ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.rot);
+      ctx.fillStyle = p.c;
+      if(p.shape==='c'){ ctx.beginPath(); ctx.arc(0,0,p.r/2,0,7); ctx.fill(); }
+      else ctx.fillRect(-p.r/2,-p.r/3,p.r,p.r*.66);
+      ctx.restore();
+    });
+    if(++frames < 250) requestAnimationFrame(loop);
+    else ctx.clearRect(0,0,cv.width,cv.height);
+  })();
+}
+
+/* ================== الإقلاع ================== */
+renderTabs();
+renderCards();
+renderMenu();
+renderBasket();
+updateBasketUI();
+</script>
+</body>
+</html>
