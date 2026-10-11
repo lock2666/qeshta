@@ -199,6 +199,23 @@ nav.topnav a:hover{border-color:var(--ink);background:var(--card);box-shadow:3px
 .tab.on{background:var(--tc,var(--ink));color:#fff;transform:rotate(-1.5deg) scale(1.04);box-shadow:4px 4px 0 var(--ink)}
 .tab.on .tdot{border-color:#fff}
 
+/* ===== تبويب الجديد والتشكيلة اليومية ===== */
+#cards.flat{columns:1}
+.tab.new-tab{border-color:#ee4f90;background:linear-gradient(135deg,#fce0ec,#fff1cd);animation:newPulse 1.6s infinite}
+.tab.new-tab.on{background:linear-gradient(135deg,#ee4f90,#f59e00);border-color:var(--ink)}
+@keyframes newPulse{0%,100%{box-shadow:0 0 0 0 rgba(238,79,144,.45)}50%{box-shadow:0 0 0 7px rgba(238,79,144,0)}}
+.new-badge{display:inline-block;background:linear-gradient(135deg,#ee4f90,#f59e00);color:#fff;font-size:12px;font-weight:800;border-radius:12px;padding:2px 11px;margin-inline-start:8px;border:1.5px solid var(--ink);vertical-align:middle}
+.daily-strip{background:linear-gradient(135deg,#fff8e6,#fce0ec);border:2.5px dashed #ee4f90;border-radius:22px;padding:18px 18px 22px;margin-bottom:26px}
+.daily-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.daily-head strong{font-size:19px}
+.daily-head .d-count{background:var(--ink);color:#fff;font-size:12.5px;font-weight:700;border-radius:12px;padding:3px 12px}
+.daily-head .d-date{margin-inline-start:auto;font-size:13px;font-weight:700;color:#7a6549}
+.pick-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.pick-grid .card{margin-bottom:0}
+.new-sec-title{font-size:21px;font-weight:800;margin:4px 0 16px}
+@media (max-width:980px){.pick-grid{grid-template-columns:1fr 1fr}}
+@media (max-width:620px){.pick-grid{grid-template-columns:1fr}}
+
 /* ===== بطاقات الوصفات (ماسونري) ===== */
 .recipes-sec{padding:44px 0 60px}
 .cards{columns:3;column-gap:22px}
@@ -503,6 +520,7 @@ footer{background:var(--ink);color:var(--paper);border-top:3px solid var(--ink);
     <nav class="topnav">
       <a href="#menu-sec" id="navMenu"></a>
       <a href="#recipes-sec" id="navBook"></a>
+      <a href="#recipes-sec" id="navNew"></a>
       <a href="#" onclick="openBasket();return false" id="navBasket"></a>
     </nav>
     <button class="btn yellow basket-btn" onclick="openBasket()" id="headBasket">
@@ -913,7 +931,59 @@ steps:[['أذوبي النشا في نصف كوب من الحليب البارد
 ['أضيفي ماء الورد أو ماء الزهر، اتركيها دقيقة أخيرة ثم أطفئي النار.'],
 ['اسكبيها ساخنة في كاسات التقديم، واتركيها تبرد في الجو 20 دقيقة ثم غطّيها وبرّدها 3 ساعات على الأقل حتى تتماسك باردة.'],
 ['قبل التقديم زيّنيها بخيوط كريمة الخفق المخفوقة والفستق الحلبي المجروش وخيط من العسل أو القطر.']],
-tip:'مرري المهلبية بمنخل ناعم بعد الطبخ إن رغبتِ بنعومة مخملية قصوى — تُخرج أي تكتلات دقيقة وتجعلها مخملية كالحرير.'})
+tip:'مرري المهلبية بمنخل ناعم بعد الطبخ إن رغبتِ بنعومة مخملية قصوى — تُخرج أي تكتلات دقيقة وتجعلها مخملية كالحرير.'}),
+/* ---- وصفات جديدة (ترند) ---- */
+R({id:'cheesyfries',cat:'snacks',isNew:1,name:'تشيزي فرايز بالجبنة الذائبة',tagline:'بطاطس مقرمشة تُغرق بصوص جبن سائل — سناك السهرات الأول',time:30,serves:4,diff:1,cal:480,hearts:9200,tags:['جبن','مقرمش','سهرات'],icon:'bowl',
+ing:[['4 حبات كبيرة','بطاطس'],['2 ملاعق كبيرة','زيت + ملح وفلفل وبابريكا'],['2 ملاعق كبيرة','زبدة'],['2 ملاعق كبيرة','طحين'],['1 كوب ونصف','حليب دافئ'],['2 كوب','جبن شيدر مبشور'],['للتزيين','بصل أخضر مفروم + هالبينو']],
+steps:[['سخني الفرن على 220° وقطّعي البطاطس أصابع متساوية السماكة — التساوي سرّ النضج الموحّد.'],
+['قلّبي الأصابع مع الزيت والملح والفلفل والبابريكا، وافرديها على صينية بطبقة واحدة دون تكديس.'],
+['اخبزيها 25-30 دقيقة مع تقليبها مرة في المنتصف حتى تصبح ذهبية ومقرمشة من كل الجهات.',25],
+['صوص الجبن: ذوّبي الزبدة في قدر، أضيفي الطحين وحرّكي دقيقة، ثم اسكبي الحليب الدافئ تدريجيًا مع التحريك المستمر حتى يتكثف.'],
+['أضيفي الشيدر المبشور على دفعات مع التحريك حتى يذوب تمامًا ويصبح الصوص ناعمًا يسيل من الملعقة.'],
+['رصّي البطاطس في طبق واسع، اسكبي الصوص الساخن فوقها بسخاء، وزيّني بالبصل الأخضر والهالبينو وقدّميها فورًا.']],
+tip:'أبقي صوص الجبن دافئًا على نار هادئة جدًا مع ملعقة حليب إضافية — البرد يجعّده ويجمّده قبل وصوله للطاولة.'}),
+R({id:'overnight',cat:'breakfast',isNew:1,name:'شوفان ليلي بالشوكولاتة',tagline:'جهزيه بالليل واصحي على فطور جاهز — بدون طبخ إطلاقًا',time:10,serves:2,diff:1,cal:310,hearts:7800,tags:['صحي','بدون طبخ','تحضير مسبق'],icon:'custard',
+ing:[['نصف كوب','شوفان'],['1 ملعقة كبيرة','كاكاو خام'],['1 ملعقة كبيرة','عسل'],['نصف كوب','حليب'],['ربع كوب','زبادي يوناني'],['1 ملعقة صغيرة','بذور شيا'],['للتزيين','موز + زبدة فول سوداني']],
+steps:[['في برطمان زجاجي اخلطي الشوفان والكاكاو وبذور الشيا جيدًا حتى يتوزع الكاكاو بالتساوي.'],
+['أضيفي العسل والحليب والزبادي وقلّبي حتى يمتزج كل شيء ولا تبقى بقع كاكاو جافة.'],
+['أغلقي البرطمان بإحكام وضعيه في الثلاجة ليلة كاملة (6 ساعات على الأقل) حتى يمتص الشوفان السوائل ويصبح كريميًا.'],
+['في الصباح قلّبيه، وخففيه بملعقة حليب إضافية إن كان كثيفًا زيادة عن ذوقك.'],
+['زيّنيه بشرائح الموز وخيط زبدة الفول السوداني وقدّميه باردًا مباشرة.']],
+tip:'النسبة الذهبية: كوب شوفان مقابل كوب سائل — التزمي بها وسيخرج القوام كريميًا لا سائلًا ولا متحجرًا.'}),
+R({id:'fetapasta',cat:'lunch',isNew:1,name:'مكرونة الفيتا المخبوزة',tagline:'أشهر وصفة بتاريخ تيك توك — صينية واحدة وصلصة كريمية',time:40,serves:4,diff:1,cal:580,hearts:18900,tags:['ترند','صينية واحدة','كريمي'],icon:'pasta',
+ing:[['250غ','مكرونة بينيه'],['200غ','قالب جبن فيتا كامل'],['500غ','طماطم كرزية'],['ثلث كوب','زيت زيتون'],['4 فصوص','ثوم مهروس'],['للتزيين','ريحان طازج + فلفل أسود مجروش']],
+steps:[['سخني الفرن على 200° وضعي قالب الفيتا في وسط صينية فرن عميقة.'],
+['وزّعي حوله الطماطم الكرزية والثوم، واسكبي زيت الزيتون فوق الجميع مع رشة فلفل أسود.'],
+['اخبزي الصينية 30 دقيقة حتى تتشقق الطماطم وتطرى الفيتا وتتحمر أطرافها قليلًا.',30],
+['في هذه الأثناء اسلقي المكرونة بماء مملح حتى النضج واحتفظي بكوب من ماء السلق قبل التصفية.'],
+['اهرسي الفيتا والطماطم بالشوكة داخل الصينية نفسها حتى تتحول لصلصة كريمية وردية.'],
+['اخلطي المكرونة الساخنة مع الصلصة وأضيفي ماء السلق تدريجيًا حتى تغلف الصلصة كل حبة، وزيّني بالريحان.']],
+tip:'لا تستخدمي فيتا مفتتة جاهزة — القالب الكامل يذوب ببطء ويعطي القوام الكريمي، والمفتت يجف ويتفتت.'}),
+R({id:'smashtaco',cat:'dinner',isNew:1,name:'سماش تاكو البرجر',tagline:'برجر وتاكو في لقمة واحدة — اللحم يُضغط على الخبز مباشرة',time:20,serves:3,diff:1,cal:520,hearts:13400,tags:['سريع','لحم','ترند'],icon:'burger',
+ing:[['500غ','لحم مفروم'],['6 أرغفة','خبز تورتيلا صغير'],['6 شرائح','جبن شيدر'],['1 كوب','خس مقطع'],['للصوص','مايونيز + كتشب + خردل + مخلل مفروم'],['للتتبيل','ملح + فلفل أسود']],
+steps:[['اخلطي مكونات الصوص في وعاء صغير وضعيه في الثلاجة — البرودة تبرز نكهته.'],
+['قسّمي اللحم 6 كرات متساوية وافردي كل كرة على رغيف تورتيلا بطبقة رقيقة تصل للحواف، وتبّلي بالملح والفلفل.'],
+['سخني مقلاة واسعة على نار عالية وضعي التاكو بجهة اللحم للأسفل، واضغطيه 3 دقائق حتى يتكرمل ويتحمر.'],
+['اقلبيه على جهة الخبز، ضعي شريحة الجبن فوق اللحم مباشرة وغطّي المقلاة دقيقة حتى تذوب.'],
+['احشي كل تاكو بالخس والصوص وقدّميه فورًا وهو ساخن ومقرمش.']],
+tip:'لا تضغطي اللحم كثيرًا بعد وضعه — ضغطة أولى قوية تكفي، والضغط المتكرر يعصر العصارة ويجفف البرجر.'}),
+R({id:'basque',cat:'dessert',isNew:1,name:'تشيز كيك الباسك المحروقة',tagline:'وجه محروق كراميلي وقلب كريمي يهتز — الحرق هنا مقصود',time:60,serves:8,diff:2,cal:420,hearts:16700,tags:['ترند','بالفرن','كريمي'],icon:'cheesecake',
+ing:[['600غ','جبن كريمي بحرارة الغرفة'],['1 كوب','سكر'],['4 حبات','بيض'],['300 مل','كريمة خفق'],['2 ملاعق كبيرة','طحين'],['1 ملعقة صغيرة','فانيلا + رشة ملح']],
+steps:[['سخني الفرن على 220° وغلّفي قالبًا بورق زبدة يعلو عن الحواف — الورق يحمي الجوانب ويسهّل الإخراج.'],
+['اخفقي الجبن الكريمي مع السكر حتى يصبح ناعمًا تمامًا بلا أي تكتلات.'],
+['أضيفي البيض واحدة تلو الأخرى مع الخفق بعد كل إضافة، ثم الفانيلا والملح وكريمة الخفق.'],
+['انخلي الطحين فوق الخليط وقلّبي برفق حتى يختفي تمامًا — لا تبالغي بالخلط.'],
+['اسكبي الخليط في القالب واخبزيه 25-30 دقيقة حتى يحترق الوجه ويبقى الوسط يهتز قليلًا عند هز القالب.',25],
+['برّديه بحرارة الغرفة ثم في الثلاجة 4 ساعات على الأقل قبل التقطيع — الصبر هنا جزء من الوصفة.']],
+tip:'الاهتزاز في الوسط ليس نقص نضج بل هو القوام المطلوب — سيتماسك بالتبريد ويبقى كريميًا يذوب.'}),
+R({id:'toastpizza',cat:'dinner',isNew:1,name:'بيتزا التوست السريعة',tagline:'بيتزا بربع ساعة — خبز التوست يقوم بدور العجينة',time:15,serves:2,diff:1,cal:380,hearts:8900,tags:['سريع جدًا','للأطفال','بالفرن'],icon:'pizza',
+ing:[['4 شرائح','خبز توست'],['نصف كوب','صلصة بيتزا جاهزة'],['1 كوب ونصف','موزاريلا مبشورة'],['حسب الرغبة','زيتون + فلفل + مشروم + بيبروني'],['رشة','أوريجانو']],
+steps:[['سخني الفرن على 200° ورتّبي شرائح التوست على صينية مغطاة بورق زبدة.'],
+['ادهني كل شريحة بملعقة صلصة مع ترك حافة صغيرة فارغة كي تتقرمش.'],
+['وزّعي الموزاريلا بسخاء ثم إضافاتك المفضلة ورشة الأوريجانو.'],
+['اخبزيها 8-10 دقائق حتى تذوب الجبنة وتتحمر الأطراف وتفوح الرائحة.',8],
+['أخرجيها واتركيها دقيقة واحدة فقط ثم قدّميها ساخنة.']],
+tip:'حمّصي التوست دقيقتين وحده قبل إضافة الصلصة — يحميه من التطريّة ويبقي القاعدة مقرمشة.'})
 ];
 /* ================== الحالة والتخزين ================== */
 let uidSeed = 1;
@@ -1014,11 +1084,13 @@ function closeBasket(){ $('#drawerWrap').classList.remove('open'); }
  $('#headBasket').insertAdjacentHTML('beforeend', ic('cart',18) + ' المذكرة');
  $('#navMenu').innerHTML = ic('cal',16) + ' منيو اليوم';
  $('#navBook').innerHTML = ic('book',16) + ' الوصفات';
+ $('#navNew').innerHTML = ic('sparkle',16) + ' الجديد';
+ $('#navNew').onclick = ()=>setCat('new');
  $('#navBasket').innerHTML = ic('cart',16) + ' قائمة التسوق';
  $('#ctaMenu').innerHTML = ic('cal',18) + ' شوف منيو اليوم';
  $('#ctaBook').innerHTML = ic('book',18) + ' تصفح الوصفات';
  $('#boardKicker').innerHTML = ic('sparkle',15) + ' اقتراح اليوم';
- $('#secKicker').innerHTML = ic('book',15) + ' 18 وصفة بمقاييس دقيقة';
+ $('#secKicker').innerHTML = ic('book',15) + ' ' + RECIPES.length + ' وصفة بمقاييس دقيقة';
  $('#addDayBtn').innerHTML = ic('cart',17) + ' أضف مقادير اليوم كاملة للمذكرة';
  $('#basketInput').placeholder = 'اضف عنصرًا ناقصًا… مثل: زيت زيتون';
  $('#addRowBtn').innerHTML = ic('plus',16);
@@ -1027,7 +1099,7 @@ function closeBasket(){ $('#drawerWrap').classList.remove('open'); }
  $('#stHearts').textContent = fmt(RECIPES.reduce((a,r)=>a+r.hearts,0));
 
 /* شريط الوسوم */
-const mqItems = ['وصفات بمقاييس مظبوطة','سرّ الشيف في كل وصفة','منيو يومي لكل الوجبات','مذكرة مشتريات ذكية','مؤقت طبخ مدمج','صحتين وعافية'];
+const mqItems = ['وصفات بمقاييس مظبوطة','سرّ الشيف في كل وصفة','تشكيلة جديدة كل يوم ✨','منيو يومي لكل الوجبات','مذكرة مشتريات ذكية','مؤقت طبخ مدمج','صحتين وعافية'];
  $('#mqTrack').innerHTML = Array(4).fill(mqItems.map(t=>`<span>${t}<em>&bull;</em></span>`).join('')).join('');
 
 /* ================== القلوب ================== */
@@ -1042,9 +1114,9 @@ function toggleHeart(id){
 /* ================== التابات وعرض الوصفات ================== */
 let activeCat = 'all';
 function renderTabs(){
-  const tabs = [['all','الكل','#2b1a10']].concat(Object.entries(CATS).map(([k,v])=>[k,v.label,v.c]));
+  const tabs = [['all','الكل','#2b1a10'],['new','الجديد ✨','#ee4f90']].concat(Object.entries(CATS).map(([k,v])=>[k,v.label,v.c]));
   $('#tabs').innerHTML = tabs.map(([k,l,c])=>`
-    <button class="tab ${activeCat===k?'on':''}" style="--tc:${c}" onclick="setCat('${k}')">
+    <button class="tab ${activeCat===k?'on':''} ${k==='new'?'new-tab':''}" style="--tc:${c}" onclick="setCat('${k}')">
       <span class="tdot" style="background:${c}"></span>${l}
     </button>`).join('');
 }
@@ -1061,7 +1133,7 @@ function cardHTML(r, i, featured){
   <article class="card ${featured?'featured':''}" style="--c:${c.c};--cs:${c.s};--art:${c.art||'#fff'};transform:rotate(${rot}deg)">
     <div class="card-top" onclick="openRecipe('${r.id}')">
       <div>
-        <span class="cat-chip">${c.label}</span>
+        <span class="cat-chip">${c.label}</span>${r.isNew?'<span class="new-badge">جديد ✨</span>':''}
         <h3 style="color:var(--art);font-weight:800;font-size:${featured?'30px':'23px'};margin-top:8px;line-height:1.35">${esc(r.name)}</h3>
       </div>
       ${dish(r.icon)}
@@ -1098,10 +1170,38 @@ function syncModalHeart(btn, r){
   btn.querySelector('span').textContent = fmt(heartsOf(r)) + ' قلب';
 }
 function renderCards(){
+  $('#cards').classList.toggle('flat', activeCat==='new');
+  if(activeCat==='new'){ renderNewTab(); return; }
   const list = activeCat==='all'
     ? MEAL_ORDER.flatMap(c=>RECIPES.filter(r=>r.cat===c))
     : RECIPES.filter(r=>r.cat===activeCat);
   $('#cards').innerHTML = list.map((r,i)=>cardHTML(r,i,i===0)).join('');
+}
+
+/* ================== تبويب الجديد (تشكيلة تتجدد يوميًا) ================== */
+function dailyPicks(){
+  const n = RECIPES.length, d = dayIdx();
+  return [0,1,2].map(i=>RECIPES[(d*3 + i*7) % n]);
+}
+function msToMidnight(){
+  const ms = new Date().setHours(24,0,0,0) - Date.now();
+  return Math.floor(ms/36e5) + ' س و ' + Math.floor(ms%36e5/6e4) + ' د';
+}
+function renderNewTab(){
+  const picks = dailyPicks();
+  const fresh = RECIPES.filter(r=>r.isNew);
+  const dateStr = new Date().toLocaleDateString('ar',{weekday:'long', day:'numeric', month:'long'});
+  $('#cards').innerHTML = `
+  <div class="daily-strip">
+    <div class="daily-head">
+      <strong>⭐ تشكيلة اليوم المختارة</strong>
+      <span class="d-count">تتجدد بعد ${msToMidnight()} ⏰</span>
+      <span class="d-date">${dateStr}</span>
+    </div>
+    <div class="pick-grid">${picks.map((r,i)=>cardHTML(r,i,false)).join('')}</div>
+  </div>
+  <h3 class="new-sec-title">✨ وصل حديثًا إلى مطبخ قشطة</h3>
+  <div class="cards">${fresh.map((r,i)=>cardHTML(r,i,i===0)).join('')}</div>`;
 }
 
 /* ================== المنيو اليومي ================== */
@@ -1167,7 +1267,7 @@ function openRecipe(id){
   $('#modalBox').innerHTML = `
   <div class="modal-head" style="--c:${c.c};--art:${c.art||'#fff'};background:${c.c}">
     <button class="modal-close" onclick="closeRecipe()">${ic('x',18)}</button>
-    <span class="cat-chip" style="background:var(--ink)">${c.label}</span>
+    <span class="cat-chip" style="background:var(--ink)">${c.label}</span>${r.isNew?'<span class="new-badge">وصفة جديدة ✨</span>':''}
     <h2>${esc(r.name)}</h2>
     <p class="tagline">${esc(r.tagline)}</p>
     <div class="modal-meta">
