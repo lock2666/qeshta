@@ -216,6 +216,16 @@ nav.topnav a:hover{border-color:var(--ink);background:var(--card);box-shadow:3px
 @media (max-width:980px){.pick-grid{grid-template-columns:1fr 1fr}}
 @media (max-width:620px){.pick-grid{grid-template-columns:1fr}}
 
+/* ===== تبويب السابقة (سجل المشاهدة) ===== */
+.hist-bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
+.hist-search{flex:1;min-width:220px;display:flex;align-items:center;gap:8px;background:var(--card);border:2.5px solid var(--ink);border-radius:16px;padding:8px 14px}
+.hist-search input{border:none;outline:none;background:transparent;flex:1;font-family:inherit;font-weight:700;font-size:15px;color:var(--ink)}
+.hist-count{font-weight:800;color:#7a6549;margin:0 0 14px}
+.hist-wrap{break-inside:avoid;margin-bottom:22px}
+.hist-wrap .card{margin-bottom:0}
+.hist-time{display:inline-block;background:var(--ink);color:#fff;font-size:12px;font-weight:700;border-radius:12px;padding:3px 12px;margin-bottom:8px}
+.hist-empty{text-align:center;background:var(--card);border:2.5px dashed var(--ink);border-radius:22px;padding:34px 18px;font-size:16px;line-height:2}
+
 /* ===== بطاقات الوصفات (ماسونري) ===== */
 .recipes-sec{padding:44px 0 60px}
 .cards{columns:3;column-gap:22px}
@@ -521,6 +531,7 @@ footer{background:var(--ink);color:var(--paper);border-top:3px solid var(--ink);
       <a href="#menu-sec" id="navMenu"></a>
       <a href="#recipes-sec" id="navBook"></a>
       <a href="#recipes-sec" id="navNew"></a>
+      <a href="#recipes-sec" id="navHist"></a>
       <a href="#" onclick="openBasket();return false" id="navBasket"></a>
     </nav>
     <button class="btn yellow basket-btn" onclick="openBasket()" id="headBasket">
@@ -996,6 +1007,7 @@ function loadState(){
   return {liked:{}, basket:[], ingChk:{}, stepChk:{}, menuOff:{}};
 }
 let state = loadState();
+if(!Array.isArray(state.history)) state.history = [];
 function save(){ try{ localStorage.setItem('qeshta-v1', JSON.stringify(state)); }catch(e){} }
 
 /* ================== أدوات ================== */
@@ -1086,6 +1098,8 @@ function closeBasket(){ $('#drawerWrap').classList.remove('open'); }
  $('#navBook').innerHTML = ic('book',16) + ' الوصفات';
  $('#navNew').innerHTML = ic('sparkle',16) + ' الجديد';
  $('#navNew').onclick = ()=>setCat('new');
+ $('#navHist').innerHTML = ic('eye',16) + ' السابقة';
+ $('#navHist').onclick = ()=>setCat('history');
  $('#navBasket').innerHTML = ic('cart',16) + ' قائمة التسوق';
  $('#ctaMenu').innerHTML = ic('cal',18) + ' شوف منيو اليوم';
  $('#ctaBook').innerHTML = ic('book',18) + ' تصفح الوصفات';
@@ -1114,7 +1128,7 @@ function toggleHeart(id){
 /* ================== التابات وعرض الوصفات ================== */
 let activeCat = 'all';
 function renderTabs(){
-  const tabs = [['all','الكل','#2b1a10'],['new','الجديد ✨','#ee4f90']].concat(Object.entries(CATS).map(([k,v])=>[k,v.label,v.c]));
+  const tabs = [['all','الكل','#2b1a10'],['new','الجديد ✨','#ee4f90'],['history','السابقة 🕘','#6366f1']].concat(Object.entries(CATS).map(([k,v])=>[k,v.label,v.c]));
   $('#tabs').innerHTML = tabs.map(([k,l,c])=>`
     <button class="tab ${activeCat===k?'on':''} ${k==='new'?'new-tab':''}" style="--tc:${c}" onclick="setCat('${k}')">
       <span class="tdot" style="background:${c}"></span>${l}
@@ -1170,8 +1184,9 @@ function syncModalHeart(btn, r){
   btn.querySelector('span').textContent = fmt(heartsOf(r)) + ' قلب';
 }
 function renderCards(){
-  $('#cards').classList.toggle('flat', activeCat==='new');
+  $('#cards').classList.toggle('flat', activeCat==='new'||activeCat==='history');
   if(activeCat==='new'){ renderNewTab(); return; }
+  if(activeCat==='history'){ renderHistoryTab(); return; }
   const list = activeCat==='all'
     ? MEAL_ORDER.flatMap(c=>RECIPES.filter(r=>r.cat===c))
     : RECIPES.filter(r=>r.cat===activeCat);
@@ -1202,6 +1217,47 @@ function renderNewTab(){
   </div>
   <h3 class="new-sec-title">✨ وصل حديثًا إلى مطبخ قشطة</h3>
   <div class="cards">${fresh.map((r,i)=>cardHTML(r,i,i===0)).join('')}</div>`;
+}
+
+/* ================== تبويب السابقة (سجل المشاهدة الذاتي) ================== */
+let histQ = '';
+function relTime(ts){
+  const m = Math.floor((Date.now()-ts)/6e4);
+  if(m < 1) return 'الآن';
+  if(m < 60) return 'منذ ' + m + ' د';
+  const h = Math.floor(m/60);
+  if(h < 24) return 'منذ ' + h + ' س';
+  const d = Math.floor(h/24);
+  if(d < 7) return 'منذ ' + d + (d===1?' يوم':d===2?' يومين':' أيام');
+  return new Date(ts).toLocaleDateString('ar',{day:'numeric',month:'short'});
+}
+function renderHistoryTab(){
+  const hist = Array.isArray(state.history) ? state.history : [];
+  const q = histQ.trim();
+  const items = hist.map(h=>({h, r:RECIPES.find(x=>x.id===h.id)}))
+    .filter(x=>x.r && (!q || x.r.name.includes(q)));
+  const bar = `
+  <div class="hist-bar">
+    <div class="hist-search">${ic('eye',18)}<input id="histInput" placeholder="🔍 ابحث باسم الطبخة…" value="${esc(histQ)}"></div>
+    <button class="tab" onclick="clearHistory()">${ic('trash',15)} مسح السجل</button>
+  </div>`;
+  if(!hist.length){
+    $('#cards').innerHTML = bar + `<div class="hist-empty">🕘 <b>لا توجد وصفات سابقة بعد</b><br>كل وصفة تفتحها ستُحفظ هنا تلقائيًا لتعود إليها بسهولة.</div>`;
+  }else if(!items.length){
+    $('#cards').innerHTML = bar + `<div class="hist-empty">🔍 لا توجد نتائج مطابقة لـ «${esc(q)}»</div>`;
+  }else{
+    $('#cards').innerHTML = bar + `<p class="hist-count">${items.length} ${items.length===1?'وصفة محفوظة':'وصفات محفوظة'} — الأحدث أولًا</p><div class="cards">` +
+      items.map(({h,r},i)=>`<div class="hist-wrap"><span class="hist-time">🕘 شوهدت ${relTime(h.t)}</span>${cardHTML(r,i,false)}</div>`).join('') + `</div>`;
+  }
+  const inp = $('#histInput');
+  if(inp) inp.addEventListener('input', ()=>{
+    histQ = inp.value; renderHistoryTab();
+    const ni = $('#histInput'); ni.focus(); ni.setSelectionRange(ni.value.length, ni.value.length);
+  });
+}
+function clearHistory(){
+  state.history = []; histQ = ''; save(); renderHistoryTab();
+  toast('مسحت سجل الوصفات السابقة','trash');
 }
 
 /* ================== المنيو اليومي ================== */
@@ -1259,6 +1315,11 @@ function stepChkOf(id){ return new Set(state.stepChk[id]||[]); }
 function openRecipe(id){
   const r = RECIPES.find(x=>x.id===id); if(!r) return;
   openId = id;
+  try{
+    if(!Array.isArray(state.history)) state.history = [];
+    state.history = [{id, t:Date.now()}].concat(state.history.filter(h=>h.id!==id)).slice(0,30);
+    save();
+  }catch(e){}
   const c = CATS[r.cat];
   const ings = ingChkOf(id), steps = stepChkOf(id);
   const diffTxt = ['سهل','وسط','شيف'][r.diff-1];
