@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مطبخ تيك توك 🍳 | وصفات ترند</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pink:#FE2C55; --cyan:#25F4EE; --yellow:#FFC93C;
+    --purple:#7B2FF7; --green:#22c55e; --orange:#ff7a18;
+    --dark:#121212; --card:#ffffff;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    font-family:'Cairo','Segoe UI',Tahoma,sans-serif;
+    background:linear-gradient(135deg,#fff1f2 0%,#fef9c3 30%,#ecfeff 65%,#f5f3ff 100%);
+    min-height:100vh; color:#1f2937;
+  }
+  header{
+    background:linear-gradient(90deg,#121212,#3b0764 55%,#FE2C55);
+    color:#fff; padding:28px 16px 20px; text-align:center;
+    position:sticky; top:0; z-index:50;
+    box-shadow:0 4px 20px rgba(0,0,0,.25);
+    border-bottom:4px solid var(--cyan);
+  }
+  header h1{font-size:2rem; font-weight:900;}
+  header h1 .tk{background:#fff; color:#000; padding:0 10px; border-radius:10px;
+    text-shadow:2px 2px 0 var(--cyan), -2px -2px 0 var(--pink);}
+  header p{opacity:.9; margin-top:6px; font-weight:600;}
+  nav{display:flex; gap:10px; justify-content:center; margin-top:14px; flex-wrap:wrap;}
+  nav button{
+    border:none; cursor:pointer; font-family:inherit; font-weight:800; font-size:.95rem;
+    padding:10px 20px; border-radius:999px; color:#fff;
+    background:rgba(255,255,255,.15); border:2px solid rgba(255,255,255,.5);
+    transition:.2s;
+  }
+  nav button:hover{transform:translateY(-2px); background:rgba(255,255,255,.3);}
+  .badge{background:var(--yellow); color:#000; border-radius:999px;
+    padding:0 9px; margin-right:6px; font-weight:900;}
+  main{max-width:1100px; margin:0 auto; padding:22px 14px 60px;}
+  section{background:rgba(255,255,255,.75); border-radius:24px; padding:22px;
+    margin-bottom:24px; box-shadow:0 8px 30px rgba(0,0,0,.08);
+    border:3px solid #fff;}
+  section h2{font-size:1.5rem; font-weight:900; margin-bottom:4px;}
+  section .sub{color:#6b7280; font-weight:600; margin-bottom:14px;}
+  .searchbar{display:flex; gap:8px; margin-bottom:14px;}
+  .searchbar input{
+    flex:1; font-family:inherit; font-size:1rem; font-weight:600;
+    padding:12px 16px; border-radius:14px; border:3px solid #e5e7eb; outline:none;
+  }
+  .searchbar input:focus{border-color:var(--pink);}
+  .pills{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px;}
+  .pills button{
+    font-family:inherit; font-weight:800; cursor:pointer; border:none;
+    padding:9px 18px; border-radius:999px; background:#f3f4f6; transition:.2s;
+  }
+  .pills button.active{color:#fff; transform:scale(1.05);}
+  .pills button[data-cat="الكل"].active{background:var(--dark);}
+  .pills button[data-cat="فطور"].active{background:var(--orange);}
+  .pills button[data-cat="غداء"].active{background:var(--pink);}
+  .pills button[data-cat="عشاء"].active{background:var(--purple);}
+  .pills button[data-cat="مقبلات"].active{background:var(--green);}
+  .pills button[data-cat="حلا"].active{background:#ec4899;}
+  .grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:16px;}
+  .card{
+    background:var(--card); border-radius:20px; overflow:hidden; cursor:pointer;
+    border:3px solid #f3f4f6; transition:.2s;
+  }
+  .card:hover{transform:translateY(-5px) rotate(-.5deg); box-shadow:0 12px 30px rgba(254,44,85,.25); border-color:var(--pink);}
+  .card .emoji{font-size:4rem; text-align:center; padding:22px 10px 8px;
+    background:linear-gradient(135deg,#fdf2f8,#fef9c3,#ecfeff);}
+  .card .body{padding:12px 14px 16px;}
+  .card h3{font-size:1.1rem; font-weight:800;}
+  .cat-tag{display:inline-block; font-size:.75rem; font-weight:900; color:#fff;
+    padding:2px 12px; border-radius:999px; margin:6px 0;}
+  .meta{display:flex; gap:10px; font-size:.82rem; color:#6b7280; font-weight:700; margin:6px 0 10px; flex-wrap:wrap;}
+  .btn{
+    font-family:inherit; font-weight:800; cursor:pointer; border:none;
+    padding:10px 18px; border-radius:14px; font-size:.95rem; transition:.2s;
+  }
+  .btn-pink{background:linear-gradient(90deg,var(--pink),#ff7a18); color:#fff; width:100%;}
+  .btn-pink:hover{transform:scale(1.03);}
+  .btn-cyan{background:linear-gradient(90deg,#0891b2,var(--cyan)); color:#00363b;}
+  .btn-purple{background:linear-gradient(90deg,var(--purple),#ec4899); color:#fff;}
+  .btn-row{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:14px;}
+  .menu-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:12px;}
+  .menu-card{background:#fff; border-radius:16px; padding:14px; text-align:center;
+    border:3px dashed var(--purple); cursor:pointer; transition:.2s;}
+  .menu-card:hover{transform:scale(1.04); border-style:solid;}
+  .menu-card .emoji{font-size:2.8rem;}
+  .menu-card h4{font-weight:800; margin:4px 0;}
+  .menu-card small{color:#6b7280; font-weight:700;}
+  table{width:100%; border-collapse:collapse; background:#fff; border-radius:16px; overflow:hidden; font-size:.9rem;}
+  th{background:var(--dark); color:#fff; padding:10px 6px;}
+  td{padding:9px 6px; border-bottom:2px solid #f3f4f6; text-align:center; font-weight:600;}
+  tr:nth-child(even) td{background:#fdf2f8;}
+  td.meal{cursor:pointer; color:var(--purple); font-weight:800;}
+  td.meal:hover{text-decoration:underline;}
+  .shop-add{display:flex; gap:8px; margin-bottom:14px;}
+  .shop-add input{flex:1; font-family:inherit; font-size:1rem; font-weight:600;
+    padding:12px 16px; border-radius:14px; border:3px solid #e5e7eb; outline:none;}
+  .shop-add input:focus{border-color:var(--green);}
+  .shop-item{display:flex; align-items:center; gap:10px; background:#fff;
+    border-radius:14px; padding:10px 14px; margin-bottom:8px; border:2px solid #e5e7eb; font-weight:700;}
+  .shop-item input[type=checkbox]{width:22px; height:22px; accent-color:var(--green); cursor:pointer;}
+  .shop-item.done span{text-decoration:line-through; color:#9ca3af;}
+  .shop-item.done{background:#f0fdf4; border-color:var(--green);}
+  .shop-item .del{margin-right:auto; background:#fee2e2; border:none; cursor:pointer;
+    border-radius:10px; padding:4px 12px; font-size:1rem;}
+  .empty{text-align:center; color:#9ca3af; font-weight:700; padding:20px;}
+  .modal-bg{position:fixed; inset:0; background:rgba(0,0,0,.6); z-index:100;
+    display:none; align-items:flex-start; justify-content:center; padding:20px; overflow-y:auto;}
+  .modal-bg.open{display:flex;}
+  .modal{background:#fff; border-radius:24px; max-width:640px; width:100%;
+    padding:26px; margin:20px 0; border:5px solid var(--pink); animation:pop .25s;}
+  @keyframes pop{from{transform:scale(.9); opacity:0;} to{transform:scale(1); opacity:1;}}
+  .modal .emoji{font-size:4.5rem; text-align:center;}
+  .modal h2{text-align:center; font-weight:900; font-size:1.6rem;}
+  .modal .meta{justify-content:center;}
+  .modal h3{margin:16px 0 8px; font-weight:900; color:var(--pink); font-size:1.15rem;}
+  .modal ul{list-style:none;}
+  .modal ul li{background:#fdf2f8; border-radius:10px; padding:8px 12px; margin-bottom:6px;
+    display:flex; align-items:center; gap:8px; font-weight:600;}
+  .modal ul li button{margin-right:auto; border:none; cursor:pointer; background:var(--yellow);
+    border-radius:8px; padding:2px 12px; font-family:inherit; font-weight:800;}
+  .modal ol{padding-right:22px;}
+  .modal ol li{margin-bottom:8px; font-weight:600; background:#f5f3ff;
+    border-radius:10px; padding:8px 12px;}
+  .tip{background:#fef9c3; border:2px dashed var(--orange); border-radius:14px;
+    padding:10px 14px; font-weight:700; margin-top:12px;}
+  .close-x{float:left; background:var(--dark); color:#fff; border:none; cursor:pointer;
+    border-radius:50%; width:36px; height:36px; font-size:1.1rem;}
+  .toast{position:fixed; bottom:24px; right:50%; transform:translateX(50%) translateY(100px);
+    background:var(--dark); color:#fff; font-weight:800; padding:12px 26px;
+    border-radius:999px; z-index:200; transition:.3s; border:3px solid var(--green);}
+  .toast.show{transform:translateX(50%) translateY(0);}
+  footer{text-align:center; color:#6b7280; font-weight:700; padding:10px;}
+  @media(max-width:600px){ header h1{font-size:1.5rem;} .modal{padding:18px;} }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🍳 <span class="tk">مطبخ تيك توك</span></h1>
+  <p>أشهر وصفات الترند بالمقادير والخطوات خطوة بخطوة ✨</p>
+  <nav>
+    <button onclick="go('recipes')">🍳 الوصفات</button>
+    <button onclick="go('menu')">🗓️ منيو اليوم</button>
+    <button onclick="go('shop')">🛒 النواقص <span class="badge" id="shopCount">0</span></button>
+  </nav>
+</header>
+
+<main>
+  <!-- الوصفات -->
+  <section id="recipes">
+    <h2>🍳 تصفح الوصفات</h2>
+    <p class="sub">اختر القسم أو ابحث عن وصفة — اضغط على أي بطاقة لعرض المقادير وطريقة التحضير</p>
+    <div class="searchbar"><input id="search" placeholder="🔍 ابحث عن وصفة... (مثال: مكرونة، دجاج، شوكولاتة)" oninput="renderRecipes()"></div>
+    <div class="pills" id="pills">
+      <button data-cat="الكل" class="active" onclick="setCat('الكل')">الكل 🎉</button>
+      <button data-cat="فطور" onclick="setCat('فطور')">فطور 🥞</button>
+      <button data-cat="غداء" onclick="setCat('غداء')">غداء 🍝</button>
+      <button data-cat="عشاء" onclick="setCat('عشاء')">عشاء 🌙</button>
+      <button data-cat="مقبلات" onclick="setCat('مقبلات')">مقبلات 🧆</button>
+      <button data-cat="حلا" onclick="setCat('حلا')">حلا 🍰</button>
+    </div>
+    <div class="grid" id="grid"></div>
+  </section>
+
+  <!-- المنيو -->
+  <section id="menu">
+    <h2>🗓️ منيو اليوم والأسبوع</h2>
+    <p class="sub">محتارة وش تطبخين؟ خلّي التطبيق يقترح عليك منيو كامل لكل الوجبات!</p>
+    <div class="btn-row">
+      <button class="btn btn-purple" onclick="renderDay(true)">🎲 اقتراح جديد لمنيو اليوم</button>
+      <button class="btn btn-cyan" onclick="renderWeek(true)">🎲 منيو أسبوع كامل</button>
+    </div>
+    <h3 style="font-weight:900;margin-bottom:8px;">⭐ منيو اليوم</h3>
+    <div class="menu-grid" id="dayMenu" style="margin-bottom:18px;"></div>
+    <h3 style="font-weight:900;margin-bottom:8px;">📅 منيو الأسبوع</h3>
+    <div style="overflow-x:auto;"><table id="weekTable"></table></div>
+  </section>
+
+  <!-- النواقص -->
+  <section id="shop">
+    <h2>🛒 قائمة النواقص (أغراض لازم تشترينها)</h2>
+    <p class="sub">أي مكون ناقص عندك أضيفيه هنا، وعلّمي ✅ على اللي اشتريتيه</p>
+    <div class="shop-add">
+      <input id="shopInput" placeholder="مثال: جبن فيتا، طماطم كرزية...">
+      <button class="btn btn-purple" onclick="addShop()">➕ إضافة</button>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-cyan" onclick="clearDone()">🧹 مسح اللي تم شراؤه</button>
+    </div>
+    <div id="shopList"></div>
+  </section>
+</main>
+
+<footer>صُنع بحب لعشاق طبخات التيك توك 💖🍳</footer>
+
+<!-- نافذة الوصفة -->
+<div class="modal-bg" id="modalBg" onclick="if(event.target===this)closeModal()">
+  <div class="modal" id="modalBox"></div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const CAT_COLOR = {"فطور":"#ff7a18","غداء":"#FE2C55","عشاء":"#7B2FF7","مقبلات":"#22c55e","حلا":"#ec4899"};
+const CAT_EMOJI = {"فطور":"🥞","غداء":"🍝","عشاء":"🌙","مقبلات":"🧆","حلا":"🍰"};
+
+const RECIPES = [
+/* ===== فطور ===== */
+{id:1, cat:"فطور", emoji:"🍳", name:"بيض البيستو الترند", time:"10 دقائق", servings:"تكفي 2", level:"سهلة جداً",
+ desc:"البيض المقلي بصلصة البيستو بدل الزيت — الوصفة اللي كسرت التيك توك!",
+ ing:["2 ملعقة كبيرة صلصة بيستو","4 بيضات","ملح وفلفل أسود حسب الرغبة","2 شريحة خبز محمص","2 ملعقة كبيرة جبن بارميزان مبشور","رشة رقائق فلفل أحمر (اختياري)"],
+ steps:["سخني صلصة البيستو في مقلاة غير لاصقة على نار متوسطة حتى تفوح رائحتها.","اكسري البيض فوق البيستو مباشرة وتبليه بالملح والفلفل.","غطي المقلاة واتركيه 2-3 دقائق حتى ينضج البياض ويبقى الصفار سائلاً.","قدميه فوق الخبز المحمص ورشي البارميزان ورقائق الفلفل."],
+ tip:"استخدمي بيستو جاهزة من البرطمان لتوفير الوقت — النتيجة نفسها تقريباً!"},
+{id:2, cat:"فطور", emoji:"🥣", name:"الشوفان المخبوز بطعم الكيك", time:"25 دقيقة", servings:"تكفي 1-2", level:"سهلة",
+ desc:"شوفان صحي بطعم الكيك — فطور يشبع ويرضي عشاق الحلا!",
+ ing:["1/2 كوب شوفان","1 موزة ناضجة","1 بيضة","1/2 كوب حليب","1 ملعقة صغيرة بيكنج باودر","1 ملعقة كبيرة عسل","1 ملعقة صغيرة فانيليا","2 ملعقة كبيرة قطع شوكولاتة"],
+ steps:["سخني الفرن على 180° وادهني طبق فرن صغير بالزبدة.","اخلطي كل المكونات (عدا الشوكولاتة) في الخلاط حتى يصبح الخليط ناعماً.","صبي الخليط في الطبق ورشي قطع الشوكولاتة على الوجه.","اخبزي 18-20 دقيقة حتى يتماسك ويتحمر الوجه. قدميه دافئاً."],
+ tip:"جربيه بنكهات مختلفة: أضيفي ملعقة كاكاو لنسخة الشوكولاتة أو توت أزرق للنسخة الفاكهية."},
+{id:3, cat:"فطور", emoji:"🥞", name:"بان كيك الحبوب (Mini Pancakes)", time:"20 دقيقة", servings:"تكفي 2", level:"سهلة",
+ desc:"بان كيك بحجم حبة الحبوب يُقدَّم في وعاء مع الحليب — فطور ممتع للأطفال!",
+ ing:["1 كوب خليط بان كيك جاهز","3/4 كوب حليب (حسب تعليمات العبوة)","1 ملعقة كبيرة زبدة مذابة","شراب القيقب أو عسل للتقديم","توت طازج للتزيين","حليب بارد للتقديم (اختياري)"],
+ steps:["جهزي خليط البان كيك حسب تعليمات العبوة وضعيه في كيس تزيين أو علبة ضغط.","سخني مقلاة غير لاصقة على نار متوسطة وادهنيها بقليل من الزبدة.","شكلي قطرات صغيرة بحجم العملة واطهيها دقيقة ثم اقلبيها لدقيقة أخرى.","ضعيها في وعاء واسكبي عليها الحليب البارد والشراب والتوت مثل حبوب الإفطار."],
+ tip:"لا تزدحمي المقلاة — اطهيها على دفعات لتحصلي على تحمير متساوٍ."},
+{id:4, cat:"فطور", emoji:"🍞", name:"توست الكاسترد بالزبادي", time:"20 دقيقة", servings:"تكفي 2", level:"سهلة",
+ desc:"توست محشو بكاسترد الزبادي الكريمي مع الفواكه — فطور راقٍ بأقل مجهود!",
+ ing:["4 شرائح خبز بريوش أو توست سميك","علبة زبادي يوناني (170غ)","1 بيضة","2 ملعقة كبيرة عسل","1 ملعقة صغيرة فانيليا","توت أو فراولة للتزيين"],
+ steps:["سخني الفرن على 180° وغلفي صينية بورق الزبدة.","اخلطي الزبادي مع البيضة والعسل والفانيليا جيداً.","اضغطي وسط كل شريحة توست بظهر الملعقة لعمل تجويف.","وزعي خليط الكاسترد في التجويف وزيني بالتوت.","اخبزي 12-15 دقيقة حتى يتماسك الكاسترد ويتحمر التوست."],
+ tip:"لا تملئي التجويف للآخر لأن الكاسترد يتمدد قليلاً أثناء الخبز."},
+
+/* ===== غداء ===== */
+{id:5, cat:"غداء", emoji:"🧀", name:"مكرونة الفيتا المخبوزة", time:"40 دقيقة", servings:"تكفي 4", level:"سهلة",
+ desc:"أشهر وصفة في تاريخ تيك توك: فيتا وطماطم تُخبز وتتحول لصلصة كريمية!",
+ ing:["250غ مكرونة (بينيه أو ريجاتوني)","قالب جبن فيتا 200غ","500غ طماطم كرزية","1/3 كوب زيت زيتون","4 فصوص ثوم مهروسة","1/2 ملعقة صغيرة فلفل أحمر مجروش","أوراق ريحان طازجة","ملح وفلفل أسود"],
+ steps:["سخني الفرن على 200° واسلقي المكرونة واحتفظي بكوب من ماء السلق.","ضعي الفيتا وسط صينية فرن وحوليها بالطماطم والثوم.","اسكبي زيت الزيتون ورشي الملح والفلفل والفلفل المجروش.","اخبزي 30 دقيقة حتى تذوب الفيتا وتتشقق الطماطم.","اهرسي الخليط بالشوكة لصلصة كريمية ثم اخلطيها مع المكرونة وقليل من ماء السلق.","زيني بالريحان وقدميها ساخنة."],
+ tip:"ماء سلق المكرونة سر الصلصة الكريمية — لا تستغني عنه!"},
+{id:6, cat:"غداء", emoji:"🌮", name:"تاكو البيريا المكسيكي", time:"ساعتان", servings:"تكفي 5", level:"متوسطة",
+ desc:"تاكو اللحم المطهو ببطء مع مرق التغميس الغني — يستاهل كل دقيقة انتظار!",
+ ing:["1 كغ لحم بقري (كتف أو لحم للسلق) مقطع","2 بصل مفروم","6 فصوص ثوم","3 حبات فلفل مجفف (أو 2 م ك بابريكا مدخنة)","4 أكواب مرق لحم","1 ملعقة كبيرة كمون","1 ملعقة كبيرة أوريغانو","2 ورق غار","خبز تورتيا صغير","2 كوب جبن موزاريلا مبشور","كزبرة وبصل أبيض للتقديم","ملح وفلفل"],
+ steps:["حمري اللحم في قدر كبير من كل الجهات ثم أخرجيه.","في نفس القدر شوحي البصل والثوم والفلفل المجفف 5 دقائق.","أعيدي اللحم وأضيفي المرق والبهارات وورق الغار.","غطي القدر واتركيه على نار هادئة 90 دقيقة حتى يتفتت اللحم.","فتتي اللحم وصفي المرق واحتفظي به للتغميس.","احشي التورتيا باللحم والجبن وحمريها في مقلاة حتى تقرمش وتذوب الجبنة.","قدميها مع مرق التغميس الساخن والكزبرة والبصل."],
+ tip:"اللحم يصبح ألذ في اليوم الثاني — جهزيه مسبقاً إذا تقدرين!"},
+{id:7, cat:"غداء", emoji:"🍗", name:"دجاج Marry Me (تزوجيني)", time:"35 دقيقة", servings:"تكفي 4", level:"سهلة",
+ desc:"دجاج بصلصة كريمية بالطماطم المجففة لذيذ لدرجة طلب الزواج! 💍",
+ ing:["4 صدور دجاج","ملح وفلفل وبابريكا للتتبيل","2 ملعقة كبيرة زيت زيتون","3 فصوص ثوم مهروسة","1/2 كوب طماطم مجففة مقطعة","1 كوب مرق دجاج","1 كوب كريمة طبخ","1/2 كوب بارميزان مبشور","1 ملعقة صغيرة زعتر مجفف","أوراق ريحان للتزيين"],
+ steps:["تبلي الدجاج بالملح والفلفل والبابريكا وحمريه 5-6 دقائق لكل جهة ثم أخرجيه.","في نفس المقلاة شوحي الثوم والطماطم المجففة دقيقتين.","أضيفي المرق والكريمة والبارميزان والزعتر واتركيها تتسبك 3 دقائق.","أعيدي الدجاج للصلصة واتركيه على نار هادئة 10 دقائق حتى ينضج تماماً.","زيني بالريحان وقدميه مع الأرز أو المكرونة."],
+ tip:"لا تغلي الصلصة بقوة بعد إضافة الكريمة حتى لا تتكتل — نار هادئة فقط."},
+{id:8, cat:"غداء", emoji:"🍣", name:"وعاء السلمون والأرز (Emily Mariko)", time:"15 دقيقة", servings:"تكفي 1-2", level:"سهلة جداً",
+ desc:"وصفة إميلي ماريكو الشهيرة: سلمون مهروس مع الأرز والمايونيز الحار!",
+ ing:["2 كوب أرز مطبوخ ساخن","1 علبة سلمون أو فيليه سلمون مطبوخ ومفتت","2 ملعقة كبيرة مايونيز","1 ملعقة كبيرة صريراتشا","1 ملعقة كبيرة صويا صوص","1 أفوكادو مقطع","1/2 خيارة مقطعة","1 ملعقة صغيرة سمسم محمص","أوراق نوري (أعشاب بحرية) للتقديم"],
+ steps:["ضعي الأرز الساخن في وعاء واهرسي فوقه السلمون بالشوكة.","اخلطي المايونيز مع الصريراتشا واسكبيه فوق الخليط.","أضيفي الصويا صوص وقلبي كل شيء جيداً.","زيني بالأفوكادو والخيار والسمسم.","قدميه مع أوراق النوري — لفي لقيمات صغيرة واستمتعي!"],
+ tip:"الوصفة أصلها ببقايا السلمون والأرز — مثالية لتدوير أكل الأمس!"},
+
+/* ===== عشاء ===== */
+{id:9, cat:"عشاء", emoji:"🍔", name:"سماش تاكو (تاكو البرجر)", time:"20 دقيقة", servings:"تكفي 3", level:"سهلة",
+ desc:"مزيج البرجر والتاكو: لحم مضغوط على التورتيا بطعم Big Mac الشهير!",
+ ing:["500غ لحم مفروم","6 خبز تورتيا صغير","6 شرائح جبن شيدر","1 كوب خس مقطع","1/2 كوب مخلل خيار","للصوص: 3 م ك مايونيز + 1 م ك كتشب + 1 م ص خردل + مخلل مفروم","ملح وفلفل"],
+ steps:["اخلطي مكونات الصوص وضعيه في الثلاجة.","افردي طبقة رقيقة من اللحم المفروم على كل قطعة تورتيا وتبليها.","ضعي التورتيا (جهة اللحم لأسفل) في مقلاة ساخنة واضغطيها 3-4 دقائق.","اقلبيها وضعي شريحة الجبن وغطي دقيقة حتى تذوب.","احشيها بالخس والمخلل والصوص وقدميها فوراً."],
+ tip:"افردي اللحم حتى أطراف التورتيا لأنه ينكمش أثناء الطهي."},
+{id:10, cat:"عشاء", emoji:"🌶️", name:"باستا الفودكا الحارة (Gigi Hadid)", time:"25 دقيقة", servings:"تكفي 3", level:"سهلة",
+ desc:"باستا جيجي حديد الشهيرة بصلصة حارة كريمية — بدون فودكا وبنفس الطعم!",
+ ing:["250غ مكرونة بينيه","1 بصلة صغيرة مفرومة ناعماً","3 فصوص ثوم مهروسة","3 ملعقة كبيرة معجون طماطم","1 ملعقة صغيرة رقائق فلفل أحمر","1 كوب كريمة طبخ","2 ملعقة كبيرة زبدة","1/2 كوب بارميزان مبشور","ملح وفلفل"],
+ steps:["اسلقي المكرونة واحتفظي بكوب من ماء السلق.","شوحي البصل في زيت الزيتون 5 دقائق ثم أضيفي الثوم ورقائق الفلفل.","أضيفي معجون الطماطم وقلبي 3-4 دقائق حتى يغمق لونه ويتكرمل.","اسكبي الكريمة وحركي حتى تتجانس ثم أضيفي الزبدة والبارميزان.","اخلطي المكرونة مع الصلصة وقليل من ماء السلق وقدميها ساخنة."],
+ tip:"تكرمل معجون الطماطم هو سر النكهة العميقة — لا تستعجلي هذه الخطوة!"},
+{id:11, cat:"عشاء", emoji:"🥟", name:"زلابية ورق الأرز المقرمشة", time:"30 دقيقة", servings:"تكفي 3", level:"متوسطة",
+ desc:"ورق الأرز يتحول لزلابية مقرمشة من برا وطرية من جوا — إدمان!",
+ ing:["10 ورقات أرز (رايس بيبر)","300غ دجاج مفروم أو خضار مشكلة","2 بصل أخضر مفروم","1 ملعقة كبيرة صويا صوص","1 ملعقة صغيرة زنجبيل مبشور","1 فص ثوم مهروس","زيت للقلي","للتغميس: صويا صوص + خل + زيت سمسم + سمسم"],
+ steps:["اخلطي الدجاج مع البصل الأخضر والصويا والزنجبيل والثوم.","بللي ورقة الأرز بالماء الدافئ 5 ثوانٍ حتى تلين.","ضعي ملعقة من الحشوة ولفيها رول محكم مع ثني الأطراف.","كرري مع باقي الأوراق ثم اقليها في زيت متوسط 3-4 دقائق لكل جهة حتى تقرمش.","قدميها ساخنة مع صوص التغميس."],
+ tip:"لا تنقعي ورق الأرز كثيراً — 5 ثوانٍ تكفي وسيكمل الليونة أثناء اللف."},
+{id:12, cat:"عشاء", emoji:"🍕", name:"بيتزا التورتيا السريعة", time:"15 دقيقة", servings:"تكفي 2", level:"سهلة جداً",
+ desc:"بيتزا بقاعدة تورتيا مقرمشة جاهزة في 15 دقيقة — عشاء الطوارئ المثالي!",
+ ing:["2 خبز تورتيا كبير","1/2 كوب صلصة بيتزا جاهزة","2 كوب جبن موزاريلا مبشور","إضافات حسب الرغبة: زيتون، فلفل، مشروم، دجاج، بيبروني","1 ملعقة صغيرة أوريغانو","زيت زيتون لدهن الأطراف"],
+ steps:["سخني الفرن على 200° وضعي التورتيا على صينية.","وزعي الصلصة ثم الموزاريلا ثم إضافاتك المفضلة.","ادهني الأطراف بقليل من زيت الزيتون ورشي الأوريغانو.","اخبزي 8-10 دقائق حتى تذوب الجبنة وتقرمش الأطراف.","قطعيها وقدميها فوراً."],
+ tip:"اخبزي التورتيا وحدها 3 دقائق أولاً ثم أضيفي المكونات لقرمشة مضاعفة!"},
+
+/* ===== مقبلات ===== */
+{id:13, cat:"مقبلات", emoji:"🌽", name:"أضلاع الذرة المقرمشة", time:"25 دقيقة", servings:"تكفي 4", level:"سهلة",
+ desc:"ذرة مقطعة كالأضلاع ومحمّرة بالبهارات — أشهر مقبلات التيك توك!",
+ ing:["4 عرانيس ذرة طازجة","3 ملعقة كبيرة زيت زيتون","1 ملعقة صغيرة بابريكا","1/2 ملعقة صغيرة ثوم بودرة","ملح وفلفل","2 ملعقة كبيرة زبدة مذابة","1/4 كوب بارميزان مبشور","كزبرة مفرومة وشرائح ليمون للتقديم"],
+ steps:["سخني الفرن على 200° (أو القلاية الهوائية).","قطعي كل عرنوس طولياً إلى 4 أرباع بحذر.","اخلطي الزيت مع البهارات وادهني بها قطع الذرة.","اشويها 15-20 دقيقة مع التقليب حتى تتقوس وتتحمر.","ادهنيها بالزبدة ورشي البارميزان والكزبرة وقدميها مع الليمون."],
+ tip:"استخدمي سكيناً حادة وثقيلة وقطعي الذرة على لوح ثابت — السلامة أولاً!"},
+{id:14, cat:"مقبلات", emoji:"🍯", name:"فيتا مخفوقة بالعسل الحار", time:"10 دقائق", servings:"تكفي 4", level:"سهلة جداً",
+ desc:"جبنة فيتا مخفوقة كالحرير مع عسل حار — تغميسة تسرق الأضواء!",
+ ing:["200غ جبن فيتا","1/2 كوب زبادي يوناني","2 ملعقة كبيرة زيت زيتون","1 ملعقة صغيرة عصير ليمون","للعسل الحار: 1/4 كوب عسل + 1/2 م ص رقائق فلفل","زعتر طازج للتزيين","خبز محمص أو خضار للتقديم"],
+ steps:["اخفقي الفيتا مع الزبادي وزيت الزيتون والليمون في محضرة الطعام حتى يصبح الخليط ناعماً كالحرير.","سخني العسل مع رقائق الفلفل دقيقة واحدة فقط.","اسكبي الفيتا المخفوقة في طبق ورشي عليها العسل الحار.","زيني بالزعتر وقدميها مع الخبز المحمص."],
+ tip:"قدميها دافئة قليلاً — النكهات تتفتح أكثر بحرارة الغرفة."},
+{id:15, cat:"مقبلات", emoji:"🥔", name:"البطاطس المهروسة المقرمشة", time:"45 دقيقة", servings:"تكفي 4", level:"سهلة",
+ desc:"بطاطس مسلوقة تُهرس وتُحمَّر حتى القرمشة — مقبلة لا تُقاوَم!",
+ ing:["1 كغ بطاطس صغيرة","1/3 كوب زيت زيتون","ملح وفلفل","1 ملعقة صغيرة إكليل الجبل مجفف","1/2 ملعقة صغيرة ثوم بودرة","بارميزان مبشور للتقديم","صوص: زبادي + ثوم + ليمون + شبت"],
+ steps:["اسلقي البطاطس بقشرها في ماء مملح 15-20 دقيقة حتى تنضج.","سخني الفرن على 220° وادهني صينية بزيت الزيتون.","اهرسي كل حبة بقاع كوب حتى تتفلطح دون أن تتفتت.","ادهنيها بالزيت ورشي الملح والبهارات.","اشويها 25-30 دقيقة حتى تصبح ذهبية ومقرمشة.","قدميها مع رشة بارميزان وصوص الزبادي."],
+ tip:"جففي البطاطس جيداً بعد السلق — الرطوبة عدو القرمشة!"},
+{id:16, cat:"مقبلات", emoji:"🥒", name:"سلطة الخيار الحارة (البرطمان)", time:"10 دقائق", servings:"تكفي 2", level:"سهلة جداً",
+ desc:"خيار يُرج في برطمان مع صوص آسيوي حار — السلطة اللي أدمنها الجميع!",
+ ing:["3 خيارات مقطعة شرائح رفيعة","2 ملعقة كبيرة صويا صوص","1 ملعقة كبيرة خل أرز (أو خل أبيض)","1 ملعقة صغيرة زيت سمسم","1 فص ثوم مهروس","1 ملعقة صغيرة رقائق فلفل أحمر","1 ملعقة صغيرة سمسم محمص","1 ملعقة صغيرة سكر"],
+ steps:["ضعي شرائح الخيار في برطمان زجاجي محكم.","أضيفي كل مكونات الصوص فوق الخيار.","أغلقي البرطمان ورجيه جيداً 30 ثانية.","اتركيه في الثلاجة 10 دقائق على الأقل ثم قدميه بارداً."],
+ tip:"كلما طالت مدة التتبيل زادت النكهة — جهزيها قبل الوجبة بساعة!"},
+
+/* ===== حلا ===== */
+{id:17, cat:"حلا", emoji:"☁️", name:"خبز السحاب (Cloud Bread)", time:"35 دقيقة", servings:"تكفي 4", level:"متوسطة",
+ desc:"خبز خفيف كالسحابة بـ3 مكونات فقط — حلا الترند الأشهر!",
+ ing:["3 بياض بيض (بدرجة حرارة الغرفة)","2 ملعقة كبيرة سكر","1 ملعقة كبيرة نشا ذرة","1/2 ملعقة صغيرة فانيليا","ملون طعام (اختياري)"],
+ steps:["سخني الفرن على 150° وغلفي صينية بورق الزبدة.","اخفقي بياض البيض حتى يصبح رغوياً ثم أضيفي السكر تدريجياً.","أضيفي النشا والفانيليا واكملي الخفق حتى قمم ثابتة لامعة.","شكلي الخليط كسحابة على الصينية.","اخبزي 25 دقيقة حتى يتماسك ويصبح ذهبياً فاتحاً.","اتركيه يبرد 10 دقائق ثم استمتعي بقوامه القطني!"],
+ tip:"تأكدي أن الوعاء والمضرب جافان تماماً — أي دهون تمنع البياض من الانتفاخ."},
+{id:18, cat:"حلا", emoji:"☕", name:"قهوة دالغونا الكورية", time:"10 دقائق", servings:"تكفي 2", level:"سهلة",
+ desc:"رغوة القهوة المخفوقة الشهيرة فوق الحليب المثلج — مشروب وحلا معاً!",
+ ing:["2 ملعقة كبيرة قهوة سريعة الذوبان","2 ملعقة كبيرة سكر","2 ملعقة كبيرة ماء ساخن","2 كوب حليب بارد مثلج","مكعبات ثلج","رشة كاكاو للتزيين"],
+ steps:["اخلطي القهوة والسكر والماء الساخن في وعاء عميق.","اخفقي بالمضرب الكهربائي 3-5 دقائق حتى تتشكل رغوة ذهبية كثيفة.","املئي كوبين بالثلج والحليب البارد.","وزعي رغوة القهوة فوق الحليب ورشي الكاكاو.","قلبي قبل الشرب واستمتعي!"],
+ tip:"لا تعمل إلا بالقهوة سريعة الذوبان — القهوة العادية لن تكوّن الرغوة."},
+{id:19, cat:"حلا", emoji:"🍰", name:"تشيز كيك الباسك المحروقة", time:"60 دقيقة", servings:"تكفي 8", level:"متوسطة",
+ desc:"التشيز كيك الإسبانية بوجه محروق كراميلي وقلب كريمي يذوب!",
+ ing:["600غ جبن كريمي بدرجة حرارة الغرفة","1 كوب سكر","4 بيضات","300 مل كريمة خفق","30غ دقيق (2 م ك)","1 ملعقة صغيرة فانيليا","1/2 ملعقة صغيرة ملح"],
+ steps:["سخني الفرن على 220° وغلفي قالباً بورق زبدة يعلو عن الأطراف.","اخفقي الجبن مع السكر حتى يصبح ناعماً تماماً.","أضيفي البيض واحدة تلو الأخرى ثم الفانيليا والملح.","اسكبي الكريمة ثم انخلي الدقيق واخلطي برفق.","صبي الخليط في القالب واخبزي 25-30 دقيقة حتى يحترق الوجه ويهتز الوسط قليلاً.","بريديها تماماً ثم في الثلاجة 4 ساعات على الأقل قبل التقديم."],
+ tip:"الاهتزاز في الوسط طبيعي ومطلوب — هو سر القوام الكريمي! لا تفرطي في الخبز."},
+{id:20, cat:"حلا", emoji:"🍫", name:"كيك الأرز بالشوكولاتة", time:"20 دقيقة + تبريد", servings:"تكفي 6", level:"سهلة جداً",
+ desc:"سناك الترند: كيك أرز مقرمش بزبدة الفول السوداني مغطى بالشوكولاتة!",
+ ing:["6 أقراص كيك أرز","1/2 كوب زبدة فول سوداني","200غ شوكولاتة داكنة","1 ملعقة صغيرة زيت جوز الهند (أو زبدة)","رشة ملح بحري خشن"],
+ steps:["ادهني كل قرص كيك أرز بطبقة سخية من زبدة الفول السوداني.","ذوبي الشوكولاتة مع الزيت في الميكروويف على دفعات.","غلفي كل قرص بالشوكولاتة المذابة من كل الجهات.","رشي الملح البحري وضعيها على ورق زبدة.","بريديها في الثلاجة 30 دقيقة حتى تتماسك الشوكولاتة."],
+ tip:"احفظيها في الثلاجة لتبقى مقرمشة — تفسد بسرعة بحرارة الغرفة."}
+];
+
+let activeCat = "الكل";
+
+/* ---------- عرض الوصفات ---------- */
+function setCat(c){
+  activeCat = c;
+  document.querySelectorAll("#pills button").forEach(b=>b.classList.toggle("active", b.dataset.cat===c));
+  renderRecipes();
+}
+function catBadge(c){ return `<span class="cat-tag" style="background:${CAT_COLOR[c]}">${CAT_EMOJI[c]} ${c}</span>`; }
+function renderRecipes(){
+  const q = document.getElementById("search").value.trim();
+  const list = RECIPES.filter(r =>
+    (activeCat==="الكل" || r.cat===activeCat) &&
+    (!q || r.name.includes(q) || r.desc.includes(q) || r.ing.join(" ").includes(q))
+  );
+  const grid = document.getElementById("grid");
+  if(!list.length){ grid.innerHTML = `<div class="empty">😕 لا توجد وصفات مطابقة — جربي كلمة أخرى</div>`; return; }
+  grid.innerHTML = list.map(r=>`
+    <div class="card" onclick="openRecipe(${r.id})">
+      <div class="emoji">${r.emoji}</div>
+      <div class="body">
+        <h3>${r.name}</h3>
+        ${catBadge(r.cat)}
+        <div class="meta"><span>⏱ ${r.time}</span><span>👥 ${r.servings}</span><span>📊 ${r.level}</span></div>
+        <button class="btn btn-pink">📖 عرض المقادير والخطوات</button>
+      </div>
+    </div>`).join("");
+}
+
+/* ---------- نافذة الوصفة ---------- */
+function openRecipe(id){
+  const r = RECIPES.find(x=>x.id===id);
+  document.getElementById("modalBox").innerHTML = `
+    <button class="close-x" onclick="closeModal()">✕</button>
+    <div class="emoji">${r.emoji}</div>
+    <h2>${r.name}</h2>
+    <div class="meta" style="display:flex;gap:10px;font-size:.9rem;color:#6b7280;font-weight:700;margin:8px 0;">
+      <span>⏱ ${r.time}</span><span>👥 ${r.servings}</span><span>📊 ${r.level}</span>
+    </div>
+    <div style="text-align:center">${catBadge(r.cat)}</div>
+    <p style="font-weight:600;color:#4b5563;margin:10px 0;">${r.desc}</p>
+    <h3>🧂 المقادير</h3>
+    <ul>${r.ing.map(i=>`<li>✔ ${i}<button onclick="addShop('${i.replace(/'/g,"")}')">➕ للنواقص</button></li>`).join("")}</ul>
+    <button class="btn btn-purple" style="width:100%;margin-top:8px;" onclick='addAll(${JSON.stringify(r.ing)})'>🛒 أضف كل المقادير للنواقص</button>
+    <h3>👩‍🍳 طريقة التحضير (خطوة بخطوة)</h3>
+    <ol>${r.steps.map((s,i)=>`<li><b>خطوة ${i+1}:</b> ${s}</li>`).join("")}</ol>
+    <div class="tip">💡 <b>نصيحة الترند:</b> ${r.tip}</div>`;
+  document.getElementById("modalBg").classList.add("open");
+}
+function closeModal(){ document.getElementById("modalBg").classList.remove("open"); }
+
+/* ---------- المنيو ---------- */
+function hashStr(s){ let h=0; for(let i=0;i<s.length;i++){ h=(h*31 + s.charCodeAt(i))|0; } return Math.abs(h); }
+function seededPick(arr, seed){ return arr[seed % arr.length]; }
+function byCat(c){ return RECIPES.filter(r=>r.cat===c); }
+function todayKey(){ return new Date().toISOString().slice(0,10); }
+
+function renderDay(forceRandom){
+  const seedBase = forceRandom ? Math.floor(Math.random()*100000) : hashStr(todayKey());
+  const meals = ["فطور","غداء","عشاء","مقبلات","حلا"];
+  const box = document.getElementById("dayMenu");
+  box.innerHTML = meals.map((m,i)=>{
+    const r = seededPick(byCat(m), seedBase + i*7);
+    return `<div class="menu-card" onclick="openRecipe(${r.id})">
+      <div class="emoji">${r.emoji}</div>
+      <small>${CAT_EMOJI[m]} ${m}</small><h4>${r.name}</h4><small>⏱ ${r.time}</small>
+    </div>`;
+  }).join("");
+  if(!forceRandom) toast("✨ هذا منيو اليوم — اضغطي 🎲 لاقتراح جديد!");
+}
+const DAYS = ["السبت","الأحد","الاثنين","الثلاثاء","الأربعاء","الخميس","الجمعة"];
+function renderWeek(forceRandom){
+  const seedBase = forceRandom ? Math.floor(Math.random()*100000) : hashStr("week"+todayKey().slice(0,7));
+  const meals = ["فطور","غداء","عشاء"];
+  let html = `<tr><th>اليوم</th><th>🥞 فطور</th><th>🍝 غداء</th><th>🌙 عشاء</th></tr>`;
+  DAYS.forEach((d,di)=>{
+    html += `<tr><td><b>${d}</b></td>` + meals.map((m,mi)=>{
+      const r = seededPick(byCat(m), seedBase + di*13 + mi*29);
+      return `<td class="meal" onclick="openRecipe(${r.id})">${r.emoji} ${r.name}</td>`;
+    }).join("") + `</tr>`;
+  });
+  document.getElementById("weekTable").innerHTML = html;
+}
+
+/* ---------- النواقص ---------- */
+let shop = JSON.parse(localStorage.getItem("tiktok-shop")||"[]");
+function saveShop(){ localStorage.setItem("tiktok-shop", JSON.stringify(shop)); renderShop(); }
+function addShop(name){
+  name = (name||"").trim() || document.getElementById("shopInput").value.trim();
+  if(!name) return;
+  if(shop.some(s=>s.name===name)){ toast("⚠️ هذا الغرض موجود مسبقاً في القائمة!"); return; }
+  shop.push({name, done:false});
+  document.getElementById("shopInput").value = "";
+  saveShop(); toast("✅ تمت الإضافة للنواقص!");
+}
+function addAll(ings){ let n=0; ings.forEach(i=>{ if(!shop.some(s=>s.name===i)){ shop.push({name:i,done:false}); n++; } }); saveShop(); toast(`✅ أُضيفت ${n} أغراض جديدة للنواقص!`); }
+function toggleShop(i){ shop[i].done = !shop[i].done; saveShop(); }
+function delShop(i){ shop.splice(i,1); saveShop(); }
+function clearDone(){ shop = shop.filter(s=>!s.done); saveShop(); toast("🧹 تم مسح الأغراض المشتراة!"); }
+function renderShop(){
+  const box = document.getElementById("shopList");
+  document.getElementById("shopCount").textContent = shop.filter(s=>!s.done).length;
+  if(!shop.length){ box.innerHTML = `<div class="empty">🛒 القائمة فاضية — كل أغراضك متوفرة! 🎉</div>`; return; }
+  box.innerHTML = shop.map((s,i)=>`
+    <div class="shop-item ${s.done?"done":""}">
+      <input type="checkbox" ${s.done?"checked":""} onchange="toggleShop(${i})">
+      <span>${s.done?"✅":"🛍️"} ${s.name}</span>
+      <button class="del" onclick="delShop(${i})">🗑️</button>
+    </div>`).join("");
+}
+
+/* ---------- عام ---------- */
+function go(id){ document.getElementById(id).scrollIntoView({behavior:"smooth"}); }
+function toast(msg){
+  const t = document.getElementById("toast");
+  t.textContent = msg; t.classList.add("show");
+  clearTimeout(t._h); t._h = setTimeout(()=>t.classList.remove("show"), 2500);
+}
+document.getElementById("shopInput").addEventListener("keydown", e=>{ if(e.key==="Enter") addShop(); });
+document.addEventListener("keydown", e=>{ if(e.key==="Escape") closeModal(); });
+
+renderRecipes(); renderDay(false); renderWeek(false); renderShop();
+</script>
+</body>
+</html>
