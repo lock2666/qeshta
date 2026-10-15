@@ -190,6 +190,18 @@ input{font-family:inherit}
 .sub-status{display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:var(--green-soft);border:2.5px solid var(--ink);border-radius:14px;padding:10px 14px;font-size:13.5px;font-weight:800}
 @media (max-width:620px){.cmp-row{grid-template-columns:1fr 70px 70px;font-size:12px}.plan-grid{gap:9px}}
 
+/* ===== بوابة الدخول الإجبارية ===== */
+.gate-wrap{position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;background:var(--paper);background-image:radial-gradient(#eedcbd 1.3px,transparent 1.4px);background-size:24px 24px;padding:20px;overflow-y:auto}
+.gate-wrap.open{display:flex}
+.gate-card{width:min(430px,94vw);background:var(--card);border:3px solid var(--ink);border-radius:24px;box-shadow:8px 8px 0 var(--ink);padding:28px 26px;text-align:center;animation:rise .3s cubic-bezier(.2,1.2,.4,1)}
+.gate-card h2{font-size:2rem;margin:8px 0 0}
+.gate-sub{font-weight:700;color:#7a6549;margin-bottom:14px}
+.gate-card .login-row{flex-direction:column}
+.gate-card .login-row input{width:100%;border:2.5px solid var(--ink);border-radius:12px;padding:10px 14px;font-size:14px;background:var(--card);color:var(--ink);outline:none;font-weight:600}
+.gate-card .pw-wrap{width:100%}
+.gate-card .pw-wrap input{padding-inline-end:54px}
+.gate-card .pw-eye{position:absolute;inset-inline-end:6px;top:50%;transform:translateY(-50%);border:none;background:rgba(0,0,0,.09);border-radius:8px;font-weight:800;font-size:11px;padding:4px 9px;cursor:pointer;font-family:inherit;color:var(--ink)}
+.gate-card .acc-link{margin-top:12px}
 /* ===== الهيدر ===== */
 header.top{
   position:sticky;top:0;z-index:60;
@@ -682,6 +694,28 @@ footer{background:var(--ink);color:var(--paper);border-top:3px solid var(--ink);
 </style>
 </head>
 <body>
+<!-- بوابة الدخول الإجبارية -->
+<div class="gate-wrap" id="gateWrap" style="display:flex">
+  <div class="gate-card">
+    <div style="text-align:center;margin-bottom:4px"><span class="logo-stamp" style="display:inline-grid;font-size:24px">🍳</span></div>
+    <h2>قشطة</h2>
+    <p class="gate-sub">سجّل الدخول لتدخل المطبخ 👨‍🍳</p>
+    <div class="acc-tabs" style="justify-content:center">
+      <button class="acc-tab" id="gateTabLogin" onclick="setGateTab('login')">تسجيل الدخول</button>
+      <button class="acc-tab" id="gateTabNew" onclick="setGateTab('new')">حساب جديد</button>
+    </div>
+    <form id="gateForm" onsubmit="return gateSubmit(event)">
+      <div class="login-row" style="flex-direction:column">
+        <input id="gName" placeholder="اسم المستخدم" maxlength="24" autocomplete="username">
+        <input id="gMail" type="email" placeholder="name@example.com" maxlength="80" autocomplete="email" style="display:none">
+        <span class="pw-wrap"><input id="gPw" type="password" placeholder="كلمة السر" maxlength="64" autocomplete="current-password"><button type="button" class="pw-eye" onclick="togglePw('gPw')">إظهار</button></span>
+        <span class="pw-wrap" id="gPw2Wrap" style="display:none"><input id="gPw2" type="password" placeholder="تأكيد كلمة السر" maxlength="64" autocomplete="new-password"><button type="button" class="pw-eye" onclick="togglePw('gPw2')">إظهار</button></span>
+      </div>
+      <button class="pay-cta" type="submit" id="gateBtn" style="margin-top:12px">دخول</button>
+    </form>
+    <button class="acc-link" onclick="openAdminGate()">دخول المدير 🛡️</button>
+  </div>
+</div>
 <!-- شريط رسالة المدير -->
 <div class="app-banner" id="appBanner" style="display:none"><span id="appBannerTxt"></span><button class="app-banner-x" onclick="hideBanner()" aria-label="close">✕</button></div>
 
@@ -3120,6 +3154,7 @@ function refreshAfterAuth(){
   save(); applyLang(); renderCards(); renderMenu(); renderBasket(); updateBasketUI(); updateFavBadge();
   if(document.getElementById('setWin').classList.contains('open')) renderSettings();
   if(document.getElementById('payWin').classList.contains('open')) renderPayWin();
+  syncGate();
 }
 function switchProfile(name){
   save();                                        /* حفظ ملف الضيف أولًا */
@@ -3343,6 +3378,7 @@ function cloudEnter(name){
   applyLang(); renderCards(); renderMenu(); renderBasket(); updateBasketUI(); updateFavBadge();
   if(document.getElementById('setWin').classList.contains('open')) renderSettings();
   if(document.getElementById('payWin').classList.contains('open')) renderPayWin();
+  syncGate();
 }
 /* مزامنة بيانات الحساب (مفضلة/سلة/أرشيف/سجل) */
 async function fbPushData(){
@@ -4656,6 +4692,98 @@ function confetti(){
   })();
 }
 
+/* ================== بوابة الدخول الإجبارية ================== */
+let gateTab = 'login';
+function gateNeeded(){ return !(state.user && state.user.name); }
+function setGateTab(k){
+  gateTab = k;
+  const login = (k==='login');
+  document.getElementById('gateTabLogin').classList.toggle('on', login);
+  document.getElementById('gateTabNew').classList.toggle('on', !login);
+  document.getElementById('gateTabLogin').textContent = t('acc_tab_login');
+  document.getElementById('gateTabNew').textContent = t('acc_tab_new');
+  document.getElementById('gMail').style.display = login ? 'none' : '';
+  document.getElementById('gPw2Wrap').style.display = login ? 'none' : '';
+  document.getElementById('gPw').setAttribute('autocomplete', login ? 'current-password' : 'new-password');
+  document.getElementById('gateBtn').textContent = login ? t('acc_btn_login') : t('acc_btn_create');
+}
+function showGate(){
+  try{ if(!Object.keys(accRead()).length) gateTab = 'new'; }catch(e){}
+  setGateTab(gateTab);
+  const w = document.getElementById('gateWrap');
+  w.classList.add('open'); w.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+function hideGate(){
+  const w = document.getElementById('gateWrap');
+  w.classList.remove('open'); w.style.display = 'none';
+  if(!document.querySelector('.favwin-wrap.open')) document.body.style.overflow = '';
+}
+function syncGate(){ if(gateNeeded()) showGate(); else hideGate(); }
+function gateSubmit(e){ if(e) e.preventDefault(); if(gateTab==='login') gateLogin(); else gateRegister(); return false; }
+async function gateLogin(){
+  if(accBusy) return; accBusy = true;
+  try{
+    const raw = (document.getElementById('gName').value||'').trim();
+    const pw = document.getElementById('gPw').value||'';
+    if(!raw || !pw){ toast(t('acc_err_empty'),'eye'); return; }
+    if(cloudMode() && raw.indexOf('@')>=0){
+      try{ const nm = await fbSignIn(raw, pw); toast(t('acc_logged',{user:nm})); }
+      catch(err){ toast(t('acc_err_wrong'),'eye'); }
+      syncGate(); return;
+    }
+    const name = accName(raw);
+    const acc = accRead()[name];
+    if(!acc){ toast(t('acc_err_no_user'),'eye'); return; }
+    if(acc.cloud){ toast(t('acc_cloud_login'),'eye'); return; }
+    const h = await pwHash(pw, acc.salt);
+    if(h !== acc.hash){ toast(t('acc_err_wrong'),'eye'); return; }
+    switchProfile(name);
+    toast(t('acc_logged',{user:name}));
+  }catch(err){ toast(t('acc_err_empty'),'eye'); }
+  finally{ accBusy = false; }
+  syncGate();
+}
+async function gateRegister(){
+  if(accBusy) return; accBusy = true;
+  try{
+    const name = accName(document.getElementById('gName').value);
+    const pw = document.getElementById('gPw').value||'';
+    const pw2 = document.getElementById('gPw2').value||'';
+    const mail = (document.getElementById('gMail').value||'').trim();
+    if(name.length<2 || !pw){ toast(t('acc_err_empty'),'eye'); return; }
+    if(!emailOk(mail)){ toast(t('acc_err_email'),'eye'); return; }
+    if(pw.length<6){ toast(t('acc_err_short'),'eye'); return; }
+    if(pw!==pw2){ toast(t('acc_err_match'),'eye'); return; }
+    if(cloudMode()){
+      try{
+        const nm = await fbCreateUser(name, mail, pw);
+        accStep = 'form';
+        cloudEnter(nm);
+        toast(t('acc_created',{user:nm}));
+        await startVerify(nm);
+      }catch(err){
+        const code = (err && err.code)||'';
+        if(code.indexOf('email-already-in-use')>=0) toast(t('acc_err_email_used'),'eye');
+        else toast(t('acc_mail_fail'),'eye');
+      }
+      syncGate(); return;
+    }
+    const a = accRead();
+    if(a[name]){ toast(t('acc_err_exists'),'eye'); return; }
+    if(accByEmail(mail)){ toast(t('acc_err_email_used'),'eye'); return; }
+    const salt = Math.random().toString(36).slice(2) + Date.now().toString(36);
+    a[name] = {salt, hash: await pwHash(pw, salt), email: mail, since: Date.now(), verified: false};
+    accWrite(a);
+    accStep = 'form';
+    switchProfile(name);
+    toast(t('acc_created',{user:name}));
+    await startVerify(name);
+  }catch(err){ toast(t('acc_err_empty'),'eye'); }
+  finally{ accBusy = false; }
+  syncGate();
+}
+
 /* ================== الإقلاع ================== */
 refreshPremium();
 applyLang();
@@ -4675,6 +4803,7 @@ setInterval(dayRollover, 60000);
 document.addEventListener('visibilitychange', ()=>{ if(!document.hidden) dayRollover(); });
 paintSoundBtn();
 updateFavBadge();
+syncGate();
 try{ if(window.speechSynthesis) speechSynthesis.getVoices(); }catch(e){}
 </script>
 </body>
