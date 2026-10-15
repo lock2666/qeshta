@@ -3652,6 +3652,7 @@ async function adminCreate(e){
   adminWrite({salt, hash: await pwHash(pw, salt), since: Date.now()});
   try{ sessionStorage.setItem(ADM_SESSION,'1'); }catch(e){}
   closeAdminGate();
+  syncGate();
   toast(t('adm_setup_done'),'mail');
   openAdmin();
 }
@@ -3664,9 +3665,10 @@ async function adminLogin(e){
   if(h!==a.hash){ toast(t('adm_err_wrong'),'eye'); return; }
   try{ sessionStorage.setItem(ADM_SESSION,'1'); }catch(e){}
   closeAdminGate();
+  syncGate();
   openAdmin();
 }
-function adminLogout(){ try{ sessionStorage.removeItem(ADM_SESSION); }catch(e){} closeAdmin(); toast(t('adm_logout')); }
+function adminLogout(){ try{ sessionStorage.removeItem(ADM_SESSION); }catch(e){} closeAdmin(); syncGate(); toast(t('adm_logout')); }
 function openAdmin(){
   if(!isAdmin()){ openAdminGate(); return; }
   renderAdmin();
@@ -4694,7 +4696,7 @@ function confetti(){
 
 /* ================== بوابة الدخول الإجبارية ================== */
 let gateTab = 'login';
-function gateNeeded(){ return !(state.user && state.user.name); }
+function gateNeeded(){ try{ if(typeof isAdmin==='function' && isAdmin()) return false; }catch(e){} return !(state.user && state.user.name); }
 function setGateTab(k){
   gateTab = k;
   const login = (k==='login');
