@@ -2107,23 +2107,102 @@ function playHello(cat){
   const b = HELLO[cat]||440;
   tone(b,0,.16,'sine',.14); tone(b*1.25,.13,.16,'sine',.13); tone(b*1.5,.26,.3,'sine',.14);
 }
+/* ===== الترحيب المنطوق: صوت بشري محسّن ===== */
+/* اختيار أفضل صوت عربي متاح — يُفضّل الأصوات البشرية الطبيعية (Natural/Google) */
+function pickArVoice(){
+  try{
+    const vs = (speechSynthesis.getVoices()||[]).filter(v=>/^ar/i.test(v.lang||''));
+    if(!vs.length) return null;
+    const score = v=>{
+      const n = String(v.name||'').toLowerCase();
+      let s = 0;
+      if(n.indexOf('natural')>=0) s += 5;
+      else if(n.indexOf('google')>=0) s += 4;
+      else if(/premium|enhanced|neural/.test(n)) s += 3;
+      if(/hoda|hamed|saud|salma|laila|amina|maged|majed|naayf|zariyah|sana/.test(n)) s += 2;
+      if(v.localService) s += 1;
+      return s;
+    };
+    return vs.slice().sort((a,b)=>score(b)-score(a))[0];
+  }catch(e){ return null; }
+}
+let ARVOICE = pickArVoice();
+try{
+  if(window.speechSynthesis && speechSynthesis.addEventListener)
+    speechSynthesis.addEventListener('voiceschanged', ()=>{ ARVOICE = pickArVoice(); });
+}catch(e){}
+/* تبدو النطق أكثر بشريّة: جمل متتابعة (فواصل |) بتنفّس طبيعي وسرعة ونبرة متفاوتة قليلًا */
+let NET_SPEAKING = null;
+function netSpeak(text){
+  try{
+    const segs = String(text).split('|').map(x=>x.trim()).filter(Boolean);
+    let chunks = [];
+    segs.forEach(sg=>{
+      let s = String(sg);
+      while(s.length > 180){ chunks.push(s.slice(0,180)); s = s.slice(180); }
+      if(s) chunks.push(s);
+    });
+    const play = i=>{
+      if(i >= chunks.length){ NET_SPEAKING = null; return; }
+      const a = new Audio(`https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=ar&q=${encodeURIComponent(chunks[i])}`);
+      NET_SPEAKING = a;
+      a.onended = ()=> play(i+1);
+      a.onerror = ()=>{ NET_SPEAKING = null; };
+      a.play().catch(()=>{ NET_SPEAKING = null; });
+    };
+    play(0);
+  }catch(e){ NET_SPEAKING = null; }
+}
+/* إيقاف كل الأصوات (محلية + شبكية) */
+function stopVoice(){
+  try{ if(window.speechSynthesis) speechSynthesis.cancel(); }catch(e){}
+  try{ if(NET_SPEAKING){ NET_SPEAKING.pause(); NET_SPEAKING.currentTime = 0; NET_SPEAKING = null; } }catch(e){}
+}
 function speakArabic(text){
   if(state.voice===false) return;
   try{
     if(!window.speechSynthesis) return;
     const vs = speechSynthesis.getVoices()||[];
-    if(vs.length && !vs.some(v=>/^ar/i.test(v.lang||''))) return;
-    const u = new SpeechSynthesisUtterance(text);
-    u.lang = 'ar-SA'; u.rate = .98; u.pitch = 1.05;
-    const ar = vs.find(v=>/^ar/i.test(v.lang||''));
-    if(ar) u.voice = ar;
-    speechSynthesis.cancel(); speechSynthesis.speak(u);
+    if(!vs.length && typeof netSpeak==='function'){
+      /* الأصوات لم تُحمّل بعد — نتأكد ثم نقرر */
+      setTimeout(()=>{ try{ speakArabic(text); }catch(e){} }, 350); return;
+    }
+    ARVOICE = ARVOICE || pickArVoice();
+    if(ARVOICE && vs.some(v=>/^ar/i.test(v.lang||''))){
+      speechSynthesis.cancel();
+      const segs = String(text).split('|').map(x=>x.trim()).filter(Boolean);
+      segs.forEach((seg,i)=>{
+        const u = new SpeechSynthesisUtterance(seg);
+        u.lang = 'ar-SA';
+        u.rate = (.9 + (i%2? -.03 : .02));   /* سرعة قريبة من الكلام البشري */
+        u.pitch = 1.0 + (i%2? .04 : 0);      /* نبرة تتفاوت قليلًا بين الجمل */
+        u.volume = 1;
+        if(voiceOk(u.voice||ARVOICE)) u.voice = u.voice||ARVOICE;
+        speechSynthesis.speak(u);
+      });
+    }else{
+      /* لا يوجد صوت عربي على الجهاز — صوت بشري حقيقي من الشبكة */
+      netSpeak(text);
+    }
   }catch(e){}
+}
+function voiceOk(v){ try{ return !!(v && v.voiceURI); }catch(e){ return false; } }
+/* تحية متنوعة حسب الوقت والطبخة — كأنها مضيف حقيقي */
+function welLines(r){
+  try{
+    const h = new Date().getHours();
+    const wOpen  = [h<12?'صباح الخير':'مساء الخير', 'يا هلا', 'أهلين وسهلين', 'حيّا الله'];
+    const wIntro = ['اليوم بنطبخ', 'جهّزوا مطبخكم، اليوم بنطبخ', 'خلونا نطبخ سوا', 'طبختنا اليوم', 'معاكم بنطبخ'];
+    const wClose = ['مع مطبخ قشطة', 'ومن مطبخ قشطة، بالعافية مسبقًا', 'على نار خفّة ومزاج، من مطبخ قشطة'];
+    const pick = a => a[Math.floor(Math.random()*a.length)];
+    const nm = (typeof MT==='function') ? MT(r.name) : r.name;
+    return `${pick(wOpen)} | ${pick(wIntro)} ${nm} | ${pick(wClose)}`;
+  }catch(e){ return 'أهلًا وسهلًا | اليوم نطبخ ' + r.name + ' مع مطبخ قشطة'; }
 }
 function welcomeRecipe(r){
   try{
     playHello(r.cat);
-    setTimeout(()=> speakArabic('أهلًا وسهلًا! اليوم نطبخ ' + r.name + ' مع مطبخ قشطة'), 750);
+    setTimeout(()=> speakArabic(welLines(r)), 750);
   }catch(e){}
 }
 function timerAlarm(){
@@ -2136,7 +2215,7 @@ function toggleSound(){
   state.sound = (state.sound===false);
   save(); paintSoundBtn();
   if(state.sound){ playHello('breakfast'); toast(t('t_sound_on'),'check'); }
-  else { try{ if(window.speechSynthesis) speechSynthesis.cancel(); }catch(e){} toast(t('t_sound_off'),'check'); }
+  else { stopVoice(); toast(t('t_sound_off'),'check'); }
 }
 function paintSoundBtn(){
   const b = document.getElementById('soundBtn'); if(!b) return;
@@ -2942,7 +3021,7 @@ function boardRows(){
 }
 /* ===== تجدد المنيو: المنيو كله يكون أشياء جديدة كل يوم ===== */
 const MENU_FRESH_MIN = 10;  /* الهدف: الـ١٠ أطباق كلها لم تظهر حديثًا */
-const MENU_FRESH_GAP = 5;   // يُحتسب "جديدًا" كل طبق لم يظهر في آخر ٥ أيام (أو لم يظهر أبدًا)
+const MENU_FRESH_GAP = 1;   // يُحتسب "جديدًا" كل طبق لم يظهر أمس فقط — يعود بعد مرور يوم واحد على الأقل
 function seenMap(){
   if(!state.menuSeen || typeof state.menuSeen!=='object') state.menuSeen = {};
   return state.menuSeen;
@@ -4587,7 +4666,7 @@ function closeRecipe(){
   document.body.style.overflow='';
   openId = null;
   renderCards();
-  try{ if(window.speechSynthesis) speechSynthesis.cancel(); }catch(e){}
+  stopVoice();
 }
  $('#modalWrap').addEventListener('click', e=>{ if(e.target.id==='modalWrap') closeRecipe(); });
 
