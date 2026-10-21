@@ -4781,6 +4781,7 @@ async function gateRegister(){
     switchProfile(name);
     toast(t('acc_created',{user:name}));
     await startVerify(name);
+    openSettings();
   }catch(err){ toast(t('acc_err_empty'),'eye'); }
   finally{ accBusy = false; }
   syncGate();
