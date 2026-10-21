@@ -3038,9 +3038,16 @@ function renderSearch(){
 
 /* ================== صفحة الإعدادات ================== */
 function openSettings(){
-  renderSettings();
-  document.getElementById('setWin').classList.add('open');
+  /* افتح أولًا ثم ارسم: حتى لو فشل الرسم تبقى النافذة قابلة للفتح والإغلاق */
+  const w = document.getElementById('setWin');
+  w && w.classList.add('open');
   document.body.style.overflow = 'hidden';
+  try{
+    renderSettings();
+  }catch(e){
+    const box = document.getElementById('setWinBox');
+    if(box) box.innerHTML = `<div class="modal-head" style="background:#7c3aed"><button class="modal-close" onclick="closeSettings()">✕</button><span class="cat-chip" style="background:var(--ink)">⚙️</span><h2>${t('g_title')}</h2></div><div class="worldwin-body"><p class="acc-note">تعذر تحميل بعض الإعدادات — أغلق هذه النافذة وأعد تحميل الصفحة.</p></div>`;
+  }
 }
 function closeSettings(){
   document.getElementById('setWin').classList.remove('open');
@@ -3584,6 +3591,8 @@ function togglePw(id){
   if(el) el.type = el.type==='password' ? 'text' : 'password';
 }
 function doLogout(){
+  /* أغلق كل النوافذ أولًا حتى تظهر بوابة الدخول فوقها مباشرة */
+  ['closeSettings','closePay','closeWorld','closeFav','closeSearch','closeBasket','closeRecipe','closeFit','closeDrink','closeKid'].forEach(fn=>{ try{ if(typeof window[fn]==='function') window[fn](); }catch(e){} });
   switchGuest();
   toast(t('t_logout'));
 }
