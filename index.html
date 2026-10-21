@@ -2167,7 +2167,7 @@ ar:{
 brand_sub:'طبخات التيك توك',
 nav_menu:'منيو اليوم',nav_book:'الوصفات',nav_new:'الجديد',nav_hist:'السابقة',nav_folk:'الشعبي',nav_world:'العالمي',nav_basket:'قائمة التسوق',nav_fav:'المفضلة',
 app_name:'قشطة',hero_badge:'وصفات دقيقة… بروح تيكتوك',hero_t1:'اطبخ أجمل الطبخات',hero_hl:'بالمقاييس المظبوطة',hero_and:'و',hero_hl2:'خطوات واضحة',hero_step:'خطوة بخطوة',hero_lead:'كل وصفة هون بمقادير محسوبة بالجرام والملعقة، خطوات مرقّمة بالتفصيل، سرّ الشيف، مؤقت مدمج — ومنيو يومي كامل لكل وجباتك.',cta_menu:'شوف منيو اليوم',cta_book:'تصفح الوصفات',cta_world:'النافذة العالمية',st_recipes:'وصفة مفصّلة',st_hearts:'قلب من الطبّاخين',st_meals:'وجبات مقترحة يوميًا',
-board_kicker:'اقتراح اليوم',board_title:'منيو اليوم',board_hint:'اقتراح مطبخ «قشطة» لكل وجبات يومك — بدّل أي طبق ما عجبك، وأضف مقاديره كاملة لقائمة المشتريات بضغطة.',board_add:'أضف مقادير اليوم كاملة للمذكرة',board_count:'({n} مقادير ستُضاف دون تكرار)',board_new:'جديد ✨',board_fresh:'من ضمنهم {n} أطباق جديدة لم تظهر في الأيام السابقة',board_fresh_low:'{n} أطباق جديدة اليوم',
+board_kicker:'اقتراح اليوم',board_title:'منيو اليوم',board_hint:'اقتراح مطبخ «قشطة» لكل وجبات يومك — يتجدد المنيو تلقائيًا كل يوم بأصناف جديدة لم تظهر حديثًا، بدّل أي طبق ما عجبك وأضف مقاديره كاملة لقائمة المشتريات بضغطة.',board_add:'أضف مقادير اليوم كاملة للمذكرة',board_count:'({n} مقادير ستُضاف دون تكرار)',board_new:'جديد ✨',board_fresh:'من ضمنهم {n} أطباق جديدة لم تظهر في الأيام السابقة',board_fresh_low:'{n} أطباق جديدة اليوم',
 sec_kicker:'{n} وصفة بمقاييس دقيقة',sec_title:'مكتبة الوصفات',sec_sub:'افتح أي وصفة لترى المقادير والخطوات الكاملة مع المؤقت وسرّ الشيف',
 tab_all:'الكل',tab_new:'الجديد ✨',tab_hist:'السابقة 🕘',tab_folk:'شعبي 🏜️',
 cat_breakfast:'فطور',cat_snacks:'مقبلات',cat_lunch:'غداء',cat_dinner:'عشاء',cat_dessert:'حلا',cat_najdi:'نجدية',cat_hijazi:'حجازية',cat_southern:'جنوبية',cat_northern:'شمالية',cat_eastern:'خليجية',cat_shami:'شامية',cat_italian:'إيطالي',cat_mexican:'مكسيكي',cat_asian:'آسيوي',cat_turkish:'تركي',
@@ -2188,7 +2188,7 @@ LANG.en={
 brand_sub:'TikTok recipes',
 nav_menu:'Daily menu',nav_book:'Recipes',nav_new:'New',nav_hist:'History',nav_folk:'Folk',nav_world:'World',nav_basket:'Shopping list',nav_fav:'Favorites',
 app_name:'Qashta',hero_badge:'Precise recipes… with a TikTok soul',hero_t1:'Cook the finest dishes',hero_hl:'with exact measurements',hero_and:'with',hero_hl2:'clear steps',hero_step:'step by step',hero_lead:'Every recipe here has gram-accurate amounts, detailed numbered steps, a chef secret, a built-in timer — plus a full daily menu.',cta_menu:"Today's menu",cta_book:'Browse recipes',cta_world:'World window',st_recipes:'detailed recipes',st_hearts:'hearts from cooks',st_meals:'suggested meals daily',
-board_kicker:"Today's pick",board_title:"Today's menu",board_hint:'Qashta kitchen suggests your whole day — swap any dish, and add its full amounts to the shopping list with one tap.',board_add:'Add all of today’s amounts to the list',board_count:'({n} amounts will be added, no duplicates)',board_new:'New ✨',board_fresh:'{n} of them are new dishes not shown on previous days',board_fresh_low:'{n} new dishes today',
+board_kicker:"Today's pick",board_title:"Today's menu",board_hint:'Qashta kitchen suggests your whole day — the menu renews automatically every day with fresh dishes not shown recently. Swap any dish you dislike and add its amounts to the shopping list in one tap.',board_add:'Add all of today’s amounts to the list',board_count:'({n} amounts will be added, no duplicates)',board_new:'New ✨',board_fresh:'{n} of them are new dishes not shown on previous days',board_fresh_low:'{n} new dishes today',
 sec_kicker:'{n} precisely measured recipes',sec_title:'Recipe library',sec_sub:'Open any recipe for full amounts and steps with timer and chef secret',
 tab_all:'All',tab_new:'New ✨',tab_hist:'History 🕘',tab_folk:'Folk 🏜️',
 cat_breakfast:'Breakfast',cat_snacks:'Starters',cat_lunch:'Lunch',cat_dinner:'Dinner',cat_dessert:'Dessert',cat_najdi:'Najdi',cat_hijazi:'Hijazi',cat_southern:'Southern',cat_northern:'Northern',cat_eastern:'Gulf',cat_shami:'Shami',cat_italian:'Italian',cat_mexican:'Mexican',cat_asian:'Asian',cat_turkish:'Turkish',
@@ -2940,9 +2940,9 @@ function boardRows(){
   ensureFresh(rows, used);
   return rows;
 }
-/* ===== تجدد المنيو: ٥ أطباق جديدة لم تظهر في الأيام السابقة ===== */
-const MENU_FRESH_MIN = 5;
-const MENU_FRESH_GAP = 3;   // يُحتسب "جديدًا" كل طبق لم يظهر في آخر ٣ أيام (أو لم يظهر أبدًا)
+/* ===== تجدد المنيو: المنيو كله يكون أشياء جديدة كل يوم ===== */
+const MENU_FRESH_MIN = 10;  /* الهدف: الـ١٠ أطباق كلها لم تظهر حديثًا */
+const MENU_FRESH_GAP = 5;   // يُحتسب "جديدًا" كل طبق لم يظهر في آخر ٥ أيام (أو لم يظهر أبدًا)
 function seenMap(){
   if(!state.menuSeen || typeof state.menuSeen!=='object') state.menuSeen = {};
   return state.menuSeen;
