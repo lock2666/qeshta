@@ -60,6 +60,7 @@ input{font-family:inherit}
 .btn.yellow{background:var(--yellow)}
 .btn.red{background:var(--red);color:#fff}
 .btn.round{border-radius:50%;width:46px;height:46px;padding:0;justify-content:center}
+.out-btn{background:linear-gradient(135deg,#ef4444,#b91c1c);color:#fff;font-size:17px;box-shadow:1px 1px 0 var(--ink)}
 .sound-btn{font-size:20px;line-height:1}
 .sound-btn.off{background:#d8cbb4;color:#7a6549}
 /* ===== نافذة المفضلة ===== */
@@ -745,6 +746,7 @@ footer{background:var(--ink);color:var(--paper);border-top:3px solid var(--ink);
     <button class="btn round fav-btn" id="favBtn" title="الوصفات المفضلة" onclick="openFav()">❤️<span class="basket-count" id="favCount" style="display:none">0</span></button>
     <button class="btn round sound-btn" id="searchBtn" title="بحث" onclick="openSearch()"></button>
     <button class="btn round sound-btn" id="setBtn" title="الإعدادات" onclick="openSettings()"></button>
+    <button class="btn round out-btn" id="userOutBtn" title="تسجيل الخروج" style="display:none" onclick="doLogout()">🚪</button>
     <button class="btn round sound-btn" id="soundBtn" title="تشغيل / إطفاء الصوت" onclick="toggleSound()">🔊</button>
     <button class="btn yellow basket-btn" onclick="openBasket()" id="headBasket">
       <span class="basket-count" id="headBasketCount">0</span>
@@ -3156,12 +3158,22 @@ function setPref(k){
 }
 /* ================== الحسابات: دخول/تسجيل/تبديل الملف ================== */
 let accTab = 'login', accBusy = false, accStep = 'form';
+/* زر تسجيل الخروج في الهيدر */
+function paintUserOut(){
+  try{
+    const b = document.getElementById('userOutBtn');
+    if(!b) return;
+    b.style.display = (state.user && state.user.name) ? '' : 'none';
+    b.title = t('g_logout') || 'تسجيل الخروج';
+  }catch(e){}
+}
 function refreshAfterAuth(){
   refreshPremium();
   save(); applyLang(); renderCards(); renderMenu(); renderBasket(); updateBasketUI(); updateFavBadge();
   if(document.getElementById('setWin').classList.contains('open')) renderSettings();
   if(document.getElementById('payWin').classList.contains('open')) renderPayWin();
   syncGate();
+  paintUserOut();
 }
 function switchProfile(name){
   save();                                        /* حفظ ملف الضيف أولًا */
@@ -3386,6 +3398,7 @@ function cloudEnter(name){
   if(document.getElementById('setWin').classList.contains('open')) renderSettings();
   if(document.getElementById('payWin').classList.contains('open')) renderPayWin();
   syncGate();
+  paintUserOut();
 }
 /* مزامنة بيانات الحساب (مفضلة/سلة/أرشيف/سجل) */
 async function fbPushData(){
@@ -4816,6 +4829,7 @@ document.addEventListener('visibilitychange', ()=>{ if(!document.hidden) dayRoll
 paintSoundBtn();
 updateFavBadge();
 syncGate();
+paintUserOut();
 try{ if(window.speechSynthesis) speechSynthesis.getVoices(); }catch(e){}
 </script>
 </body>
